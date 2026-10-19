@@ -1,0 +1,41 @@
+{
+  "recordedAt": "2026-10-19T18:09:46.367Z",
+  "scope": "Actual report-viewer playback of three previously generated synthetic local-browser runs; not a new agent run or a production session.",
+  "viewport": {
+    "width": 1200,
+    "height": 780
+  },
+  "externalRequests": 0,
+  "frames": [
+    {
+      "input": "examples/save-timeout.json",
+      "sha256": "91be72f0cda1bedabf07ffd755ec9dd33f9366e1bdd70a4b988efc2e15884c48",
+      "label": "Saved after timeout",
+      "observedResult": "Verified"
+    },
+    {
+      "input": "examples/rejected-write.json",
+      "sha256": "cd674201720d1fba6eb37fba6a0a03c02770180d9cce0d5a7b97bc73bfe9852a",
+      "label": "False confirmation",
+      "observedResult": "Check failed"
+    },
+    {
+      "input": "examples/unknown-readback.json",
+      "sha256": "1ac94d8d3c9b2d4a7488010185dc0d884897dc7e87cfa9d1bc96753561a167b9",
+      "label": "Readback unavailable",
+      "observedResult": "Not verified"
+    }
+  ],
+  "sourceVersion": "v0.2.0",
+  "captureScript": "scripts/record-viewer.mjs",
+  "format": "GIF",
+  "width": 1000,
+  "height": 650,
+  "fps": 8,
+  "trimStartSeconds": 0.4,
+  "paletteColors": 96,
+  "bytes": 1633610,
+  "sha256": "dcff865df0e2b43ffe176603cfe0d63efdcea045ffe542034af3628e8dc738c6",
+  "pointerOverlay": false,
+  "audio": "none; silent report-viewer replay"
+}

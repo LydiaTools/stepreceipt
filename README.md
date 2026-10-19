@@ -8,9 +8,9 @@ StepReceipt puts each browser action beside an explicit follow-up check, then tu
 
 **[Open the live report](https://lydiatools.github.io/stepreceipt/)** · [中文说明](README.zh-CN.md) · [Download v0.2.0](https://github.com/LydiaTools/stepreceipt/releases/tag/v0.2.0)
 
-![Actual StepReceipt report: a Save timeout beside a separate readback that found one saved record](docs/assets/report-focus.png)
+![Actual viewer replay of three synthetic local-browser reports: saved after timeout, false confirmation, and unavailable readback](docs/assets/three-outcomes.gif)
 
-*Captured from a real Playwright run against the included synthetic local fixture. It made one POST, saved one record, and never retried the write. This is a test scenario, not a production result.*
+*Recorded from the real report viewer using three committed synthetic local-browser runs. Each fixture made one POST with no retry. [Static timeout screenshot](docs/assets/report-focus.png) · [Capture and reproduction notes](docs/DEMO.md).*
 
 ## Three things you can keep separate
 
