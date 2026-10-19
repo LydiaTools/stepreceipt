@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "title": "Save timed out. The record was there.",
+  "startedAt": "2026-10-19T17:00:03.237Z",
+  "steps": [
+    {
+      "id": "step-1",
+      "label": "Open the draft",
+      "kind": "read",
+      "startedAt": "2026-10-19T17:00:03.237Z",
+      "durationMs": 21,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "The draft form is visible on the synthetic local page.",
+        "observedAt": "2026-10-19T17:00:03.291Z"
+      }
+    },
+    {
+      "id": "step-2",
+      "label": "Save the draft",
+      "kind": "write",
+      "startedAt": "2026-10-19T17:00:03.292Z",
+      "durationMs": 623,
+      "toolStatus": "error",
+      "errorName": "TimeoutError",
+      "verification": {
+        "status": "verified",
+        "summary": "A separate GET found 1 saved record. Record #1 contains “Garden checklist”. The Save action was not retried.",
+        "observedAt": "2026-10-19T17:00:03.928Z"
+      }
+    },
+    {
+      "id": "step-3",
+      "label": "Read back the saved record",
+      "kind": "read",
+      "startedAt": "2026-10-19T17:00:03.928Z",
+      "durationMs": 17,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "The saved-record page shows exactly one record after the tool timeout.",
+        "observedAt": "2026-10-19T17:00:03.964Z"
+      }
+    }
+  ]
+}

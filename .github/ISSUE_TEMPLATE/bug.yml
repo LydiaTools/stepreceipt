@@ -1,0 +1,20 @@
+name: Misleading report or integration problem
+description: Show a small reproducible case using synthetic data.
+body:
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to see?
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: What did the report show?
+    validations:
+      required: true
+  - type: textarea
+    id: example
+    attributes:
+      label: Small synthetic example and environment
+      description: Include the version and OS. Remove private data, credentials, and production URLs.
