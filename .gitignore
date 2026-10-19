@@ -1,6 +1,8 @@
 node_modules/
 artifacts/
 coverage/
+__pycache__/
+.venv*/
 *.log
 .DS_Store
 .env

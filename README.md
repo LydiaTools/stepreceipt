@@ -79,6 +79,14 @@ Each case makes exactly one POST. Our [actual workflow](.github/workflows/test.y
 
 ![Actual false-confirmation case: the tool returned normally while the separate check found no saved record](docs/assets/rejected-write.png)
 
+## A real LangGraph process restart
+
+**The graph returned normally. It saved the same draft twice.** An optional, provider-free example kills a Python process after the business commit and resumes the same thread in a new process. Ordinary insert: **2 attempts, 2 drafts**. A target-side unique operation key: **2 attempts, 1 draft**. A completed-node control stays at **1 attempt, 1 draft**.
+
+[Run all three cases](docs/LANGGRAPH.md) · [Open the duplicate report](https://lydiatools.github.io/stepreceipt/langgraph/crash-replay.html) · [Open the target-deduplication report](https://lydiatools.github.io/stepreceipt/langgraph/target-dedup.html). Current main only; the fixed v0.2.0 ZIP predates this example. StepReceipt records the difference; the target database performs the deduplication.
+
+![Actual synthetic LangGraph restart report: the resumed worker returned normally; independent readback found two drafts and failed the exactly-one-draft check](docs/assets/langgraph-replay.png)
+
 ## Add it to your run
 
 The recorder is a small ES module with zero runtime dependencies. Import it from this checkout:

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "title": "Completed node: restart without another write.",
+  "startedAt": "2026-10-19T23:55:17.573Z",
+  "steps": [
+    {
+      "id": "step-1",
+      "label": "Start the graph and save one draft",
+      "kind": "write",
+      "startedAt": "2026-10-19T23:55:17.573Z",
+      "durationMs": 2369,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "A separate read-only process found exactly one matching draft after the first process completed. This checks the saved draft, not graph completion.",
+        "observedAt": "2026-10-19T23:55:19.969Z"
+      }
+    },
+    {
+      "id": "step-2",
+      "label": "Restart the process and resume the same graph thread",
+      "kind": "write",
+      "startedAt": "2026-10-19T23:55:19.969Z",
+      "durationMs": 344,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "Independent readback: 1 matching draft; 1 node attempt. Expected one draft for this logical operation. The completed node was not executed again on this latest-thread resume.",
+        "observedAt": "2026-10-19T23:55:20.338Z"
+      }
+    }
+  ]
+}

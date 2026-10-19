@@ -1,5 +1,11 @@
 # Changelog
 
+## Current main — after v0.2.0
+
+- Add an optional pinned LangGraph/SqliteSaver process-crash/restart example: completed control, duplicate effect after resume, and target-side transactional deduplication.
+- Observe the business database through separate read-only processes and verify actual StepReceipt CLI gates (0/1/0).
+- Provide English/Chinese reproduction guides and generated synthetic reports. The fixed v0.2.0 release ZIP is unchanged and does not contain this example.
+
 ## 0.2.0 — 2026-10-20
 
 - Add Markdown summaries and an explicit `--check` CLI gate with distinct 0/1/2 exits.
@@ -17,4 +23,4 @@
 - Validate the data format and escape untrusted report text; omit raw error messages/stacks from capture and redact selected credential patterns.
 - Test core behavior, CLI, real-browser readback, offline export/reopen, mobile layout and script injection handling.
 
-Native agent-framework integrations and production workflows are not yet tested.
+Production workflows and general native SDK adapters are not yet tested.

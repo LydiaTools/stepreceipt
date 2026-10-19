@@ -67,6 +67,14 @@ node bin/stepreceipt.mjs artifacts/demo/run.json --summary receipt-summary.md --
 
 ![真实反例报告：工具正常返回，但单独读取发现没有保存记录，检查未通过](docs/assets/rejected-write.png)
 
+## 真实 LangGraph 跨进程恢复
+
+**流程正常返回，却留下两份相同的草稿。** 可选示例在业务提交后直接退出 Python 进程，再用新进程恢复同一任务。普通插入：2 次调用、2 条草稿；目标库唯一操作键：2 次调用、1 条草稿；正常完成对照组：1 次调用、1 条草稿。
+
+[三组复现步骤](docs/LANGGRAPH.zh-CN.md) · [重复写入报告](https://lydiatools.github.io/stepreceipt/langgraph/crash-replay.html) · [目标库去重报告](https://lydiatools.github.io/stepreceipt/langgraph/target-dedup.html)。示例在当前 main，固定 v0.2.0 ZIP 尚未包含。去重由业务数据库负责，StepReceipt 负责记录与展示差别。
+
+![真实模拟任务截图：恢复进程正常返回，但独立读取发现两条草稿，因此检查未通过](docs/assets/langgraph-replay.png)
+
 ## 当前边界
 
 已测试本地浏览器案例、JSON 导入、独立 HTML 导出再打开、移动端与中英文界面。尚未测试 browser-use、Stagehand、Codex 或 MCP 原生适配器。当前不是 Playwright trace.zip 查看器，也没有 npm 发包。

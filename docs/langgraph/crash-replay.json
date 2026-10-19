@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "title": "The process died after Save. Resume made a second draft.",
+  "startedAt": "2026-10-19T23:55:20.367Z",
+  "steps": [
+    {
+      "id": "step-1",
+      "label": "Start the graph and save one draft",
+      "kind": "write",
+      "startedAt": "2026-10-19T23:55:20.367Z",
+      "durationMs": 296,
+      "toolStatus": "error",
+      "errorName": "ProcessExit",
+      "verification": {
+        "status": "verified",
+        "summary": "A separate read-only process found exactly one matching draft after the first process exited with code 73, before the node returned. This checks the saved draft, not graph completion.",
+        "observedAt": "2026-10-19T23:55:20.689Z"
+      }
+    },
+    {
+      "id": "step-2",
+      "label": "Restart the process and resume the same graph thread",
+      "kind": "write",
+      "startedAt": "2026-10-19T23:55:20.689Z",
+      "durationMs": 358,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "rejected",
+        "summary": "Independent readback: 2 matching drafts; 2 node attempts. Expected one draft for this logical operation. Resume returned normally, but created a duplicate. This fixture intentionally exercises unsafe replay.",
+        "observedAt": "2026-10-19T23:55:21.073Z"
+      }
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "synthetic": true,
+  "capturedAt": "2026-10-19T23:55:21.859Z",
+  "durability": "sync",
+  "framework": "LangGraph StateGraph with SqliteSaver",
+  "crashCut": "business SQLite transaction committed, before node return",
+  "network": "Python socket connect/DNS/sendto denied by audit hook; no model calls",
+  "cases": [
+    {
+      "case": "completed-control",
+      "firstExit": 0,
+      "restartExit": 0,
+      "before": {
+        "records": 1,
+        "matching": 1,
+        "nodeAttempts": 1
+      },
+      "after": {
+        "records": 1,
+        "matching": 1,
+        "nodeAttempts": 1
+      },
+      "gate": 0,
+      "versions": {
+        "langgraph": "1.2.16",
+        "langgraph-checkpoint": "4.3.0",
+        "langgraph-checkpoint-sqlite": "3.1.2"
+      }
+    },
+    {
+      "case": "crash-replay",
+      "firstExit": 73,
+      "restartExit": 0,
+      "before": {
+        "records": 1,
+        "matching": 1,
+        "nodeAttempts": 1
+      },
+      "after": {
+        "records": 2,
+        "matching": 2,
+        "nodeAttempts": 2
+      },
+      "gate": 1,
+      "versions": {
+        "langgraph": "1.2.16",
+        "langgraph-checkpoint": "4.3.0",
+        "langgraph-checkpoint-sqlite": "3.1.2"
+      }
+    },
+    {
+      "case": "target-dedup",
+      "firstExit": 73,
+      "restartExit": 0,
+      "before": {
+        "records": 1,
+        "matching": 1,
+        "nodeAttempts": 1
+      },
+      "after": {
+        "records": 1,
+        "matching": 1,
+        "nodeAttempts": 2
+      },
+      "gate": 0,
+      "versions": {
+        "langgraph": "1.2.16",
+        "langgraph-checkpoint": "4.3.0",
+        "langgraph-checkpoint-sqlite": "3.1.2"
+      }
+    }
+  ]
+}
