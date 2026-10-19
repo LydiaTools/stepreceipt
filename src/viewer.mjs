@@ -1,14 +1,24 @@
 export function boot(normalizeRun) {
   const $ = (id) => document.getElementById(id);
   let run = normalizeRun(JSON.parse($('receipt-data').textContent));
-  let selected = run.steps.findIndex((s) => s.toolStatus === 'error');
-  if (selected < 0) selected = 0;
+  function initialStep() {
+    for (const match of [
+      (step) => step.kind === 'write' && step.verification.status !== 'verified',
+      (step) => step.verification.status !== 'verified',
+      (step) => step.toolStatus === 'error',
+    ]) {
+      const index = run.steps.findIndex(match);
+      if (index >= 0) return index;
+    }
+    return 0;
+  }
+  let selected = initialStep();
   let lang = 'en';
   const words = {
     en: {
       headline: 'See what happened after the click.', sub: 'Tool results and observations, side by side.',
       load: 'Open JSON', download: 'Save HTML report', source: 'Source & setup', example: 'Local fixture demo',
-      steps: 'Recorded steps', verified: 'Checks passed', unknown: 'Unknown outcomes', errors: 'Tool errors',
+      steps: 'Recorded steps', verified: 'Checks passed', rejected: 'Checks failed', unknown: 'Unknown outcomes', errors: 'Tool errors',
       timeline: 'Run timeline', attempted: 'What the tool returned', observed: 'What was checked afterward',
       ok: 'Returned normally', error: 'Returned an error', read: 'Read', write: 'Write',
       vverified: 'Verified', vrejected: 'Check failed', vunknown: 'Not verified', duration: 'Duration',
@@ -23,7 +33,7 @@ export function boot(normalizeRun) {
     zh: {
       headline: '点击之后，到底发生了什么？', sub: '把工具返回和后续观察放在一起看。',
       load: '打开运行 JSON', download: '下载这份报告', source: '源码与上手', example: '本地测试页演示',
-      steps: '已记录步骤', verified: '检查通过', unknown: '结果未知', errors: '工具报错',
+      steps: '已记录步骤', verified: '检查通过', rejected: '检查未通过', unknown: '结果未知', errors: '工具报错',
       timeline: '运行时间线', attempted: '工具返回了什么', observed: '随后检查到了什么',
       ok: '正常返回', error: '返回错误', read: '读取', write: '写入',
       vverified: '已核验', vrejected: '检查未通过', vunknown: '尚未核验', duration: '耗时',
@@ -45,8 +55,8 @@ export function boot(normalizeRun) {
     $('language').textContent = lang === 'en' ? '中文' : 'English';
     $('run-title').textContent = run.title;
     $('run-date').textContent = new Date(run.startedAt).toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
-    const values = [run.steps.length, run.steps.filter((s) => s.verification.status === 'verified').length, run.steps.filter((s) => s.verification.status === 'unknown').length, run.steps.filter((s) => s.toolStatus === 'error').length];
-    ['count-steps','count-verified','count-unknown','count-errors'].forEach((id,i) => { $(id).textContent = values[i]; });
+    const values = [run.steps.length, run.steps.filter((s) => s.verification.status === 'verified').length, run.steps.filter((s) => s.verification.status === 'rejected').length, run.steps.filter((s) => s.verification.status === 'unknown').length, run.steps.filter((s) => s.toolStatus === 'error').length];
+    ['count-steps','count-verified','count-rejected','count-unknown','count-errors'].forEach((id,i) => { $(id).textContent = values[i]; });
     $('timeline').replaceChildren();
     run.steps.forEach((step, index) => {
       const button = node('button', '', `step ${selected === index ? 'selected' : ''}`);
@@ -78,7 +88,7 @@ export function boot(normalizeRun) {
     try {
       if (file.size > 2 * 1024 * 1024) throw new Error(words[lang].fileSize);
       const next = normalizeRun(JSON.parse(await file.text()));
-      run = next; selected = Math.max(0, run.steps.findIndex((s) => s.toolStatus === 'error')); $('notice').textContent = ''; render();
+      run = next; selected = initialStep(); $('notice').textContent = ''; render();
     } catch { $('notice').textContent = words[lang].jsonError + (lang === 'en' ? 'Use a StepReceipt v1 JSON file under 2 MB with a title, timestamps, and steps.' : '请使用小于 2 MB、含标题、时间与步骤的 StepReceipt v1 JSON。'); }
     event.target.value = '';
   });

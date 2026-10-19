@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "title": "The page said Saved. No record was there.",
+  "startedAt": "2026-10-19T17:36:54.267Z",
+  "steps": [
+    {
+      "id": "step-1",
+      "label": "Open the draft",
+      "kind": "read",
+      "startedAt": "2026-10-19T17:36:54.267Z",
+      "durationMs": 22,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "The draft form is visible on the synthetic local page.",
+        "observedAt": "2026-10-19T17:36:54.327Z"
+      }
+    },
+    {
+      "id": "step-2",
+      "label": "Save the draft",
+      "kind": "write",
+      "startedAt": "2026-10-19T17:36:54.327Z",
+      "durationMs": 120,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "rejected",
+        "summary": "A separate GET found 0 saved records. The required record was absent. The Save action was not retried.",
+        "observedAt": "2026-10-19T17:36:54.449Z"
+      }
+    },
+    {
+      "id": "step-3",
+      "label": "Read back the saved record",
+      "kind": "read",
+      "startedAt": "2026-10-19T17:36:54.449Z",
+      "durationMs": 8,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "The readback page displays “Saved records: 0”. This checks that the count is readable; the save requirement is evaluated in the write step.",
+        "observedAt": "2026-10-19T17:36:54.469Z"
+      }
+    }
+  ]
+}

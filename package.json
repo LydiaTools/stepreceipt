@@ -1,16 +1,24 @@
 {
   "name": "stepreceipt",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "Put browser-agent tool results beside explicit observations in a standalone HTML report.",
   "license": "MIT",
-  "engines": { "node": ">=20" },
-  "exports": { ".": "./src/receipt.mjs", "./report": "./src/report.mjs" },
+  "engines": {
+    "node": ">=20"
+  },
+  "exports": {
+    ".": "./src/receipt.mjs",
+    "./report": "./src/report.mjs",
+    "./summary": "./src/summary.mjs"
+  },
   "scripts": {
     "test": "node --test test/*.test.mjs",
     "demo": "node examples/demo.mjs",
     "test:e2e": "node test/e2e.mjs"
   },
-  "devDependencies": { "playwright": "1.64.1" }
+  "devDependencies": {
+    "playwright": "1.64.1"
+  }
 }

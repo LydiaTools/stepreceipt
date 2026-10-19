@@ -4,7 +4,7 @@
 
 工具报错时，页面上的操作可能已经完成。StepReceipt 把“工具返回了什么”和“随后检查到了什么”放在同一份报告里，方便你决定下一步。
 
-**[直接打开演示](https://lydiatools.github.io/stepreceipt/)** · [English](README.md) · [下载 v0.1.0](https://github.com/LydiaTools/stepreceipt/releases/tag/v0.1.0)
+**[直接打开演示](https://lydiatools.github.io/stepreceipt/)** · [English](README.md) · [下载 v0.2.0](https://github.com/LydiaTools/stepreceipt/releases/tag/v0.2.0)
 
 ![真实本地测试生成的中文回执：保存超时，随后读取到了已保存记录](docs/assets/report-zh.png)
 
@@ -42,6 +42,28 @@ npm run demo
 本机已有 Chrome 时，macOS/Linux 可执行 `BROWSER_CHANNEL=chrome npm run demo`，无需再下载浏览器。PowerShell 使用 `$env:BROWSER_CHANNEL="chrome"; npm run demo`。测试启动独立浏览器，不连接日常登录的 Chrome 账号。
 
 结果位于 `artifacts/demo/`。JS 接入示例见 [英文说明](README.md#add-it-to-your-run)。`attempt()` 捕获动作错误而不向外抛出，请检查返回的 `ok` 字段，再依据观察结果决定是否继续。
+
+## 在 GitHub Actions 中使用检查结果
+
+```bash
+node bin/stepreceipt.mjs artifacts/demo/run.json --summary receipt-summary.md --check
+```
+
+命令输出 Markdown 摘要，可显示在 GitHub Actions 任务结果页。加上 `--check` 后：非空记录且所有观察都为 `verified` 返回 0；有 `rejected`、`unknown` 或空记录返回 1；输入、参数或输出错误返回 2。工具超时但读回已核验，可以通过。只生成报告、不加 `--check` 时，不执行这个判断。
+
+它判断的是接入方记录的检查，不能代替独立验收，也无法识破接入方自己填写的错误结论。[接入示例与边界](docs/CI.md)。
+
+`npm run test:e2e` 实际运行三组独立本地浏览器场景，每组只发送一次 POST：
+
+| 场景 | 单独读取结果 | 判断 | 查看真实报告 |
+| --- | --- | --- | --- |
+| 保存后界面确认超时 | 一条匹配的记录 | 通过 | [保存超时](https://lydiatools.github.io/stepreceipt/) |
+| 页面显示保存成功，存储实际失败 | 没有记录 | 未通过 | [错误的成功提示](https://lydiatools.github.io/stepreceipt/cases/rejected-write.html) |
+| 保存后超时，读取服务也不可用 | 无法读取记录数 | 未知，不通过 | [读回不可用](https://lydiatools.github.io/stepreceipt/cases/unknown-readback.html) |
+
+仓库自身的 CI 已接入摘要和合成报告留存；反例必须返回 1，测试套件才算符合预期。
+
+![真实反例报告：工具正常返回，但单独读取发现没有保存记录，检查未通过](docs/assets/rejected-write.png)
 
 ## 当前边界
 

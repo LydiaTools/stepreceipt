@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "title": "Save timed out. Readback was unavailable.",
+  "startedAt": "2026-10-19T17:36:54.980Z",
+  "steps": [
+    {
+      "id": "step-1",
+      "label": "Open the draft",
+      "kind": "read",
+      "startedAt": "2026-10-19T17:36:54.980Z",
+      "durationMs": 20,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "The draft form is visible on the synthetic local page.",
+        "observedAt": "2026-10-19T17:36:55.018Z"
+      }
+    },
+    {
+      "id": "step-2",
+      "label": "Save the draft",
+      "kind": "write",
+      "startedAt": "2026-10-19T17:36:55.018Z",
+      "durationMs": 627,
+      "toolStatus": "error",
+      "errorName": "TimeoutError",
+      "verification": {
+        "status": "unknown",
+        "summary": "The separate GET returned HTTP 503. No record count could be observed. The Save action was not retried.",
+        "observedAt": "2026-10-19T17:36:55.648Z"
+      }
+    },
+    {
+      "id": "step-3",
+      "label": "Read back the saved record",
+      "kind": "read",
+      "startedAt": "2026-10-19T17:36:55.648Z",
+      "durationMs": 28,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "unknown",
+        "summary": "The saved-record page was unavailable. This read cannot establish the write outcome.",
+        "observedAt": "2026-10-19T17:36:55.676Z"
+      }
+    }
+  ]
+}

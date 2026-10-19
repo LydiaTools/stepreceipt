@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.0 — 2026-10-20
+
+- Add Markdown summaries and an explicit `--check` CLI gate with distinct 0/1/2 exits.
+- Block empty runs, rejected observations and unknown outcomes; permit verified readback after a tool error.
+- Add real-browser false-confirmation and readback-outage fixtures, with one write attempt per scenario.
+- Integrate summaries and seven-day synthetic report artifacts into this repository's GitHub Actions workflow.
+- Open a failed or unknown write first in the viewer and show a separate failed-check count, including after file import.
+- Escape untrusted Markdown and avoid echoing malformed JSON contents in CLI errors.
+
 ## 0.1.0 — 2026-10-20
 
 - Record one-time JavaScript actions and separate explicit observations.

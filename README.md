@@ -6,7 +6,7 @@ The error tells you what happened to the tool. You still need to know what happe
 
 StepReceipt puts each browser action beside an explicit follow-up check, then turns the run into a standalone HTML report. A normal return stays **unknown** until you check it. A timeout can sit beside a successful readback. You can see both before deciding what to do next.
 
-**[Open the live report](https://lydiatools.github.io/stepreceipt/)** · [中文说明](README.zh-CN.md) · [Download v0.1.0](https://github.com/LydiaTools/stepreceipt/releases/tag/v0.1.0)
+**[Open the live report](https://lydiatools.github.io/stepreceipt/)** · [中文说明](README.zh-CN.md) · [Download v0.2.0](https://github.com/LydiaTools/stepreceipt/releases/tag/v0.2.0)
 
 ![Actual StepReceipt report: a Save timeout beside a separate readback that found one saved record](docs/assets/report-focus.png)
 
@@ -57,6 +57,28 @@ PowerShell: `$env:BROWSER_CHANNEL="chrome"; npm run demo`.
 
 Open `artifacts/demo/report.html`. The matching `run.json` contains the recorded tool error and the later observation. The expected fixture result is **one write request and one saved record**.
 
+## Put recorded checks in CI
+
+```bash
+node bin/stepreceipt.mjs artifacts/demo/run.json --summary receipt-summary.md --check
+```
+
+The summary is Markdown, suitable for a GitHub Actions job summary. `--check` exits **0** only when a non-empty run has every observation marked `verified`; **1** for any `rejected`/`unknown` observation or an empty run; **2** for invalid input, arguments, or output errors. A verified readback can accompany a tool error. Generating a report without `--check` does not apply this gate.
+
+The gate evaluates recorded checks; it does not independently inspect your application or prevent a caller from supplying a misleading observation. [CI recipe and boundaries](docs/CI.md).
+
+Three real-browser cases run in `npm run test:e2e`, each against its own synthetic local service:
+
+| Tool / page signal | Separate readback | Recorded-check gate | Actual report |
+| --- | --- | --- | --- |
+| Timeout after Save | Exactly one matching record | Passed | [Saved after timeout](https://lydiatools.github.io/stepreceipt/) |
+| Page says “Saved successfully” | No saved record; storage returned 503 | Blocked | [False confirmation](https://lydiatools.github.io/stepreceipt/cases/rejected-write.html) |
+| Timeout after Save | Readback returned 503; count unavailable | Blocked, unknown | [Unavailable readback](https://lydiatools.github.io/stepreceipt/cases/unknown-readback.html) |
+
+Each case makes exactly one POST. Our [actual workflow](.github/workflows/test.yml) adds all three summaries and retains the synthetic HTML/JSON reports as a short-lived Actions artifact. The negative cases are expected to block; the test suite checks their CLI exit codes.
+
+![Actual false-confirmation case: the tool returned normally while the separate check found no saved record](docs/assets/rejected-write.png)
+
 ## Add it to your run
 
 The recorder is a small ES module with zero runtime dependencies. Import it from this checkout:
@@ -90,11 +112,12 @@ await writeFile('receipt.html', renderReport(receipt.toJSON()));
 
 `attempt()` captures an action error and returns `{ id, ok, value }`; it does **not** rethrow the action error. Check `ok`, inspect the observation, and explicitly decide whether the workflow should continue. Observer errors remain `unknown`. Verifying a step a second time is rejected; record a new observation step if you need another check.
 
-## What v0.1.0 is ready for
+## What v0.2.0 is ready for
 
 - Rendering your recorded actions and checks into a portable review report.
 - Opening and exporting run JSON locally in a browser, with no backend.
 - Trying the included real-browser timeout/readback fixture.
+- Producing Markdown CI summaries and applying a recorded-observation gate, with three reproducible browser cases.
 - Keeping raw error messages, stacks, page contents, and network traffic out of automatic capture. Only the error class is recorded.
 - Redacting a few common credential patterns from exported text. This is heuristic redaction, not complete detection; labels and observations can still contain private information.
 
