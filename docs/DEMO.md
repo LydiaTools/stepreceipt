@@ -24,7 +24,7 @@ BROWSER_CHANNEL=chrome node scripts/record-viewer.mjs
 
 Without Chrome, install the Playwright browser with `npx playwright install chromium ffmpeg`, then run `node scripts/record-viewer.mjs`. Output is written to a new folder under ignored `artifacts/recordings/`; the script prints its path. Set `STEPRECEIPT_DEMO_DIR` to use another parent directory. The video helper is a development dependency; ordinary report rendering does not need it.
 
-The published GIF trims the first 0.4 seconds of browser startup, scales the 1200×780 viewport to 1000×650, and uses 8 fps with a 96-color palette. There are no inserted outcome frames. The original recording is retained outside Git; only the lightweight GIF, capture code and provenance are committed.
+The published GIF trims the first 0.4 seconds of browser startup, scales the 1200×780 viewport to 1000×650, and uses 4 fps with a 128-color palette and no dithering. There are no inserted outcome frames. The original recording is retained outside Git; only the lightweight GIF, capture code and provenance are committed.
 
 See [machine-readable capture metadata](assets/three-outcomes.json) for the recording date, input SHA-256 values and GIF hash. The fixed v0.2.0 ZIP remains its original release snapshot; the current repository additionally contains these presentation assets.
 

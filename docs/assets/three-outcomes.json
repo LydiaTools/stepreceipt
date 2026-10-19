@@ -31,11 +31,12 @@
   "format": "GIF",
   "width": 1000,
   "height": 650,
-  "fps": 8,
+  "fps": 4,
   "trimStartSeconds": 0.4,
-  "paletteColors": 96,
-  "bytes": 1633610,
-  "sha256": "dcff865df0e2b43ffe176603cfe0d63efdcea045ffe542034af3628e8dc738c6",
+  "paletteColors": 128,
+  "bytes": 1384025,
+  "sha256": "10a33be0461cda304395c304b36bb5abfbe344fe3cab48ba3143c97f362f52fb",
   "pointerOverlay": false,
-  "audio": "none; silent report-viewer replay"
+  "audio": "none; silent report-viewer replay",
+  "dither": "none"
 }
