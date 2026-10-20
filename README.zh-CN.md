@@ -4,7 +4,7 @@
 
 工具报错时，页面上的操作可能已经完成。StepReceipt 把“工具返回了什么”和“随后检查到了什么”放在同一份报告里，方便你决定下一步。
 
-**[直接打开演示](https://lydiatools.github.io/stepreceipt/)** · [English](README.md) · [下载 v0.2.0](https://github.com/LydiaTools/stepreceipt/releases/tag/v0.2.0)
+**[直接打开演示](https://lydiatools.github.io/stepreceipt/)** · [English](README.md) · [下载 v0.3.0](https://github.com/LydiaTools/stepreceipt/releases/tag/v0.3.0)
 
 ![真实本地测试生成的中文回执：保存超时，随后读取到了已保存记录](docs/assets/report-zh.png)
 
@@ -33,6 +33,28 @@ node bin/stepreceipt.mjs examples/save-timeout.json --out receipt.html
 
 打开 `receipt.html`。文件已存在时，命令会拒绝覆盖，请换一个输出文件名。
 
+## 直接从 GitHub 安装 CLI 或库
+
+项目目前没有发布到 npm 官方仓库。安装 Node.js 20+ 和 Git 后，可以直接安装 GitHub 上的当前源码：
+
+```bash
+npm install -g github:LydiaTools/stepreceipt
+stepreceipt path/to/run.json --out receipt.html
+```
+
+在 Node.js 项目中使用记录器：
+
+```bash
+npm install github:LydiaTools/stepreceipt
+```
+
+```js
+import { createReceipt } from 'stepreceipt';
+import { renderReport } from 'stepreceipt/report';
+```
+
+安装地址明确指向 GitHub 仓库，不代表项目已发布到 npm registry。
+
 要亲自跑浏览器测试：
 
 ```bash
@@ -43,7 +65,7 @@ npm run demo
 
 本机已有 Chrome 时，macOS/Linux 可执行 `BROWSER_CHANNEL=chrome npm run demo`，无需再下载浏览器。PowerShell 使用 `$env:BROWSER_CHANNEL="chrome"; npm run demo`。测试启动独立浏览器，不连接日常登录的 Chrome 账号。
 
-结果位于 `artifacts/demo/`。JS 接入示例见 [英文说明](README.md#add-it-to-your-run)。`attempt()` 捕获动作错误而不向外抛出，请检查返回的 `ok` 字段，再依据观察结果决定是否继续。
+结果位于 `artifacts/demo/`。JS 接入示例见 [英文说明](README.md#use-it-in-your-nodejs-project)。`attempt()` 捕获动作错误而不向外抛出，请检查返回的 `ok` 字段，再依据观察结果决定是否继续。
 
 ## 在 GitHub Actions 中使用检查结果
 
@@ -71,13 +93,13 @@ node bin/stepreceipt.mjs artifacts/demo/run.json --summary receipt-summary.md --
 
 **流程正常返回，却留下两份相同的草稿。** 可选示例在业务提交后直接退出 Python 进程，再用新进程恢复同一任务。普通插入：2 次调用、2 条草稿；目标库唯一操作键：2 次调用、1 条草稿；正常完成对照组：1 次调用、1 条草稿。
 
-[三组复现步骤](docs/LANGGRAPH.zh-CN.md) · [重复写入报告](https://lydiatools.github.io/stepreceipt/langgraph/crash-replay.html) · [目标库去重报告](https://lydiatools.github.io/stepreceipt/langgraph/target-dedup.html)。示例在当前 main，固定 v0.2.0 ZIP 尚未包含。去重由业务数据库负责，StepReceipt 负责记录与展示差别。
+[三组复现步骤](docs/LANGGRAPH.zh-CN.md) · [重复写入报告](https://lydiatools.github.io/stepreceipt/langgraph/crash-replay.html) · [目标库去重报告](https://lydiatools.github.io/stepreceipt/langgraph/target-dedup.html)。v0.3.0 已包含此示例；固定 v0.2.0 ZIP 早于该示例。去重由业务数据库负责，StepReceipt 负责记录与展示差别。
 
 ![真实模拟任务截图：恢复进程正常返回，但独立读取发现两条草稿，因此检查未通过](docs/assets/langgraph-replay.png)
 
 ## 当前边界
 
-已测试本地浏览器案例、JSON 导入、独立 HTML 导出再打开、移动端与中英文界面。尚未测试 browser-use、Stagehand、Codex 或 MCP 原生适配器。当前不是 Playwright trace.zip 查看器，也没有 npm 发包。
+已测试本地浏览器案例、JSON 导入、独立 HTML 导出再打开、移动端与中英文界面。尚未测试 browser-use、Stagehand、Codex 或 MCP 原生适配器。当前不是 Playwright trace.zip 查看器，也尚未发布到 npm 官方仓库；CLI 和库可直接从 GitHub 安装。
 
 报告自动捕获错误类别，不自动记录错误正文、堆栈、页面内容或网络流量。导出文字会对少量常见凭据格式做脱敏，仍需检查自己填写的标题与观察说明。浏览器页面不含统计代码；在线演示托管于 GitHub Pages，会产生正常页面访问请求。
 

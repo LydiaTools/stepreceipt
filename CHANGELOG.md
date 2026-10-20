@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.0 — GitHub install and package entry points
+
+- Install the CLI directly from GitHub with `npm install -g github:LydiaTools/stepreceipt`.
+- Expose the recorder, renderer, and summary modules through package entry points.
+- Keep the install package focused on runtime files, examples, documentation, and the MIT license.
+- Add a pre-publish test gate; the package is still not published to the npm registry.
+
 ## Current main — after v0.2.0
 
 - Add an optional pinned LangGraph/SqliteSaver process-crash/restart example: completed control, duplicate effect after resume, and target-side transactional deduplication.

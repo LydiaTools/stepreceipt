@@ -1,10 +1,37 @@
 {
   "name": "stepreceipt",
-  "version": "0.2.0",
-  "private": true,
+  "version": "0.3.0",
   "type": "module",
-  "description": "Put browser-agent tool results beside explicit observations in a standalone HTML report.",
+  "description": "Record browser-agent actions beside explicit outcome checks; export portable HTML reports and CI summaries.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LydiaTools/stepreceipt.git"
+  },
+  "homepage": "https://lydiatools.github.io/stepreceipt/",
+  "bugs": {
+    "url": "https://github.com/LydiaTools/stepreceipt/issues"
+  },
+  "keywords": [
+    "browser-agent",
+    "agent-reliability",
+    "playwright",
+    "verification",
+    "ci",
+    "html-report"
+  ],
+  "bin": {
+    "stepreceipt": "./bin/stepreceipt.mjs"
+  },
+  "files": [
+    "bin/stepreceipt.mjs",
+    "src/",
+    "examples/*.json",
+    "README.md",
+    "README.zh-CN.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
   "engines": {
     "node": ">=20"
   },
@@ -16,7 +43,8 @@
   "scripts": {
     "test": "node --test test/*.test.mjs",
     "demo": "node examples/demo.mjs",
-    "test:e2e": "node test/e2e.mjs"
+    "test:e2e": "node test/e2e.mjs",
+    "prepublishOnly": "npm test"
   },
   "devDependencies": {
     "playwright": "1.64.1"

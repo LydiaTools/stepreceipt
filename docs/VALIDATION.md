@@ -1,6 +1,6 @@
 # Validation
 
-## Current-main LangGraph example (after v0.2.0)
+## LangGraph example (v0.3.0)
 
 Checked on 2026-10-20 with Python 3.12, Node.js 22, LangGraph 1.2.16, checkpoint 4.3.0 and SQLite saver 3.1.2. Dependencies are pinned in the optional example's requirements file. Three cases run real worker processes and separate read-only inspectors, with tracing disabled and Python network events denied:
 
@@ -14,7 +14,7 @@ The runner checks these concrete counts and actual CLI exits. It fails if the ne
 
 `BROWSER_CHANNEL=chrome node test/langgraph-viewer.mjs` checks the three committed reports against their run JSON and the current renderer, their gate outcomes, English/Chinese controls, 390px overflow, download/reopen and absence of non-navigation HTTP(S) requests. The new CI job reruns the graph cases separately and retains its measured reports/databases for seven days. Remote CI results must be read from the actual run before being reported as successful.
 
-See [scope and reproduction](LANGGRAPH.md) and the [committed measurements](langgraph/measurements.json). This is a local SQLite process-exit example, not a power-loss test, concurrency benchmark, Cloud validation, production adapter, or reproduction/fix of LangGraph #8039. Current main contains it; the fixed v0.2.0 release ZIP does not.
+See [scope and reproduction](LANGGRAPH.md) and the [committed measurements](langgraph/measurements.json). This is a local SQLite process-exit example, not a power-loss test, concurrency benchmark, Cloud validation, production adapter, or reproduction/fix of LangGraph #8039. The v0.3.0 source release contains it; v0.2.0 does not.
 
 ## v0.2.0 browser cases
 

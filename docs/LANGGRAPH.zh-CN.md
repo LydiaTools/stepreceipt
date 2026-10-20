@@ -18,7 +18,7 @@
 
 ## 亲自运行
 
-使用当前 main 源码、Node.js 20+ 和 Python 3.12。此示例在固定 v0.2.0 ZIP 之后加入，旧 ZIP 不包含它。无需安装 npm 依赖。
+使用 v0.3.0 发布包或当前源码、Node.js 20+ 和 Python 3.12。固定 v0.2.0 ZIP 早于此示例。无需安装 npm 依赖。
 
 ```bash
 git clone https://github.com/LydiaTools/stepreceipt.git

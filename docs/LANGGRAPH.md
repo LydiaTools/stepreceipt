@@ -26,7 +26,7 @@ The deduplication is implemented by the **target SQLite database**: a stable log
 
 ## Run it
 
-Use the **current main source**, Node.js 20+ and Python 3.12. This example was added after the fixed v0.2.0 ZIP; that ZIP does not contain it. No npm install is required for this example.
+Use the v0.3.0 release or current source, Node.js 20+ and Python 3.12. The fixed v0.2.0 ZIP predates this example. No npm install is required for this example.
 
 ```bash
 git clone https://github.com/LydiaTools/stepreceipt.git

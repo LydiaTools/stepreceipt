@@ -6,7 +6,7 @@ The error tells you what happened to the tool. You still need to know what happe
 
 StepReceipt puts each browser action beside an explicit follow-up check, then turns the run into a standalone HTML report. A normal return stays **unknown** until you check it. A timeout can sit beside a successful readback. You can see both before deciding what to do next.
 
-**[Open the live report](https://lydiatools.github.io/stepreceipt/)** · [中文说明](README.zh-CN.md) · [Download v0.2.0](https://github.com/LydiaTools/stepreceipt/releases/tag/v0.2.0)
+**[Open the live report](https://lydiatools.github.io/stepreceipt/)** · [中文说明](README.zh-CN.md) · [Download v0.3.0](https://github.com/LydiaTools/stepreceipt/releases/tag/v0.3.0)
 
 ![Actual viewer replay of three synthetic local-browser reports: saved after timeout, false confirmation, and unavailable readback](docs/assets/three-outcomes.gif)
 
@@ -35,6 +35,30 @@ node bin/stepreceipt.mjs examples/save-timeout.json --out receipt.html
 Open `receipt.html` in your browser. You can also open a run JSON in the [online viewer](https://lydiatools.github.io/stepreceipt/). The viewer reads it in the page; there is no upload endpoint or analytics code. GitHub Pages still receives ordinary page requests.
 
 The CLI refuses to overwrite an existing output file. Choose a new filename for another report.
+
+## Install the CLI or library from GitHub
+
+The package is not published to the npm registry. You can install the current GitHub source directly with Node.js 20+ and Git:
+
+```bash
+npm install -g github:LydiaTools/stepreceipt
+stepreceipt path/to/run.json --out receipt.html
+```
+
+To use the recorder in a Node.js project:
+
+```bash
+npm install github:LydiaTools/stepreceipt
+```
+
+Then import the public entry points:
+
+```js
+import { createReceipt } from 'stepreceipt';
+import { renderReport } from 'stepreceipt/report';
+```
+
+Installing from GitHub avoids implying that the package is available through the npm registry.
 
 ## Run the browser example yourself
 
@@ -83,17 +107,17 @@ Each case makes exactly one POST. Our [actual workflow](.github/workflows/test.y
 
 **The graph returned normally. It saved the same draft twice.** An optional, provider-free example kills a Python process after the business commit and resumes the same thread in a new process. Ordinary insert: **2 attempts, 2 drafts**. A target-side unique operation key: **2 attempts, 1 draft**. A completed-node control stays at **1 attempt, 1 draft**.
 
-[Run all three cases](docs/LANGGRAPH.md) · [Open the duplicate report](https://lydiatools.github.io/stepreceipt/langgraph/crash-replay.html) · [Open the target-deduplication report](https://lydiatools.github.io/stepreceipt/langgraph/target-dedup.html). Current main only; the fixed v0.2.0 ZIP predates this example. StepReceipt records the difference; the target database performs the deduplication.
+[Run all three cases](docs/LANGGRAPH.md) · [Open the duplicate report](https://lydiatools.github.io/stepreceipt/langgraph/crash-replay.html) · [Open the target-deduplication report](https://lydiatools.github.io/stepreceipt/langgraph/target-dedup.html). This example is included in v0.3.0; the fixed v0.2.0 ZIP predates it. StepReceipt records the difference; the target database performs the deduplication.
 
 ![Actual synthetic LangGraph restart report: the resumed worker returned normally; independent readback found two drafts and failed the exactly-one-draft check](docs/assets/langgraph-replay.png)
 
-## Add it to your run
+## Use it in your Node.js project
 
-The recorder is a small ES module with zero runtime dependencies. Import it from this checkout:
+After installing the package from GitHub as shown above, import the recorder. It has zero runtime dependencies:
 
 ```js
-import { createReceipt } from './src/receipt.mjs';
-import { renderReport } from './src/report.mjs';
+import { createReceipt } from 'stepreceipt';
+import { renderReport } from 'stepreceipt/report';
 import { writeFile } from 'node:fs/promises';
 
 const receipt = createReceipt({ title: 'Save a draft' });
@@ -120,7 +144,7 @@ await writeFile('receipt.html', renderReport(receipt.toJSON()));
 
 `attempt()` captures an action error and returns `{ id, ok, value }`; it does **not** rethrow the action error. Check `ok`, inspect the observation, and explicitly decide whether the workflow should continue. Observer errors remain `unknown`. Verifying a step a second time is rejected; record a new observation step if you need another check.
 
-## What v0.2.0 is ready for
+## What v0.3.0 is ready for
 
 - Rendering your recorded actions and checks into a portable review report.
 - Opening and exporting run JSON locally in a browser, with no backend.
