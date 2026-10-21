@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.0 — Browser Agent Blueprint integration
+
+- Add a real localhost Playwright integration that sends guarded browser actions and independent observations into StepReceipt reports.
+- Cover saved-after-timeout, unavailable-readback, and an unguarded duplicate-producing retry; refuse replay after loading a persisted journal into a fresh controller instance.
+- Keep the integration optional and development-only; the StepReceipt runtime still has zero dependencies.
+- Run the integration and retain its generated reports/screenshots in GitHub Actions.
+- Pin the public Blueprint source archive to commit `630d773c44cc41f35128d14344a77339906b9504`.
+
 ## 0.3.0 — GitHub install and package entry points
 
 - Install the CLI directly from GitHub with `npm install -g github:LydiaTools/stepreceipt`.

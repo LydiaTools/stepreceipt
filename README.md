@@ -6,7 +6,7 @@ The error tells you what happened to the tool. You still need to know what happe
 
 StepReceipt puts each browser action beside an explicit follow-up check, then turns the run into a standalone HTML report. A normal return stays **unknown** until you check it. A timeout can sit beside a successful readback. You can see both before deciding what to do next.
 
-**[Open the live report](https://lydiatools.github.io/stepreceipt/)** · [中文说明](README.zh-CN.md) · [Download v0.3.0](https://github.com/LydiaTools/stepreceipt/releases/tag/v0.3.0)
+**[Open the live report](https://lydiatools.github.io/stepreceipt/)** · [中文说明](README.zh-CN.md) · [Download v0.4.0](https://github.com/LydiaTools/stepreceipt/releases/tag/v0.4.0)
 
 ![Actual viewer replay of three synthetic local-browser reports: saved after timeout, false confirmation, and unavailable readback](docs/assets/three-outcomes.gif)
 
@@ -111,6 +111,24 @@ Each case makes exactly one POST. Our [actual workflow](.github/workflows/test.y
 
 ![Actual synthetic LangGraph restart report: the resumed worker returned normally; independent readback found two drafts and failed the exactly-one-draft check](docs/assets/langgraph-replay.png)
 
+## Put a recovery gate and a receipt in the same browser run
+
+The [optional Blueprint integration](docs/BLUEPRINT-INTEGRATION.md) connects Browser Agent Blueprint's pinned write-ahead controller to StepReceipt's real browser action, separate readback, CLI gate, and HTML report. It runs three local synthetic cases: a saved draft whose UI confirmation times out, a failed readback that must stay unknown, and an unguarded retry that creates a duplicate. The first two reload the journal into a fresh controller and show whether another dispatch is refused.
+
+![Actual report from the saved-timeout fixture: the browser timed out, readback verified one saved record, and the reloaded controller refused another dispatch](docs/assets/blueprint/saved-timeout.png)
+
+[Open the saved-timeout report](https://lydiatools.github.io/stepreceipt/cases/blueprint-saved-timeout.html) · [Open the unknown-readback report](https://lydiatools.github.io/stepreceipt/cases/blueprint-unknown-readback.html) · [Open the unguarded-retry report](https://lydiatools.github.io/stepreceipt/cases/blueprint-unguarded-retry.html)
+
+```bash
+npm ci
+npx playwright install chromium
+npm run demo:blueprint -- --out artifacts/blueprint-demo
+```
+
+Open each generated `report.html` and `summary.md` under `artifacts/blueprint-demo/`. The checked-in CI test also captures the actual English and Chinese reports at desktop and mobile sizes. This is a same-process journal reload; the separate [LangGraph example](docs/LANGGRAPH.md) covers a real process restart. Neither local fixture proves behavior on a production website.
+
+[English reproduction guide](docs/BLUEPRINT-INTEGRATION.md) · [中文复现指南](docs/BLUEPRINT-INTEGRATION.zh-CN.md)
+
 ## Use it in your Node.js project
 
 After installing the package from GitHub as shown above, import the recorder. It has zero runtime dependencies:
@@ -144,16 +162,17 @@ await writeFile('receipt.html', renderReport(receipt.toJSON()));
 
 `attempt()` captures an action error and returns `{ id, ok, value }`; it does **not** rethrow the action error. Check `ok`, inspect the observation, and explicitly decide whether the workflow should continue. Observer errors remain `unknown`. Verifying a step a second time is rejected; record a new observation step if you need another check.
 
-## What v0.3.0 is ready for
+## What v0.4.0 is ready for
 
 - Rendering your recorded actions and checks into a portable review report.
 - Opening and exporting run JSON locally in a browser, with no backend.
 - Trying the included real-browser timeout/readback fixture.
 - Producing Markdown CI summaries and applying a recorded-observation gate, with three reproducible browser cases.
+- Connecting a pinned browser write-ahead guard to a separately recorded browser outcome and report.
 - Keeping raw error messages, stacks, page contents, and network traffic out of automatic capture. Only the error class is recorded.
 - Redacting a few common credential patterns from exported text. This is heuristic redaction, not complete detection; labels and observations can still contain private information.
 
-It is not a Playwright `trace.zip` viewer, a cryptographically signed audit trail, or a replacement for site-specific assertions. Native browser-use, Stagehand, Codex, and MCP adapters have **not** been tested. The JavaScript callback and JSON interfaces are the current integration points. The package is not published on npm.
+It is not a Playwright `trace.zip` viewer, a cryptographically signed audit trail, or a replacement for site-specific assertions. Native browser-use, Stagehand, Codex, and MCP adapters have **not** been tested. The JavaScript callback and JSON interfaces are the current integration points. The package is not published on npm. The Blueprint integration is a development example; the core recorder still has zero runtime dependencies.
 
 ## Development and evidence
 

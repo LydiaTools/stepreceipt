@@ -11,6 +11,10 @@ For context, GitHub's API reported approximately 118.5k stars for Browser Use, 2
 
 The implementation was written for this project. No upstream source was copied into it. Node.js/browser APIs provide the runtime; Playwright is a development dependency under Apache-2.0. Its license is retained in the installed package. The repository's original code is MIT.
 
+## A connected example is still a demand hypothesis
+
+The v0.4.0 example connects two existing projects with complementary roles: Browser Agent Blueprint persists a guarded action state, while StepReceipt records the browser result and separate observation for review. That gives a developer a runnable end-to-end sample without adding another workflow engine or a third repository. It does **not** establish a current high-star trend, external user demand, or adoption of the combined workflow. The local fixtures prove only their stated behavior; independent trials and feedback remain unverified.
+
 ## A bounded LangGraph integration example
 
 On 2026-10-20, [LangGraph #9240](https://github.com/langchain-ai/langgraph/issues/9240) and its existing examples made the checkpoint/side-effect distinction concrete. It already has documentation proposals and community reproductions; an open status is not evidence that no solution exists. [#8039](https://github.com/langchain-ai/langgraph/issues/8039) is a different checkpoint-ordering problem. The official [idempotency guide](https://docs.langchain.com/oss/python/langgraph/functional-api#idempotency) already discusses unfinished tasks and idempotent effects.

@@ -1,6 +1,6 @@
 {
   "name": "stepreceipt",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "type": "module",
   "description": "Record browser-agent actions beside explicit outcome checks; export portable HTML reports and CI summaries.",
   "license": "MIT",
@@ -44,9 +44,12 @@
     "test": "node --test test/*.test.mjs",
     "demo": "node examples/demo.mjs",
     "test:e2e": "node test/e2e.mjs",
+    "demo:blueprint": "node examples/blueprint/run.mjs",
+    "test:blueprint": "node test/blueprint-e2e.mjs",
     "prepublishOnly": "npm test"
   },
   "devDependencies": {
+    "browser-agent-blueprint": "https://codeload.github.com/LydiaTools/browser-agent-blueprint/tar.gz/630d773c44cc41f35128d14344a77339906b9504",
     "playwright": "1.64.1"
   }
 }

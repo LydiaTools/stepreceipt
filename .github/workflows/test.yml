@@ -38,9 +38,11 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
       - run: node test/langgraph-viewer.mjs
+      - run: npm run test:blueprint
       - name: Write recorded-check summary
         run: |
           cat artifacts/demo/summary.md artifacts/rejected-write/summary.md artifacts/unknown-readback/summary.md >> "$GITHUB_STEP_SUMMARY"
+          cat artifacts/blueprint/*/summary.md >> "$GITHUB_STEP_SUMMARY"
           node bin/stepreceipt.mjs artifacts/demo/run.json --check
       - name: Keep synthetic reports for review
         if: always()
@@ -51,5 +53,13 @@ jobs:
             artifacts/demo/
             artifacts/rejected-write/
             artifacts/unknown-readback/
+          if-no-files-found: error
+          retention-days: 7
+      - name: Keep Blueprint integration reports and screenshots
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: browser-agent-blueprint-integration
+          path: artifacts/blueprint/
           if-no-files-found: error
           retention-days: 7

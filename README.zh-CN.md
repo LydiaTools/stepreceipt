@@ -4,7 +4,7 @@
 
 工具报错时，页面上的操作可能已经完成。StepReceipt 把“工具返回了什么”和“随后检查到了什么”放在同一份报告里，方便你决定下一步。
 
-**[直接打开演示](https://lydiatools.github.io/stepreceipt/)** · [English](README.md) · [下载 v0.3.0](https://github.com/LydiaTools/stepreceipt/releases/tag/v0.3.0)
+**[直接打开演示](https://lydiatools.github.io/stepreceipt/)** · [English](README.md) · [下载 v0.4.0](https://github.com/LydiaTools/stepreceipt/releases/tag/v0.4.0)
 
 ![真实本地测试生成的中文回执：保存超时，随后读取到了已保存记录](docs/assets/report-zh.png)
 
@@ -97,9 +97,25 @@ node bin/stepreceipt.mjs artifacts/demo/run.json --summary receipt-summary.md --
 
 ![真实模拟任务截图：恢复进程正常返回，但独立读取发现两条草稿，因此检查未通过](docs/assets/langgraph-replay.png)
 
+## 把恢复闸门和回执放进同一次浏览器运行
+
+[Blueprint 整合示例](docs/BLUEPRINT-INTEGRATION.zh-CN.md) 把 Browser Agent Blueprint 的写前检查点接到 StepReceipt 的真实浏览器动作、独立读回、CLI 检查和 HTML 报告。它运行三组本地合成场景：草稿已保存但界面确认超时、读回失败必须保持未知、未加保护的重试造成重复。前两组会从磁盘把日志载入新控制器，再观察它是否拒绝再次写入。
+
+![本地真实报告截图：保存超时后读回确认一条记录，新控制器拒绝再次写入](docs/assets/blueprint/saved-timeout.png)
+
+[打开保存超时报告](https://lydiatools.github.io/stepreceipt/cases/blueprint-saved-timeout.html) · [打开读回未知报告](https://lydiatools.github.io/stepreceipt/cases/blueprint-unknown-readback.html) · [打开无保护重试报告](https://lydiatools.github.io/stepreceipt/cases/blueprint-unguarded-retry.html)
+
+```bash
+npm ci
+npx playwright install chromium
+npm run demo:blueprint -- --out artifacts/blueprint-demo
+```
+
+打开 `artifacts/blueprint-demo/` 下各场景的 `report.html` 和 `summary.md`。CI 还会真实打开英文/中文报告并截取桌面与手机视口。这里验证的是同一进程内创建新控制器后重载日志；真正跨进程终止与恢复见单独的 [LangGraph 示例](docs/LANGGRAPH.zh-CN.md)。本地夹具不能证明生产网站上的行为。
+
 ## 当前边界
 
-已测试本地浏览器案例、JSON 导入、独立 HTML 导出再打开、移动端与中英文界面。尚未测试 browser-use、Stagehand、Codex 或 MCP 原生适配器。当前不是 Playwright trace.zip 查看器，也尚未发布到 npm 官方仓库；CLI 和库可直接从 GitHub 安装。
+已测试本地浏览器案例、JSON 导入、独立 HTML 导出再打开、移动端与中英文界面，以及 Blueprint 控制器和 StepReceipt 报告的本地整合。尚未测试 browser-use、Stagehand、Codex 或 MCP 原生适配器。当前不是 Playwright trace.zip 查看器，也尚未发布到 npm 官方仓库；CLI 和库可直接从 GitHub 安装。Blueprint 整合仅是开发示例，核心记录器仍无运行时依赖。
 
 报告自动捕获错误类别，不自动记录错误正文、堆栈、页面内容或网络流量。导出文字会对少量常见凭据格式做脱敏，仍需检查自己填写的标题与观察说明。浏览器页面不含统计代码；在线演示托管于 GitHub Pages，会产生正常页面访问请求。
 

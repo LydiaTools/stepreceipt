@@ -29,6 +29,12 @@ export function normalizeRun(input) {
   return { schemaVersion: 1, title: text(input.title, 240), startedAt: date(input.startedAt), steps };
 }
 
+function errorClassName(error) {
+  const valid = (name) => typeof name === 'string' && /^[A-Za-z][A-Za-z0-9]{0,59}$/.test(name);
+  const candidates = [error?.name, error?.constructor?.name].filter(valid);
+  return candidates.find((name) => name !== 'Error') ?? candidates[0] ?? 'Error';
+}
+
 export function createReceipt({ title }) {
   normalizeRun({ schemaVersion: 1, title, startedAt: new Date().toISOString(), steps: [] });
   const run = { schemaVersion: 1, title, startedAt: new Date().toISOString(), steps: [] };
@@ -41,7 +47,7 @@ export function createReceipt({ title }) {
       const start = performance.now();
       let value;
       try { value = await action(); step.toolStatus = 'ok'; }
-      catch (error) { step.toolStatus = 'error'; step.errorName = error?.name ?? 'Error'; }
+      catch (error) { step.toolStatus = 'error'; step.errorName = errorClassName(error); }
       finally { step.durationMs = performance.now() - start; }
       // Deliberately capture only the error class, never messages, stacks, or page contents.
       return { id: step.id, ok: step.toolStatus === 'ok', value };

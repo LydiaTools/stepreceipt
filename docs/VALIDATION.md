@@ -1,5 +1,23 @@
 # Validation
 
+## Browser Agent Blueprint integration (v0.4.0 local validation)
+
+Checked on 2026-10-21 with Node.js 22.23.0, npm 10.9.8, Playwright 1.64.1 and Google Chrome 155.0.8059.85 in fresh headless browser contexts. The Blueprint development dependency resolves from a public source archive pinned to commit `630d773c44cc41f35128d14344a77339906b9504`.
+
+`npm test`: 10 tests passed, including the new custom-error-class check. The first browser integration run exposed that JavaScript subclasses such as Blueprint's `PolicyError` were recorded as the generic `Error`; StepReceipt now falls back to the safe constructor class name while continuing to omit messages and stacks.
+
+`BROWSER_CHANNEL=chrome BLUEPRINT_EVIDENCE_OUT=<new-directory> npm run test:blueprint`: passed. The browser performed actual POSTs to the isolated local fixture, and the test opened the generated reports offline:
+
+| Case | POSTs / stored records | Persisted state and replay | StepReceipt gate |
+| --- | ---: | --- | --- |
+| Saved after UI timeout | 1 / 1 | `DISPATCHED` before POST, `UNKNOWN` after timeout, separate GET confirmed one record; fresh controller refused replay | Passed (0) |
+| Readback outage | 1 / 1 | Separate GET returned 503; state stayed `UNKNOWN`; fresh controller refused replay | Blocked (1) |
+| Unguarded negative control | 2 / 2 | No guard; the fixture retained both records | Blocked (1) |
+
+The test also checked refusal to overwrite an existing evidence folder, desktop and 390px mobile layouts, Chinese viewer controls, CLI gate exits, and zero external HTTP requests from the local reports. `npm run demo:blueprint -- --out <new-directory>` separately generated all three reports with the documented one-command interface.
+
+This is local synthetic-fixture evidence. The restored controller is a new object in the same process; this run does not test operating-system process termination, user accounts, an external website, or model calls. The existing [LangGraph validation](#langgraph-example-v030) remains the process-restart example. GitHub-hosted CI must be checked separately before claiming remote CI success.
+
 ## LangGraph example (v0.3.0)
 
 Checked on 2026-10-20 with Python 3.12, Node.js 22, LangGraph 1.2.16, checkpoint 4.3.0 and SQLite saver 3.1.2. Dependencies are pinned in the optional example's requirements file. Three cases run real worker processes and separate read-only inspectors, with tracing disabled and Python network events denied:

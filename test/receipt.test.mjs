@@ -27,6 +27,14 @@ test('observer failures stay unknown and cannot rerun the action', async () => {
   assert.equal(run.toJSON().steps[0].verification.status, 'unknown'); assert.equal(writes,1);
   await assert.rejects(run.verify(s.id, () => ({ status: 'verified', summary: 'Override' })));
 });
+test('custom Error subclasses keep their class name without exporting their message', async () => {
+  class PolicyError extends Error {}
+  const run = createReceipt({ title: 'Guard blocked replay' });
+  await run.attempt({ label: 'Replay write', kind: 'write' }, () => { throw new PolicyError('private detail'); });
+  const result = run.toJSON();
+  assert.equal(result.steps[0].errorName, 'PolicyError');
+  assert.ok(!JSON.stringify(result).includes('private detail'));
+});
 test('invalid inputs fail before actions and invalid verdicts never become success', async () => {
   const run = createReceipt({ title: 'Validation' }); let calls = 0;
   await assert.rejects(run.attempt({ label: 'Save', kind: 'other' }, () => calls++)); assert.equal(calls,0);
