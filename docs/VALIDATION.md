@@ -12,7 +12,7 @@ Checked on 2026-10-24 with Node.js 22.23.0, Playwright 1.64.1 and Google Chrome 
 
 The browser test also exercised a no-change read, partial signal capture, the committed static homepage and page-signal report, Chinese and English rendering, 390px mobile layout, JSON import, standalone HTML export/reopen, malicious-title escaping, malformed-file handling, and zero external HTTP requests from the viewer. The page signal stores only changed signal names; the synthetic report pairs a visible change with a separate check and keeps an unchecked no-change read `unknown`.
 
-`npm run test:blueprint` also passed its three guarded/unguarded local write cases against the pinned Blueprint commit. A separate LangGraph viewer browser check was not run locally in this round because the shared resource slot was occupied; CI runs that check independently. These results are local synthetic evidence, not a production-site, account, model, or adoption test. GitHub CI must pass for the specific pushed commit before claiming remote validation.
+`npm run test:blueprint` passed its three guarded/unguarded local write cases against the pinned Blueprint commit. `node test/langgraph-viewer.mjs` passed after the committed LangGraph and Blueprint reports were refreshed with the v0.5.0 renderer; it checked source/render parity, 0/1/0 gates, bilingual controls, mobile layout, download/reopen and zero external requests. These results are local synthetic evidence, not a production-site, account, model, or adoption test. GitHub CI must pass for the specific pushed commit before claiming remote validation.
 
 ## Browser Agent Blueprint integration (v0.4.0 local validation)
 
