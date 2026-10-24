@@ -6,7 +6,7 @@ The error tells you what happened to the tool. You still need to know what happe
 
 StepReceipt puts each browser action beside an explicit follow-up check, then turns the run into a standalone HTML report. A normal return stays **unknown** until you check it. A timeout can sit beside a successful readback. You can see both before deciding what to do next.
 
-**[Open the live report](https://lydiatools.github.io/stepreceipt/)** · [Page-signal case](https://lydiatools.github.io/stepreceipt/cases/page-signals.html) · [中文说明](README.zh-CN.md) · [Download v0.5.0](https://github.com/LydiaTools/stepreceipt/releases/tag/v0.5.0)
+**[Open the live report](https://lydiatools.github.io/stepreceipt/)** · [Page-signal case](https://lydiatools.github.io/stepreceipt/cases/page-signals.html) · [Stagehand example](docs/STAGEHAND-INTEGRATION.md) · [中文说明](README.zh-CN.md) · [Download v0.5.0](https://github.com/LydiaTools/stepreceipt/releases/tag/v0.5.0)
 
 ![Actual viewer replay of three synthetic local-browser reports: saved after timeout, false confirmation, and unavailable readback](docs/assets/three-outcomes.gif)
 
@@ -192,7 +192,19 @@ See the [synthetic page-signal report](https://lydiatools.github.io/stepreceipt/
 
 ![StepReceipt report showing a visible page change beside a separate verified check](docs/assets/page-signals.png)
 
-## What v0.5.0 is ready for
+## Try the Stagehand v4.3.0 example
+
+The optional local example records two Stagehand Page clicks and separate checks. It shows a save that changed the page and a click that did not change the requested state. The example uses a synthetic localhost fixture, does not call the model-backed `stagehand.act()` method, requires no model key or Browserbase account, and keeps Stagehand outside StepReceipt's runtime dependencies.
+
+```bash
+cd examples/stagehand
+npm ci
+npm run demo
+```
+
+Requires Node.js 22.18+ and local Chrome or Chromium. [Run instructions and result boundaries](docs/STAGEHAND-INTEGRATION.md) · [中文说明](docs/STAGEHAND-INTEGRATION.zh-CN.md).
+
+## What the current source is ready for
 
 - Rendering your recorded actions and checks into a portable review report.
 - Opening and exporting run JSON locally in a browser, with no backend.
@@ -200,10 +212,11 @@ See the [synthetic page-signal report](https://lydiatools.github.io/stepreceipt/
 - Producing Markdown CI summaries and applying a recorded-observation gate, with three reproducible browser cases.
 - Connecting a pinned browser write-ahead guard to a separately recorded browser outcome and report.
 - Capturing privacy-preserving before/after page signals around one Playwright action.
+- Trying the optional Stagehand 4.3.0 Page integration with deterministic clicks and separate outcome checks.
 - Keeping raw error messages, stacks, page contents, and network traffic out of automatic capture. Only the error class is recorded.
 - Redacting a few common credential patterns from exported text. This is heuristic redaction, not complete detection; labels and observations can still contain private information.
 
-It is not a Playwright `trace.zip` viewer, a cryptographically signed audit trail, or a replacement for site-specific assertions. The Playwright adapter is tested with synthetic local pages; native browser-use, Stagehand, Codex, and MCP integrations have **not** been tested. The JavaScript callback and JSON interfaces remain available. The package is not published on npm. The Blueprint integration is a development example; the core recorder still has zero runtime dependencies.
+It is not a Playwright `trace.zip` viewer, a cryptographically signed audit trail, or a replacement for site-specific assertions. The Playwright and pinned Stagehand Page examples use synthetic local pages; production websites, Stagehand's model-backed `act()`, browser-use, Codex, and MCP integrations have **not** been tested. The Stagehand example is separate from the fixed v0.5.0 release ZIP. The JavaScript callback and JSON interfaces remain available. The package is not published on npm. The Blueprint integration is a development example; the core recorder still has zero runtime dependencies.
 
 ## Development and evidence
 

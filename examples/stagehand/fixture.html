@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Stagehand StepReceipt fixture</title>
+  </head>
+  <body>
+    <main>
+      <h1>Local draft fixture</h1>
+      <button id="save" type="button">Save draft</button>
+      <p id="save-status">Not saved</p>
+      <button id="noop" type="button">Click with no effect</button>
+      <p id="noop-status">Ready</p>
+    </main>
+    <script>
+      document.querySelector('#save').addEventListener('click', () => {
+        document.querySelector('#save-status').textContent = 'Saved';
+      });
+    </script>
+  </body>
+</html>
