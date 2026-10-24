@@ -31,6 +31,11 @@
     "README.zh-CN.md",
     "CHANGELOG.md",
     "docs/PLAYWRIGHT*.md",
+    "docs/STAGEHAND*.md",
+    "examples/stagehand/package.json",
+    "examples/stagehand/package-lock.json",
+    "examples/stagehand/demo.mjs",
+    "examples/stagehand/fixture.html",
     "LICENSE"
   ],
   "engines": {

@@ -1,0 +1,14 @@
+{
+  "name": "stepreceipt-stagehand-example",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "scripts": {
+    "demo": "node demo.mjs"
+  },
+  "dependencies": {
+    "@browserbasehq/stagehand": "4.3.0"
+  }
+}

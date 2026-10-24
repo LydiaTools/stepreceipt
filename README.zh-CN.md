@@ -4,7 +4,7 @@
 
 工具报错时，页面上的操作可能已经完成。StepReceipt 把“工具返回了什么”和“随后检查到了什么”放在同一份报告里，方便你决定下一步。
 
-**[直接打开演示](https://lydiatools.github.io/stepreceipt/)** · [页面信号案例](https://lydiatools.github.io/stepreceipt/cases/page-signals.html) · [English](README.md) · [下载 v0.5.0](https://github.com/LydiaTools/stepreceipt/releases/tag/v0.5.0)
+**[直接打开演示](https://lydiatools.github.io/stepreceipt/)** · [页面信号案例](https://lydiatools.github.io/stepreceipt/cases/page-signals.html) · [Stagehand 示例](docs/STAGEHAND-INTEGRATION.zh-CN.md) · [English](README.md) · [下载 v0.5.0](https://github.com/LydiaTools/stepreceipt/releases/tag/v0.5.0)
 
 ![真实本地测试生成的中文回执：保存超时，随后读取到了已保存记录](docs/assets/report-zh.png)
 
@@ -143,9 +143,21 @@ await receipt.verify(step.id, async () => {
 
 ![StepReceipt 页面信号报告：可见变化与独立检查结果并列显示](docs/assets/page-signals-zh.png)
 
+## 运行 Stagehand v4.3.0 示例
+
+这个可选本地示例会记录两次 Stagehand Page 点击，并单独检查结果。它会展示“保存后页面有变化”和“点击返回但目标状态没变化”两种情况。示例使用 localhost 合成页面，不调用需要大模型的 `stagehand.act()`，不需要模型 Key 或 Browserbase 账号；Stagehand 不会成为 StepReceipt 的运行时依赖。
+
+```bash
+cd examples/stagehand
+npm ci
+npm run demo
+```
+
+需要 Node.js 22.18+ 和本机 Chrome 或 Chromium。[运行说明与结果边界](docs/STAGEHAND-INTEGRATION.zh-CN.md) · [English](docs/STAGEHAND-INTEGRATION.md)。
+
 ## 当前边界
 
-已测试本地浏览器案例、JSON 导入、独立 HTML 导出再打开、移动端与中英文界面、Blueprint 整合，以及基于合成页面的 Playwright 信号适配器。尚未测试 browser-use、Stagehand、Codex 或 MCP 原生整合。当前不是 Playwright trace.zip 查看器，也尚未发布到 npm 官方仓库；CLI 和库可直接从 GitHub 安装。Blueprint 整合仅是开发示例，核心记录器仍无运行时依赖。
+已测试本地浏览器案例、JSON 导入、独立 HTML 导出再打开、移动端与中英文界面、Blueprint 整合，以及基于合成页面的 Playwright 信号适配器。Stagehand v4.3.0 Page 示例只测试本地合成页面；未测试模型驱动的 `stagehand.act()`、生产网站，也未测试 browser-use、Codex 或 MCP 原生整合。固定 v0.5.0 Release ZIP 不含这个新示例。当前不是 Playwright trace.zip 查看器，也尚未发布到 npm 官方仓库；CLI 和库可直接从 GitHub 安装。Blueprint 整合仅是开发示例，核心记录器仍无运行时依赖。
 
 报告自动捕获错误类别，不自动记录错误正文、堆栈、页面内容或网络流量。导出文字会对少量常见凭据格式做脱敏，仍需检查自己填写的标题与观察说明。浏览器页面不含统计代码；在线演示托管于 GitHub Pages，会产生正常页面访问请求。
 
