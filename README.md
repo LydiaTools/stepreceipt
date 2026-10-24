@@ -6,7 +6,7 @@ The error tells you what happened to the tool. You still need to know what happe
 
 StepReceipt puts each browser action beside an explicit follow-up check, then turns the run into a standalone HTML report. A normal return stays **unknown** until you check it. A timeout can sit beside a successful readback. You can see both before deciding what to do next.
 
-**[Open the live report](https://lydiatools.github.io/stepreceipt/)** · [中文说明](README.zh-CN.md) · [Download v0.4.0](https://github.com/LydiaTools/stepreceipt/releases/tag/v0.4.0)
+**[Open the live report](https://lydiatools.github.io/stepreceipt/)** · [Page-signal case](https://lydiatools.github.io/stepreceipt/cases/page-signals.html) · [中文说明](README.zh-CN.md) · [Download v0.5.0](https://github.com/LydiaTools/stepreceipt/releases/tag/v0.5.0)
 
 ![Actual viewer replay of three synthetic local-browser reports: saved after timeout, false confirmation, and unavailable readback](docs/assets/three-outcomes.gif)
 
@@ -17,6 +17,7 @@ StepReceipt puts each browser action beside an explicit follow-up check, then tu
 | Question | What StepReceipt records |
 | --- | --- |
 | What did I ask the tool to do? | A named read or write, its timing, and its tool return status |
+| Did the page visibly change? | Optional URL, title, sampled-text, and control-count signals around a Playwright action |
 | What did I actually check? | An explicit observation marked `verified`, `rejected`, or `unknown` |
 | What can I share for review? | A local JSON file and a self-contained HTML report, with English and Chinese controls |
 
@@ -93,11 +94,11 @@ The gate evaluates recorded checks; it does not independently inspect your appli
 
 Three real-browser cases run in `npm run test:e2e`, each against its own synthetic local service:
 
-| Tool / page signal | Separate readback | Recorded-check gate | Actual report |
+| Scenario and visible page signal | Separate readback | Recorded-check gate | Actual report |
 | --- | --- | --- | --- |
-| Timeout after Save | Exactly one matching record | Passed | [Saved after timeout](https://lydiatools.github.io/stepreceipt/) |
-| Page says “Saved successfully” | No saved record; storage returned 503 | Blocked | [False confirmation](https://lydiatools.github.io/stepreceipt/cases/rejected-write.html) |
-| Timeout after Save | Readback returned 503; count unavailable | Blocked, unknown | [Unavailable readback](https://lydiatools.github.io/stepreceipt/cases/unknown-readback.html) |
+| Timeout after Save; visible text changed | Exactly one matching record | Passed | [Saved after timeout](https://lydiatools.github.io/stepreceipt/) |
+| Page says “Saved successfully”; visible text changed | No saved record; storage returned 503 | Blocked | [False confirmation](https://lydiatools.github.io/stepreceipt/cases/rejected-write.html) |
+| Timeout after Save; visible text changed | Readback returned 503; count unavailable | Blocked, unknown | [Unavailable readback](https://lydiatools.github.io/stepreceipt/cases/unknown-readback.html) |
 
 Each case makes exactly one POST. Our [actual workflow](.github/workflows/test.yml) adds all three summaries and retains the synthetic HTML/JSON reports as a short-lived Actions artifact. The negative cases are expected to block; the test suite checks their CLI exit codes.
 
@@ -162,17 +163,47 @@ await writeFile('receipt.html', renderReport(receipt.toJSON()));
 
 `attempt()` captures an action error and returns `{ id, ok, value }`; it does **not** rethrow the action error. Check `ok`, inspect the observation, and explicitly decide whether the workflow should continue. Observer errors remain `unknown`. Verifying a step a second time is rejected; record a new observation step if you need another check.
 
-## What v0.4.0 is ready for
+### Record page changes around an action
+
+The optional Playwright adapter records whether the URL, title, visible text, or count of interactive elements changed around one action. It stores only the signal names—not the URL, title, page text, or their temporary fingerprints.
+
+```js
+import { recordPageAction } from 'stepreceipt/playwright';
+
+const step = await recordPageAction(receipt, page, {
+  label: 'Save the draft',
+  kind: 'write',
+  action: () => page.getByRole('button', { name: 'Save' }).click(),
+});
+
+// Page change is context. Keep the task-specific check explicit.
+await receipt.verify(step.id, async () => {
+  const saved = await page.getByText('Draft saved').isVisible();
+  return {
+    status: saved ? 'verified' : 'unknown',
+    summary: saved ? 'The independent check passed.' : 'The expected state was not observed.',
+  };
+});
+```
+
+The page is sampled as soon as the action callback settles. If a site updates asynchronously, await the relevant state inside the callback; the separate task-specific check still determines `verified`, `rejected`, or `unknown`. Capture failure does not prevent the action from running once. No retry or replay is added. A changed page does not prove the requested result happened; a page that looks unchanged may still have an off-screen or server-side effect. [Adapter details and limits](docs/PLAYWRIGHT.md).
+
+See the [synthetic page-signal report](https://lydiatools.github.io/stepreceipt/cases/page-signals.html) and its [English screenshot](docs/assets/page-signals.png) or [Chinese screenshot](docs/assets/page-signals-zh.png). The example pairs a visible change with a separate verified check, then shows an unchanged page whose task outcome remains unknown.
+
+![StepReceipt report showing a visible page change beside a separate verified check](docs/assets/page-signals.png)
+
+## What v0.5.0 is ready for
 
 - Rendering your recorded actions and checks into a portable review report.
 - Opening and exporting run JSON locally in a browser, with no backend.
 - Trying the included real-browser timeout/readback fixture.
 - Producing Markdown CI summaries and applying a recorded-observation gate, with three reproducible browser cases.
 - Connecting a pinned browser write-ahead guard to a separately recorded browser outcome and report.
+- Capturing privacy-preserving before/after page signals around one Playwright action.
 - Keeping raw error messages, stacks, page contents, and network traffic out of automatic capture. Only the error class is recorded.
 - Redacting a few common credential patterns from exported text. This is heuristic redaction, not complete detection; labels and observations can still contain private information.
 
-It is not a Playwright `trace.zip` viewer, a cryptographically signed audit trail, or a replacement for site-specific assertions. Native browser-use, Stagehand, Codex, and MCP adapters have **not** been tested. The JavaScript callback and JSON interfaces are the current integration points. The package is not published on npm. The Blueprint integration is a development example; the core recorder still has zero runtime dependencies.
+It is not a Playwright `trace.zip` viewer, a cryptographically signed audit trail, or a replacement for site-specific assertions. The Playwright adapter is tested with synthetic local pages; native browser-use, Stagehand, Codex, and MCP integrations have **not** been tested. The JavaScript callback and JSON interfaces remain available. The package is not published on npm. The Blueprint integration is a development example; the core recorder still has zero runtime dependencies.
 
 ## Development and evidence
 

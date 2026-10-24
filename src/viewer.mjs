@@ -20,6 +20,8 @@ export function boot(normalizeRun) {
       load: 'Open JSON', download: 'Save HTML report', source: 'Source & setup', example: 'Local fixture demo',
       steps: 'Recorded steps', verified: 'Checks passed', rejected: 'Checks failed', unknown: 'Unknown outcomes', errors: 'Tool errors',
       timeline: 'Run timeline', attempted: 'What the tool returned', observed: 'What was checked afterward',
+      pageSignals: 'Page signals', pageChanged: 'Visible page changes detected', pageUnchanged: 'No visible change detected', pagePartial: 'Some page signals were unavailable', pageUnavailable: 'Page signals unavailable',
+      pageUrl: 'URL', pageTitle: 'Title', pageText: 'Visible text', pageControls: 'Control count', pageBoundary: 'A page change is context, not proof that the requested task succeeded.',
       ok: 'Returned normally', error: 'Returned an error', read: 'Read', write: 'Write',
       vverified: 'Verified', vrejected: 'Check failed', vunknown: 'Not verified', duration: 'Duration',
       next: 'Before the next action', raw: 'Inspect the exported JSON', empty: 'No steps recorded yet.',
@@ -35,6 +37,8 @@ export function boot(normalizeRun) {
       load: '打开运行 JSON', download: '下载这份报告', source: '源码与上手', example: '本地测试页演示',
       steps: '已记录步骤', verified: '检查通过', rejected: '检查未通过', unknown: '结果未知', errors: '工具报错',
       timeline: '运行时间线', attempted: '工具返回了什么', observed: '随后检查到了什么',
+      pageSignals: '页面信号', pageChanged: '检测到页面可见变化', pageUnchanged: '没有检测到可见变化', pagePartial: '部分页面信号不可用', pageUnavailable: '页面信号暂不可用',
+      pageUrl: '网址', pageTitle: '标题', pageText: '可见文本', pageControls: '控件数量', pageBoundary: '页面发生变化只能作为线索，不能证明任务结果正确。',
       ok: '正常返回', error: '返回错误', read: '读取', write: '写入',
       vverified: '已核验', vrejected: '检查未通过', vunknown: '尚未核验', duration: '耗时',
       next: '下一步操作之前', raw: '查看导出的 JSON', empty: '尚未记录步骤。',
@@ -71,6 +75,24 @@ export function boot(normalizeRun) {
     const heading = node('div', '', 'detail-heading');
     heading.append(node('span', `${selected + 1} / ${run.steps.length}`, 'position'), node('h2', step.label));
     detail.append(heading);
+    if (step.pageEvidence) {
+      const pageEvidence = node('section', '', 'page-evidence');
+      pageEvidence.setAttribute('aria-label', t.pageSignals);
+      pageEvidence.append(node('h3', t.pageSignals));
+      const outcome = step.pageEvidence.outcome;
+      const pageState = outcome === 'changed'
+        ? 'pageChanged'
+        : outcome === 'no_visible_change'
+          ? 'pageUnchanged'
+          : step.pageEvidence.captureStatus === 'partial' ? 'pagePartial' : 'pageUnavailable';
+      pageEvidence.append(node('strong', t[pageState], 'page-state'));
+      if (step.pageEvidence.signals.length) {
+        const labels = { url: t.pageUrl, title: t.pageTitle, visible_text: t.pageText, controls: t.pageControls };
+        pageEvidence.append(node('p', step.pageEvidence.signals.map((signal) => labels[signal]).join(', ')));
+      }
+      pageEvidence.append(node('p', t.pageBoundary));
+      detail.append(pageEvidence);
+    }
     const panels = node('div', '', 'comparison');
     const returned = node('section', '', `observation ${step.toolStatus}`);
     returned.append(node('h3', t.attempted), node('strong', t[step.toolStatus], 'result'), node('p', step.toolStatus === 'error' ? step.errorName : t.ok), node('span', `${t.duration}: ${step.durationMs} ms`, 'meta'));

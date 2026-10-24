@@ -4,7 +4,7 @@
 
 工具报错时，页面上的操作可能已经完成。StepReceipt 把“工具返回了什么”和“随后检查到了什么”放在同一份报告里，方便你决定下一步。
 
-**[直接打开演示](https://lydiatools.github.io/stepreceipt/)** · [English](README.md) · [下载 v0.4.0](https://github.com/LydiaTools/stepreceipt/releases/tag/v0.4.0)
+**[直接打开演示](https://lydiatools.github.io/stepreceipt/)** · [页面信号案例](https://lydiatools.github.io/stepreceipt/cases/page-signals.html) · [English](README.md) · [下载 v0.5.0](https://github.com/LydiaTools/stepreceipt/releases/tag/v0.5.0)
 
 ![真实本地测试生成的中文回执：保存超时，随后读取到了已保存记录](docs/assets/report-zh.png)
 
@@ -15,6 +15,7 @@
 ## 它能帮你做什么
 
 - 分别记录动作、工具状态和后续观察。工具正常返回也不会自动算“已核验”。
+- 可选记录一次 Playwright 动作前后的网址、标题、可见文本和控件数量变化；它们只是页面信号，不代表任务成功。
 - 让检查结果明确落在“已核验 / 检查未通过 / 结果未知”三种状态。
 - 导出独立 HTML，双击即可查看；界面可切换中英文。
 - 在网页中打开自己的运行 JSON，文件在页面内读取，不上传到服务端。
@@ -79,11 +80,11 @@ node bin/stepreceipt.mjs artifacts/demo/run.json --summary receipt-summary.md --
 
 `npm run test:e2e` 实际运行三组独立本地浏览器场景，每组只发送一次 POST：
 
-| 场景 | 单独读取结果 | 判断 | 查看真实报告 |
+| 场景和页面信号 | 单独读取结果 | 判断 | 查看真实报告 |
 | --- | --- | --- | --- |
-| 保存后界面确认超时 | 一条匹配的记录 | 通过 | [保存超时](https://lydiatools.github.io/stepreceipt/) |
-| 页面显示保存成功，存储实际失败 | 没有记录 | 未通过 | [错误的成功提示](https://lydiatools.github.io/stepreceipt/cases/rejected-write.html) |
-| 保存后超时，读取服务也不可用 | 无法读取记录数 | 未知，不通过 | [读回不可用](https://lydiatools.github.io/stepreceipt/cases/unknown-readback.html) |
+| 保存后界面确认超时；页面文本变化 | 一条匹配的记录 | 通过 | [保存超时](https://lydiatools.github.io/stepreceipt/) |
+| 页面显示保存成功、存储实际失败；页面文本变化 | 没有记录 | 未通过 | [错误的成功提示](https://lydiatools.github.io/stepreceipt/cases/rejected-write.html) |
+| 保存后超时、读取服务不可用；页面文本变化 | 无法读取记录数 | 未知，不通过 | [读回不可用](https://lydiatools.github.io/stepreceipt/cases/unknown-readback.html) |
 
 仓库自身的 CI 已接入摘要和合成报告留存；反例必须返回 1，测试套件才算符合预期。
 
@@ -113,9 +114,38 @@ npm run demo:blueprint -- --out artifacts/blueprint-demo
 
 打开 `artifacts/blueprint-demo/` 下各场景的 `report.html` 和 `summary.md`。CI 还会真实打开英文/中文报告并截取桌面与手机视口。这里验证的是同一进程内创建新控制器后重载日志；真正跨进程终止与恢复见单独的 [LangGraph 示例](docs/LANGGRAPH.zh-CN.md)。本地夹具不能证明生产网站上的行为。
 
+## 记录动作前后的页面信号
+
+可选 Playwright 适配器会观察一次动作前后 URL、标题、可见文本和交互控件数量是否变化。报告只保存变化项名称，不保存网址、标题、页面文字或临时指纹。
+
+```js
+import { recordPageAction } from 'stepreceipt/playwright';
+
+const step = await recordPageAction(receipt, page, {
+  label: '保存草稿',
+  kind: 'write',
+  action: () => page.getByRole('button', { name: '保存' }).click(),
+});
+
+// 页面变化只是线索，任务结果仍需单独核验。
+await receipt.verify(step.id, async () => {
+  const saved = await page.getByText('草稿已保存').isVisible();
+  return {
+    status: saved ? 'verified' : 'unknown',
+    summary: saved ? '独立检查通过。' : '没有观察到预期状态。',
+  };
+});
+```
+
+页面会在动作回调结束后立即采样。如果网站异步更新，请在回调里等待相关页面状态；`verified`、`rejected` 或 `unknown` 仍由单独的任务检查决定。采样失败不会阻止动作只运行一次；工具不会自动重试或重放。页面变化不能证明目标结果成功；页面看起来没变，也不排除后台已产生影响。[适配器说明与边界](docs/PLAYWRIGHT.zh-CN.md)。
+
+[查看合成页面信号报告](https://lydiatools.github.io/stepreceipt/cases/page-signals.html)：页面可见变化仍由单独检查核验；页面未变化时，任务结果保持未知。配套截图：[英文](docs/assets/page-signals.png) · [中文](docs/assets/page-signals-zh.png)。
+
+![StepReceipt 页面信号报告：可见变化与独立检查结果并列显示](docs/assets/page-signals-zh.png)
+
 ## 当前边界
 
-已测试本地浏览器案例、JSON 导入、独立 HTML 导出再打开、移动端与中英文界面，以及 Blueprint 控制器和 StepReceipt 报告的本地整合。尚未测试 browser-use、Stagehand、Codex 或 MCP 原生适配器。当前不是 Playwright trace.zip 查看器，也尚未发布到 npm 官方仓库；CLI 和库可直接从 GitHub 安装。Blueprint 整合仅是开发示例，核心记录器仍无运行时依赖。
+已测试本地浏览器案例、JSON 导入、独立 HTML 导出再打开、移动端与中英文界面、Blueprint 整合，以及基于合成页面的 Playwright 信号适配器。尚未测试 browser-use、Stagehand、Codex 或 MCP 原生整合。当前不是 Playwright trace.zip 查看器，也尚未发布到 npm 官方仓库；CLI 和库可直接从 GitHub 安装。Blueprint 整合仅是开发示例，核心记录器仍无运行时依赖。
 
 报告自动捕获错误类别，不自动记录错误正文、堆栈、页面内容或网络流量。导出文字会对少量常见凭据格式做脱敏，仍需检查自己填写的标题与观察说明。浏览器页面不含统计代码；在线演示托管于 GitHub Pages，会产生正常页面访问请求。
 

@@ -42,6 +42,7 @@ jobs:
       - name: Write recorded-check summary
         run: |
           cat artifacts/demo/summary.md artifacts/rejected-write/summary.md artifacts/unknown-readback/summary.md >> "$GITHUB_STEP_SUMMARY"
+          cat artifacts/page-evidence/summary.md >> "$GITHUB_STEP_SUMMARY"
           cat artifacts/blueprint/*/summary.md >> "$GITHUB_STEP_SUMMARY"
           node bin/stepreceipt.mjs artifacts/demo/run.json --check
       - name: Keep synthetic reports for review
@@ -53,6 +54,8 @@ jobs:
             artifacts/demo/
             artifacts/rejected-write/
             artifacts/unknown-readback/
+            artifacts/page-evidence/
+            artifacts/screenshots/page-evidence-*.png
           if-no-files-found: error
           retention-days: 7
       - name: Keep Blueprint integration reports and screenshots

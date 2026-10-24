@@ -1,6 +1,6 @@
 {
   "name": "stepreceipt",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "type": "module",
   "description": "Record browser-agent actions beside explicit outcome checks; export portable HTML reports and CI summaries.",
   "license": "MIT",
@@ -30,6 +30,7 @@
     "README.md",
     "README.zh-CN.md",
     "CHANGELOG.md",
+    "docs/PLAYWRIGHT*.md",
     "LICENSE"
   ],
   "engines": {
@@ -38,7 +39,8 @@
   "exports": {
     ".": "./src/receipt.mjs",
     "./report": "./src/report.mjs",
-    "./summary": "./src/summary.mjs"
+    "./summary": "./src/summary.mjs",
+    "./playwright": "./src/playwright.mjs"
   },
   "scripts": {
     "test": "node --test test/*.test.mjs",

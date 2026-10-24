@@ -1,46 +1,55 @@
 {
   "schemaVersion": 1,
   "title": "Save timed out. The record was there.",
-  "startedAt": "2026-10-19T17:36:52.951Z",
+  "startedAt": "2026-10-24T02:38:21.005Z",
   "steps": [
     {
       "id": "step-1",
       "label": "Open the draft",
       "kind": "read",
-      "startedAt": "2026-10-19T17:36:52.951Z",
-      "durationMs": 47,
+      "startedAt": "2026-10-24T02:38:21.005Z",
+      "durationMs": 30,
       "toolStatus": "ok",
       "verification": {
         "status": "verified",
         "summary": "The draft form is visible on the synthetic local page.",
-        "observedAt": "2026-10-19T17:36:53.029Z"
+        "observedAt": "2026-10-24T02:38:21.051Z"
       }
     },
     {
       "id": "step-2",
       "label": "Save the draft",
       "kind": "write",
-      "startedAt": "2026-10-19T17:36:53.029Z",
-      "durationMs": 641,
+      "startedAt": "2026-10-24T02:38:21.054Z",
+      "durationMs": 765,
       "toolStatus": "error",
       "errorName": "TimeoutError",
       "verification": {
         "status": "verified",
         "summary": "A separate GET found 1 saved record. Record #1 contains “Garden checklist”. The Save action was not retried.",
-        "observedAt": "2026-10-19T17:36:53.680Z"
+        "observedAt": "2026-10-24T02:38:21.832Z"
+      },
+      "pageEvidence": {
+        "captureStatus": "complete",
+        "outcome": "changed",
+        "beforeCaptured": true,
+        "afterCaptured": true,
+        "signals": [
+          "visible_text"
+        ]
       }
     },
     {
       "id": "step-3",
       "label": "Read back the saved record",
       "kind": "read",
-      "startedAt": "2026-10-19T17:36:53.680Z",
-      "durationMs": 17,
+      "startedAt": "2026-10-24T02:38:21.833Z",
+      "durationMs": 15,
       "toolStatus": "ok",
       "verification": {
         "status": "verified",
         "summary": "The readback page displays “Saved records: 1”. This checks that the count is readable; the save requirement is evaluated in the write step.",
-        "observedAt": "2026-10-19T17:36:53.714Z"
+        "observedAt": "2026-10-24T02:38:21.864Z"
       }
     }
   ]
