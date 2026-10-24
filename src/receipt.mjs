@@ -1,3 +1,5 @@
+import { normalizePageEvidence } from './page-evidence.mjs';
+
 export function normalizeRun(input) {
   const object = (value) => value && typeof value === 'object' && !Array.isArray(value);
   function text(value, max = 1000) {
@@ -24,6 +26,7 @@ export function normalizeRun(input) {
       startedAt: date(s.startedAt), durationMs: Math.round(s.durationMs), toolStatus: s.toolStatus,
       ...(s.toolStatus === 'error' ? { errorName: /^[A-Za-z][A-Za-z0-9]{0,59}$/.test(s.errorName ?? '') ? s.errorName : 'Error' } : {}),
       verification: { status: v.status, summary: text(v.summary, 2000), ...(v.observedAt ? { observedAt: date(v.observedAt) } : {}) },
+      ...(Object.hasOwn(s, 'pageEvidence') ? { pageEvidence: normalizePageEvidence(s.pageEvidence) } : {}),
     };
   });
   return { schemaVersion: 1, title: text(input.title, 240), startedAt: date(input.startedAt), steps };
@@ -65,6 +68,13 @@ export function createReceipt({ title }) {
         step.verification = validated.steps[0].verification;
         return { ...step.verification };
       } finally { busy.delete(id); }
+    },
+    addPageEvidence(id, evidence) {
+      const step = run.steps.find((s) => s.id === id);
+      if (!step || step.toolStatus === 'running' || step.pageEvidence) throw new TypeError('Add page evidence once, after a completed action.');
+      const pageEvidence = normalizePageEvidence(evidence);
+      step.pageEvidence = pageEvidence;
+      return { ...pageEvidence, signals: [...pageEvidence.signals] };
     },
     toJSON() {
       if (busy.size) throw new TypeError('Wait for observations to finish before exporting.');

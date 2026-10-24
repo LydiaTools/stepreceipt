@@ -5,6 +5,7 @@ import { pathToFileURL } from 'node:url';
 import { chromium } from 'playwright';
 import { createReceipt } from '../src/receipt.mjs';
 import { renderReport } from '../src/report.mjs';
+import { recordPageAction } from '../src/playwright.mjs';
 
 const form = (scenario) => `<!doctype html><meta charset="utf-8"><title>StepReceipt local fixture</title>
 <style>body{font:18px/1.6 system-ui;max-width:650px;margin:65px auto;padding:25px;color:#142640}input,button{font:inherit;padding:12px}input{width:75%}button{background:#265ed7;color:white;border:0;border-radius:5px}small{color:#53647b;display:block;margin:20px 0}</style>
@@ -51,9 +52,11 @@ export async function runBrowserDemo({ outDir = 'artifacts/demo', channel = proc
     const receipt = createReceipt({ title: titles[scenario] });
     const open = await receipt.attempt({ label: 'Open the draft', kind: 'read' }, () => page.goto(origin));
     await receipt.verify(open.id, async () => ({ status: await page.locator('#title').isVisible() ? 'verified' : 'rejected', summary: 'The draft form is visible on the synthetic local page.' }));
-    const save = await receipt.attempt({ label: 'Save the draft', kind: 'write' }, async () => {
-      await page.locator('#save').click();
-      await page.locator('#status').filter({ hasText: 'Saved successfully' }).waitFor({ timeout: 600 });
+    const save = await recordPageAction(receipt, page, {
+      label: 'Save the draft', kind: 'write', action: async () => {
+        await page.locator('#save').click();
+        await page.locator('#status').filter({ hasText: 'Saved successfully' }).waitFor({ timeout: 600 });
+      },
     });
     await receipt.verify(save.id, async () => {
       const response = await page.request.get(`${origin}/records`);

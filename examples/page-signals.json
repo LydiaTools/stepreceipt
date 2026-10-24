@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "title": "Synthetic page signal demo",
+  "startedAt": "2026-10-24T02:38:24.628Z",
+  "steps": [
+    {
+      "id": "step-1",
+      "label": "Save the draft",
+      "kind": "write",
+      "startedAt": "2026-10-24T02:38:24.642Z",
+      "durationMs": 53,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "A separate check read the expected state on the synthetic page.",
+        "observedAt": "2026-10-24T02:38:24.697Z"
+      },
+      "pageEvidence": {
+        "captureStatus": "complete",
+        "outcome": "changed",
+        "beforeCaptured": true,
+        "afterCaptured": true,
+        "signals": [
+          "visible_text"
+        ]
+      }
+    },
+    {
+      "id": "step-2",
+      "label": "Inspect without changing the page",
+      "kind": "read",
+      "startedAt": "2026-10-24T02:38:24.697Z",
+      "durationMs": 39,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "unknown",
+        "summary": "No task-specific check was supplied.",
+        "observedAt": "2026-10-24T02:38:24.737Z"
+      },
+      "pageEvidence": {
+        "captureStatus": "complete",
+        "outcome": "no_visible_change",
+        "beforeCaptured": true,
+        "afterCaptured": true,
+        "signals": []
+      }
+    }
+  ]
+}

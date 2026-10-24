@@ -11,6 +11,7 @@ test('the recorded-check gate blocks empty and unknown runs, but permits verifie
   const receipt = createReceipt({ title: 'Check result, not just exit status' });
   assert.equal(summarizeRun(receipt.toJSON()).passed, false);
   const step = await receipt.attempt({ label: '<img src=x> | [link](https://example.com)', kind: 'write' }, () => { throw new Error('private'); });
+  receipt.addPageEvidence(step.id, { captureStatus: 'complete', outcome: 'changed', beforeCaptured: true, afterCaptured: true, signals: ['visible_text'] });
   assert.equal(summarizeRun(receipt.toJSON()).passed, false);
   await receipt.verify(step.id, () => ({ status: 'verified', summary: 'A separate read found exactly one record.' }));
   assert.equal(summarizeRun(receipt.toJSON()).passed, true);
@@ -18,6 +19,11 @@ test('the recorded-check gate blocks empty and unknown runs, but permits verifie
   const report = renderSummary(receipt.toJSON());
   assert.ok(!report.includes('<img'));
   assert.ok(!report.includes('[link](https://example.com)'));
+  assert.match(report, /changed: visible text/);
+  const partial = createReceipt({ title: 'Partial page capture' });
+  const partialStep = await partial.attempt({ label: 'Inspect page' }, () => {});
+  partial.addPageEvidence(partialStep.id, { captureStatus: 'partial', outcome: 'unavailable', beforeCaptured: true, afterCaptured: false, signals: [] });
+  assert.match(renderSummary(partial.toJSON()), /partial capture/);
   const rejected = structuredClone(receipt.toJSON());
   rejected.steps[0].toolStatus = 'ok';
   rejected.steps[0].verification.status = 'rejected';

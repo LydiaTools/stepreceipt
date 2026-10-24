@@ -1,5 +1,19 @@
 # Validation
 
+## Playwright page-signal adapter (v0.5.0 local validation)
+
+Checked on 2026-10-24 with Node.js 22.23.0, Playwright 1.64.1 and Google Chrome 156.0.8078.47 in fresh browser contexts. `npm test` passed all 13 tests. `BROWSER_CHANNEL=chrome npm run test:e2e` passed against the local HTTP fixture and synthetic pages.
+
+| Scenario | POSTs / records | Independent result | Visible page signal | CLI gate |
+| --- | ---: | --- | --- | --- |
+| Saved after tool timeout | 1 / 1 | Verified | Text changed | Passed (0) |
+| UI said success, write rejected | 1 / 0 | Rejected | Text changed | Blocked (1) |
+| Readback unavailable | 1 / 1 | Unknown | Text changed | Blocked (1) |
+
+The browser test also exercised a no-change read, partial signal capture, the committed static homepage and page-signal report, Chinese and English rendering, 390px mobile layout, JSON import, standalone HTML export/reopen, malicious-title escaping, malformed-file handling, and zero external HTTP requests from the viewer. The page signal stores only changed signal names; the synthetic report pairs a visible change with a separate check and keeps an unchecked no-change read `unknown`.
+
+`npm run test:blueprint` passed its three guarded/unguarded local write cases against the pinned Blueprint commit. `node test/langgraph-viewer.mjs` passed after the committed LangGraph and Blueprint reports were refreshed with the v0.5.0 renderer; it checked source/render parity, 0/1/0 gates, bilingual controls, mobile layout, download/reopen and zero external requests. These results are local synthetic evidence, not a production-site, account, model, or adoption test. GitHub CI must pass for the specific pushed commit before claiming remote validation.
+
 ## Browser Agent Blueprint integration (v0.4.0 local validation)
 
 Checked on 2026-10-21 with Node.js 22.23.0, npm 10.9.8, Playwright 1.64.1 and Google Chrome 155.0.8059.85 in fresh headless browser contexts. The Blueprint development dependency resolves from a public source archive pinned to commit `630d773c44cc41f35128d14344a77339906b9504`.

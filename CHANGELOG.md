@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.0 — Playwright page signals
+
+- Add an optional Playwright adapter that records before/after URL, title, visible-text and interactive-element-count changes around one action.
+- Export only the names of changed signals; raw page text, URL, title, and temporary fingerprints are not written to receipts.
+- Keep task verification separate: visible change is not success, and no visible change does not rule out a server-side effect.
+- Preserve one-shot action behavior when page capture is unavailable; do not retry or replay.
+- Add English/Chinese integration guides, HTML evidence display and a page-signal column in Markdown summaries.
+
 ## 0.4.0 — Browser Agent Blueprint integration
 
 - Add a real localhost Playwright integration that sends guarded browser actions and independent observations into StepReceipt reports.

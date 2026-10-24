@@ -1,46 +1,55 @@
 {
   "schemaVersion": 1,
   "title": "Save timed out. Readback was unavailable.",
-  "startedAt": "2026-10-19T17:36:54.980Z",
+  "startedAt": "2026-10-24T02:38:23.216Z",
   "steps": [
     {
       "id": "step-1",
       "label": "Open the draft",
       "kind": "read",
-      "startedAt": "2026-10-19T17:36:54.980Z",
-      "durationMs": 20,
+      "startedAt": "2026-10-24T02:38:23.216Z",
+      "durationMs": 17,
       "toolStatus": "ok",
       "verification": {
         "status": "verified",
         "summary": "The draft form is visible on the synthetic local page.",
-        "observedAt": "2026-10-19T17:36:55.018Z"
+        "observedAt": "2026-10-24T02:38:23.245Z"
       }
     },
     {
       "id": "step-2",
       "label": "Save the draft",
       "kind": "write",
-      "startedAt": "2026-10-19T17:36:55.018Z",
-      "durationMs": 627,
+      "startedAt": "2026-10-24T02:38:23.247Z",
+      "durationMs": 738,
       "toolStatus": "error",
       "errorName": "TimeoutError",
       "verification": {
         "status": "unknown",
         "summary": "The separate GET returned HTTP 503. No record count could be observed. The Save action was not retried.",
-        "observedAt": "2026-10-19T17:36:55.648Z"
+        "observedAt": "2026-10-24T02:38:23.990Z"
+      },
+      "pageEvidence": {
+        "captureStatus": "complete",
+        "outcome": "changed",
+        "beforeCaptured": true,
+        "afterCaptured": true,
+        "signals": [
+          "visible_text"
+        ]
       }
     },
     {
       "id": "step-3",
       "label": "Read back the saved record",
       "kind": "read",
-      "startedAt": "2026-10-19T17:36:55.648Z",
-      "durationMs": 28,
+      "startedAt": "2026-10-24T02:38:23.990Z",
+      "durationMs": 21,
       "toolStatus": "ok",
       "verification": {
         "status": "unknown",
         "summary": "The saved-record page was unavailable. This read cannot establish the write outcome.",
-        "observedAt": "2026-10-19T17:36:55.676Z"
+        "observedAt": "2026-10-24T02:38:24.011Z"
       }
     }
   ]
