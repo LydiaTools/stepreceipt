@@ -4,7 +4,7 @@
 
 工具报错时，页面上的操作可能已经完成。StepReceipt 把“工具返回了什么”和“随后检查到了什么”放在同一份报告里，方便你决定下一步。
 
-**[直接打开演示](https://lydiatools.github.io/stepreceipt/)** · [页面信号案例](https://lydiatools.github.io/stepreceipt/cases/page-signals.html) · [Stagehand 示例](docs/STAGEHAND-INTEGRATION.zh-CN.md) · [English](README.md) · [下载 v0.5.0](https://github.com/LydiaTools/stepreceipt/releases/tag/v0.5.0)
+**[直接打开演示](https://lydiatools.github.io/stepreceipt/)** · [Python browser-use 示例](docs/BROWSER-USE.zh-CN.md) · [Stagehand 示例](docs/STAGEHAND-INTEGRATION.zh-CN.md) · [English](README.md) · [下载发行版](https://github.com/LydiaTools/stepreceipt/releases/latest)
 
 ![真实本地测试生成的中文回执：保存超时，随后读取到了已保存记录](docs/assets/report-zh.png)
 
@@ -90,6 +90,16 @@ node bin/stepreceipt.mjs artifacts/demo/run.json --summary receipt-summary.md --
 
 ![真实反例报告：工具正常返回，但单独读取发现没有保存记录，检查未通过](docs/assets/rejected-write.png)
 
+## Python browser-use：点击返回，不等于已经保存
+
+可选桥接把真实的 `Tools.click` 返回与应用侧只读核对放在一起。四个原创本地案例覆盖禁用按钮、正常保存、错误成功提示和读回不可用。固定 browser-use 0.13.11 的四次点击都正常返回，核对结果依次是“不通过／通过／不通过／未知”；没有调用模型，不需要 API Key。
+
+[运行四个案例](docs/BROWSER-USE.zh-CN.md) · [打开禁用按钮报告](https://lydiatools.github.io/stepreceipt/browser-use/disabled.html) · [Python 桥接](integrations/browser-use/stepreceipt_browser_use.py)
+
+![真实 browser-use 工具层报告：正常点击返回与独立核对不通过并列展示](docs/assets/browser-use/disabled-click.png)
+
+桥接不根据生成文本推断成功，也不会自动重试。这里实测原生工具调用和合成页面，没有实测模型驱动的 `Agent.run` 或生产网站。v0.6.0 起包含此示例，旧的固定发行包不包含。
+
 ## 真实 LangGraph 跨进程恢复
 
 **流程正常返回，却留下两份相同的草稿。** 可选示例在业务提交后直接退出 Python 进程，再用新进程恢复同一任务。普通插入：2 次调用、2 条草稿；目标库唯一操作键：2 次调用、1 条草稿；正常完成对照组：1 次调用、1 条草稿。
@@ -157,7 +167,7 @@ npm run demo
 
 ## 当前边界
 
-已测试本地浏览器案例、JSON 导入、独立 HTML 导出再打开、移动端与中英文界面、Blueprint 整合，以及基于合成页面的 Playwright 信号适配器。Stagehand v4.3.0 Page 示例只测试本地合成页面；未测试模型驱动的 `stagehand.act()`、生产网站，也未测试 browser-use、Codex 或 MCP 原生整合。固定 v0.5.0 Release ZIP 不含这个新示例。当前不是 Playwright trace.zip 查看器，也尚未发布到 npm 官方仓库；CLI 和库可直接从 GitHub 安装。Blueprint 整合仅是开发示例，核心记录器仍无运行时依赖。
+已测试本地浏览器案例、JSON 导入、独立 HTML 导出再打开、移动端与中英文界面、Blueprint 整合、Playwright 信号适配器、Stagehand v4.3.0 Page 示例，以及 browser-use 0.13.11 工具层桥接。以上使用合成页面；模型驱动的 `stagehand.act()`、browser-use `Agent.run`、生产网站、Codex 和 MCP 原生整合尚未测试。当前不是 Playwright trace.zip 查看器，也尚未发布到 npm 或 PyPI；CLI 和 JavaScript 库可直接从 GitHub 安装。核心记录器仍无运行时依赖。
 
 报告自动捕获错误类别，不自动记录错误正文、堆栈、页面内容或网络流量。导出文字会对少量常见凭据格式做脱敏，仍需检查自己填写的标题与观察说明。浏览器页面不含统计代码；在线演示托管于 GitHub Pages，会产生正常页面访问请求。
 

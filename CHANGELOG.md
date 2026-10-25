@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.0 — Python browser-use outcome checks
+
+- Add an optional dependency-free Python bridge for native browser-use ActionResult and explicit independent checks. Raw result/error text stays out of the receipt; no retry is added.
+- Add four original local-browser cases with browser-use 0.13.11: disabled click, stored draft, false toast and unavailable readback. Native tool returns and separate checks remain distinct.
+- Export the existing v1 JSON format into standalone reports and actual CLI checks; include English/Chinese guides and real report captures.
+- Run Python bridge tests and native browser-use cases in a separate CI job. Preserve the previously added optional Stagehand Page example.
+- The examples make no model calls and do not test browser-use Agent.run, production websites, or overall agent success rates.
+
 ## 0.5.0 — Playwright page signals
 
 - Add an optional Playwright adapter that records before/after URL, title, visible-text and interactive-element-count changes around one action.

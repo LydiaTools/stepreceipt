@@ -1,0 +1,71 @@
+{
+  "synthetic": true,
+  "library": "browser-use",
+  "version": "0.13.11",
+  "chrome": "Google Chrome 156.0.8078.47",
+  "providerCalls": 0,
+  "agentRun": false,
+  "cases": [
+    {
+      "case": "disabled",
+      "toolStatus": "ok",
+      "verification": "rejected",
+      "visibleMessage": "Draft not submitted",
+      "independentReadback": {
+        "posts": 0,
+        "records": 0
+      },
+      "fixtureCounts": {
+        "posts": 0,
+        "records": 0
+      },
+      "readbackHTTP": 200,
+      "gate": 1
+    },
+    {
+      "case": "stored",
+      "toolStatus": "ok",
+      "verification": "verified",
+      "visibleMessage": "Draft saved",
+      "independentReadback": {
+        "posts": 1,
+        "records": 1
+      },
+      "fixtureCounts": {
+        "posts": 1,
+        "records": 1
+      },
+      "readbackHTTP": 200,
+      "gate": 0
+    },
+    {
+      "case": "false-toast",
+      "toolStatus": "ok",
+      "verification": "rejected",
+      "visibleMessage": "Draft saved",
+      "independentReadback": {
+        "posts": 1,
+        "records": 0
+      },
+      "fixtureCounts": {
+        "posts": 1,
+        "records": 0
+      },
+      "readbackHTTP": 200,
+      "gate": 1
+    },
+    {
+      "case": "readback-unavailable",
+      "toolStatus": "ok",
+      "verification": "unknown",
+      "visibleMessage": "Draft saved",
+      "independentReadback": null,
+      "fixtureCounts": {
+        "posts": 1,
+        "records": 1
+      },
+      "readbackHTTP": 503,
+      "gate": 1
+    }
+  ]
+}

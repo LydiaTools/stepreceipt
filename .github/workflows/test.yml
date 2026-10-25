@@ -3,6 +3,34 @@ on: [push, pull_request]
 permissions:
   contents: read
 jobs:
+  browser-use-example:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.12'
+      - run: python -m unittest discover -s test -p browser_use_bridge_test.py
+      - run: python -m pip install -r examples/browser-use/requirements.txt
+      - run: node examples/browser-use/run.mjs --python python --chrome "$(command -v google-chrome)" --out artifacts/browser-use
+      - name: Show explicit checks, including expected rejection and unknown
+        run: cat artifacts/browser-use/*/summary.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v7.0.2
+        if: always()
+        with:
+          name: browser-use-native-outcome-checks
+          path: |
+            artifacts/browser-use/*/run.json
+            artifacts/browser-use/*/report.html
+            artifacts/browser-use/*/summary.md
+            artifacts/browser-use/measurements.json
+            artifacts/browser-use/worker.log
+          if-no-files-found: error
+          retention-days: 7
   langgraph-example:
     runs-on: ubuntu-latest
     timeout-minutes: 6
@@ -38,6 +66,7 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
       - run: node test/langgraph-viewer.mjs
+      - run: node test/browser-use-viewer.mjs
       - run: npm run test:blueprint
       - name: Write recorded-check summary
         run: |

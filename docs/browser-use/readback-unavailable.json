@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "title": "The click returned. The readback endpoint was unavailable.",
+  "startedAt": "2026-10-25T10:16:55.771Z",
+  "steps": [
+    {
+      "id": "step-1",
+      "label": "Click Save draft once with browser-use Tools.click",
+      "kind": "write",
+      "startedAt": "2026-10-25T10:16:55.771Z",
+      "durationMs": 793,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "unknown",
+        "summary": "The observation raised an error. The outcome is unknown.",
+        "observedAt": "2026-10-25T10:16:56.566Z"
+      }
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "name": "stepreceipt",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "module",
   "description": "Record browser-agent actions beside explicit outcome checks; export portable HTML reports and CI summaries.",
   "license": "MIT",
@@ -32,6 +32,11 @@
     "CHANGELOG.md",
     "docs/PLAYWRIGHT*.md",
     "docs/STAGEHAND*.md",
+    "docs/BROWSER-USE*.md",
+    "integrations/browser-use/stepreceipt_browser_use.py",
+    "examples/browser-use/requirements.txt",
+    "examples/browser-use/run.mjs",
+    "examples/browser-use/worker.py",
     "examples/stagehand/package.json",
     "examples/stagehand/package-lock.json",
     "examples/stagehand/demo.mjs",
@@ -53,6 +58,7 @@
     "test:e2e": "node test/e2e.mjs",
     "demo:blueprint": "node examples/blueprint/run.mjs",
     "test:blueprint": "node test/blueprint-e2e.mjs",
+    "demo:browser-use": "node examples/browser-use/run.mjs",
     "prepublishOnly": "npm test"
   },
   "devDependencies": {

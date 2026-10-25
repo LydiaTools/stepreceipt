@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "title": "The page said saved. The server stored nothing.",
+  "startedAt": "2026-10-25T10:16:54.898Z",
+  "steps": [
+    {
+      "id": "step-1",
+      "label": "Click Save draft once with browser-use Tools.click",
+      "kind": "write",
+      "startedAt": "2026-10-25T10:16:54.898Z",
+      "durationMs": 768,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "rejected",
+        "summary": "Separate GET: 1 POSTs and 0 saved drafts. Expected one matching saved draft.",
+        "observedAt": "2026-10-25T10:16:55.671Z"
+      }
+    }
+  ]
+}

@@ -1,5 +1,22 @@
 # Validation
 
+## Python browser-use bridge (v0.6.0 local validation)
+
+Checked on 2026-10-25 with Python 3.12.13, browser-use 0.13.11 from PyPI, Node.js 22.23.0 and Google Chrome 156.0.8078.47. The native `Tools.navigate`, selector-map and `Tools.click` APIs ran in a fresh local profile. No `Agent.run`, model or provider was invoked. GitHub's 0.13.13 tag was checked separately from PyPI; PyPI had no same-version release at that check, so the example pins the installable 0.13.11.
+
+| Original local fixture | Tool status | Independent observation | POSTs / fixture records | CLI exit |
+| --- | --- | --- | ---: | ---: |
+| Disabled button with a click listener | Normal return | Rejected | 0 / 0 | 1 |
+| Working save | Normal return | Verified | 1 / 1 | 0 |
+| POST 500, UI nevertheless says saved | Normal return | Rejected | 1 / 0 | 1 |
+| Working save, readback GET 503 | Normal return | Unknown | 1 / 1 internally | 1 |
+
+The last receipt does not use the internal count as a successful readback. All four cases issued one native click each; no retry was made. The worker compared actual isolated fixture counts with predeclared expectations. The runner checked Python-to-JavaScript v1 normalization parity, rendered all four reports, and exercised actual CLI exits 1/0/1/1. Committed JSON/HTML and [measurements](browser-use/measurements.json) come from that run.
+
+Six Python bridge tests passed: raw-result omission, returned/raised errors, explicit one-time checks, observer failures, concurrent/incomplete export guards, invalid metadata and detached export. The existing 13 Node unit tests passed. The viewer test opened all four actual reports, checked tool status beside independent verdict and source/render byte equality, toggled English/Chinese, checked 390px overflow, downloaded/reopened HTML with networking disabled, and observed no report HTTP subrequests. Desktop and mobile screenshots were inspected; the README image is an actual report capture without a virtual pointer.
+
+These checks establish this pinned tool-layer bridge and these original synthetic cases. They do not establish model-driven task success, production compatibility, Windows behavior, complete secret detection, user adoption or an improvement in agent success rate. Remote CI must be read for the specific pushed commit; local success does not prove remote validation.
+
 ## Playwright page-signal adapter (v0.5.0 local validation)
 
 Checked on 2026-10-24 with Node.js 22.23.0, Playwright 1.64.1 and Google Chrome 156.0.8078.47 in fresh browser contexts. `npm test` passed all 13 tests. `BROWSER_CHANNEL=chrome npm run test:e2e` passed against the local HTTP fixture and synthetic pages.
@@ -74,4 +91,4 @@ Checked on 2026-10-20 (Asia/Shanghai), macOS, Node.js v22.23.0, Playwright 1.64.
 
 The committed example JSON files and online reports are generated from these synthetic local workflows. The original screenshots remain genuine captures of the saved-after-timeout case from v0.1.0. The [fixture readback screenshot](assets/fixture-readback.png) shows that saved record. Dates in the run files use UTC. There is no real user account, production write, LLM call, or external service involved in the fixtures. GitHub-hosted CI has its own authoritative run logs; local success alone does not prove that a particular remote commit passed.
 
-This does not validate browser-use/Stagehand/Codex/MCP integration, production idempotency, all browsers/operating systems, complete redaction, user adoption, or performance improvements. Each integration must provide a meaningful independent readback check.
+The v0.2.0 checks did not validate browser-use/Stagehand/Codex/MCP integration, production idempotency, all browsers/operating systems, complete redaction, user adoption, or performance improvements. Each integration must provide a meaningful independent readback check; the later optional tool-layer examples have their own narrower evidence above.
