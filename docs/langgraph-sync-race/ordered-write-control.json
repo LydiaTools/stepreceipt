@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "title": "Control: persist the task write before the same crash cut.",
+  "startedAt": "2026-10-26T08:48:06.147Z",
+  "steps": [
+    {
+      "id": "step-1",
+      "label": "Trial 1: start graph and reach the controlled cut",
+      "kind": "write",
+      "startedAt": "2026-10-26T08:48:06.147Z",
+      "durationMs": 251,
+      "toolStatus": "error",
+      "errorName": "WorkerExit",
+      "verification": {
+        "status": "verified",
+        "summary": "Observed the controlled exit 73 at the intended after-write checkpoint cut.",
+        "observedAt": "2026-10-26T08:48:06.398Z"
+      }
+    },
+    {
+      "id": "step-2",
+      "label": "Trial 1: read checkpoint and pending task writes",
+      "kind": "read",
+      "startedAt": "2026-10-26T08:48:06.522Z",
+      "durationMs": 0,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "Separate read-only inspection found checkpoint sequence 1 and 3 pending task writes.",
+        "observedAt": "2026-10-26T08:48:06.522Z"
+      }
+    },
+    {
+      "id": "step-3",
+      "label": "Trial 1: resume this thread in a fresh process",
+      "kind": "write",
+      "startedAt": "2026-10-26T08:48:06.522Z",
+      "durationMs": 291,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "The resumed graph returned normally and reported no pending next node.",
+        "observedAt": "2026-10-26T08:48:06.813Z"
+      }
+    },
+    {
+      "id": "step-4",
+      "label": "Trial 1: independently read committed effects",
+      "kind": "read",
+      "startedAt": "2026-10-26T08:48:07.000Z",
+      "durationMs": 0,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "Readback matched the control: effects {\"0\":1,\"1\":1,\"2\":1}; action attempts {\"0\":1,\"1\":1,\"2\":1}.",
+        "observedAt": "2026-10-26T08:48:07.000Z"
+      }
+    },
+    {
+      "id": "step-5",
+      "label": "Trial 2: start graph and reach the controlled cut",
+      "kind": "write",
+      "startedAt": "2026-10-26T08:48:07.000Z",
+      "durationMs": 1333,
+      "toolStatus": "error",
+      "errorName": "WorkerExit",
+      "verification": {
+        "status": "verified",
+        "summary": "Observed the controlled exit 73 at the intended after-write checkpoint cut.",
+        "observedAt": "2026-10-26T08:48:08.333Z"
+      }
+    },
+    {
+      "id": "step-6",
+      "label": "Trial 2: read checkpoint and pending task writes",
+      "kind": "read",
+      "startedAt": "2026-10-26T08:48:08.462Z",
+      "durationMs": 0,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "Separate read-only inspection found checkpoint sequence 1 and 3 pending task writes.",
+        "observedAt": "2026-10-26T08:48:08.462Z"
+      }
+    },
+    {
+      "id": "step-7",
+      "label": "Trial 2: resume this thread in a fresh process",
+      "kind": "write",
+      "startedAt": "2026-10-26T08:48:08.462Z",
+      "durationMs": 288,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "The resumed graph returned normally and reported no pending next node.",
+        "observedAt": "2026-10-26T08:48:08.750Z"
+      }
+    },
+    {
+      "id": "step-8",
+      "label": "Trial 2: independently read committed effects",
+      "kind": "read",
+      "startedAt": "2026-10-26T08:48:08.770Z",
+      "durationMs": 0,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "Readback matched the control: effects {\"0\":1,\"1\":1,\"2\":1}; action attempts {\"0\":1,\"1\":1,\"2\":1}.",
+        "observedAt": "2026-10-26T08:48:08.770Z"
+      }
+    },
+    {
+      "id": "step-9",
+      "label": "Trial 3: start graph and reach the controlled cut",
+      "kind": "write",
+      "startedAt": "2026-10-26T08:48:08.770Z",
+      "durationMs": 242,
+      "toolStatus": "error",
+      "errorName": "WorkerExit",
+      "verification": {
+        "status": "verified",
+        "summary": "Observed the controlled exit 73 at the intended after-write checkpoint cut.",
+        "observedAt": "2026-10-26T08:48:09.012Z"
+      }
+    },
+    {
+      "id": "step-10",
+      "label": "Trial 3: read checkpoint and pending task writes",
+      "kind": "read",
+      "startedAt": "2026-10-26T08:48:09.134Z",
+      "durationMs": 0,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "Separate read-only inspection found checkpoint sequence 1 and 3 pending task writes.",
+        "observedAt": "2026-10-26T08:48:09.134Z"
+      }
+    },
+    {
+      "id": "step-11",
+      "label": "Trial 3: resume this thread in a fresh process",
+      "kind": "write",
+      "startedAt": "2026-10-26T08:48:09.134Z",
+      "durationMs": 301,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "The resumed graph returned normally and reported no pending next node.",
+        "observedAt": "2026-10-26T08:48:09.435Z"
+      }
+    },
+    {
+      "id": "step-12",
+      "label": "Trial 3: independently read committed effects",
+      "kind": "read",
+      "startedAt": "2026-10-26T08:48:09.455Z",
+      "durationMs": 0,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "Readback matched the control: effects {\"0\":1,\"1\":1,\"2\":1}; action attempts {\"0\":1,\"1\":1,\"2\":1}.",
+        "observedAt": "2026-10-26T08:48:09.455Z"
+      }
+    }
+  ]
+}

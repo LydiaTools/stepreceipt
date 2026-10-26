@@ -1,0 +1,399 @@
+{
+  "synthetic": true,
+  "capturedAt": "2026-10-26T08:48:11.985Z",
+  "issue": "https://github.com/langchain-ai/langgraph/issues/8039",
+  "framework": "LangGraph StateGraph with SQLite SqliteSaver",
+  "versions": {
+    "langgraph": "1.2.17",
+    "langgraph-checkpoint": "4.3.0",
+    "langgraph-checkpoint-sqlite": "3.1.2"
+  },
+  "crashCut": "task put_writes is held; a newer checkpoint put is attempted before the task write is persisted",
+  "resume": "same thread and checkpoint database, fresh Python process, invoke(None, durability=\"sync\")",
+  "network": "Python socket connect/DNS/sendto events denied by audit hook; no model/provider calls",
+  "repetitionsPerCase": 3,
+  "cases": [
+    {
+      "case": "completed-control",
+      "gate": 0,
+      "trials": [
+        {
+          "trial": 1,
+          "firstExit": 0,
+          "checkpoint": {
+            "checkpoint_sequence": 1,
+            "current_pending_write_count": 0,
+            "parent_sequence": 0,
+            "parent_pending_write_count": 2
+          },
+          "resumeExit": 0,
+          "versions": {
+            "langgraph": "1.2.17",
+            "langgraph-checkpoint": "4.3.0",
+            "langgraph-checkpoint-sqlite": "3.1.2"
+          },
+          "effects": {
+            "0": 1
+          },
+          "attempts": {
+            "0": 1
+          },
+          "eventNames": [
+            "graph_returned"
+          ]
+        },
+        {
+          "trial": 2,
+          "firstExit": 0,
+          "checkpoint": {
+            "checkpoint_sequence": 1,
+            "current_pending_write_count": 0,
+            "parent_sequence": 0,
+            "parent_pending_write_count": 2
+          },
+          "resumeExit": 0,
+          "versions": {
+            "langgraph": "1.2.17",
+            "langgraph-checkpoint": "4.3.0",
+            "langgraph-checkpoint-sqlite": "3.1.2"
+          },
+          "effects": {
+            "0": 1
+          },
+          "attempts": {
+            "0": 1
+          },
+          "eventNames": [
+            "graph_returned"
+          ]
+        },
+        {
+          "trial": 3,
+          "firstExit": 0,
+          "checkpoint": {
+            "checkpoint_sequence": 1,
+            "current_pending_write_count": 0,
+            "parent_sequence": 0,
+            "parent_pending_write_count": 2
+          },
+          "resumeExit": 0,
+          "versions": {
+            "langgraph": "1.2.17",
+            "langgraph-checkpoint": "4.3.0",
+            "langgraph-checkpoint-sqlite": "3.1.2"
+          },
+          "effects": {
+            "0": 1
+          },
+          "attempts": {
+            "0": 1
+          },
+          "eventNames": [
+            "graph_returned"
+          ]
+        }
+      ]
+    },
+    {
+      "case": "race-replay",
+      "gate": 1,
+      "trials": [
+        {
+          "trial": 1,
+          "firstExit": 73,
+          "checkpoint": {
+            "checkpoint_sequence": 1,
+            "current_pending_write_count": 0,
+            "parent_sequence": 0,
+            "parent_pending_write_count": 3
+          },
+          "resumeExit": 0,
+          "versions": {
+            "langgraph": "1.2.17",
+            "langgraph-checkpoint": "4.3.0",
+            "langgraph-checkpoint-sqlite": "3.1.2"
+          },
+          "effects": {
+            "0": 1,
+            "1": 2,
+            "2": 1
+          },
+          "attempts": {
+            "0": 1,
+            "1": 2,
+            "2": 1
+          },
+          "eventNames": [
+            "task_write_entered_gate",
+            "checkpoint_attempted_while_task_write_blocked"
+          ]
+        },
+        {
+          "trial": 2,
+          "firstExit": 73,
+          "checkpoint": {
+            "checkpoint_sequence": 1,
+            "current_pending_write_count": 0,
+            "parent_sequence": 0,
+            "parent_pending_write_count": 3
+          },
+          "resumeExit": 0,
+          "versions": {
+            "langgraph": "1.2.17",
+            "langgraph-checkpoint": "4.3.0",
+            "langgraph-checkpoint-sqlite": "3.1.2"
+          },
+          "effects": {
+            "0": 1,
+            "1": 2,
+            "2": 1
+          },
+          "attempts": {
+            "0": 1,
+            "1": 2,
+            "2": 1
+          },
+          "eventNames": [
+            "task_write_entered_gate",
+            "checkpoint_attempted_while_task_write_blocked"
+          ]
+        },
+        {
+          "trial": 3,
+          "firstExit": 73,
+          "checkpoint": {
+            "checkpoint_sequence": 1,
+            "current_pending_write_count": 0,
+            "parent_sequence": 0,
+            "parent_pending_write_count": 3
+          },
+          "resumeExit": 0,
+          "versions": {
+            "langgraph": "1.2.17",
+            "langgraph-checkpoint": "4.3.0",
+            "langgraph-checkpoint-sqlite": "3.1.2"
+          },
+          "effects": {
+            "0": 1,
+            "1": 2,
+            "2": 1
+          },
+          "attempts": {
+            "0": 1,
+            "1": 2,
+            "2": 1
+          },
+          "eventNames": [
+            "task_write_entered_gate",
+            "checkpoint_attempted_while_task_write_blocked"
+          ]
+        }
+      ]
+    },
+    {
+      "case": "ordered-write-control",
+      "gate": 0,
+      "trials": [
+        {
+          "trial": 1,
+          "firstExit": 73,
+          "checkpoint": {
+            "checkpoint_sequence": 1,
+            "current_pending_write_count": 3,
+            "parent_sequence": 0,
+            "parent_pending_write_count": 3
+          },
+          "resumeExit": 0,
+          "versions": {
+            "langgraph": "1.2.17",
+            "langgraph-checkpoint": "4.3.0",
+            "langgraph-checkpoint-sqlite": "3.1.2"
+          },
+          "effects": {
+            "0": 1,
+            "1": 1,
+            "2": 1
+          },
+          "attempts": {
+            "0": 1,
+            "1": 1,
+            "2": 1
+          },
+          "eventNames": [
+            "task_write_entered_gate",
+            "task_write_gate_released",
+            "task_write_committed",
+            "checkpoint_attempted_after_task_write"
+          ]
+        },
+        {
+          "trial": 2,
+          "firstExit": 73,
+          "checkpoint": {
+            "checkpoint_sequence": 1,
+            "current_pending_write_count": 3,
+            "parent_sequence": 0,
+            "parent_pending_write_count": 3
+          },
+          "resumeExit": 0,
+          "versions": {
+            "langgraph": "1.2.17",
+            "langgraph-checkpoint": "4.3.0",
+            "langgraph-checkpoint-sqlite": "3.1.2"
+          },
+          "effects": {
+            "0": 1,
+            "1": 1,
+            "2": 1
+          },
+          "attempts": {
+            "0": 1,
+            "1": 1,
+            "2": 1
+          },
+          "eventNames": [
+            "task_write_entered_gate",
+            "task_write_gate_released",
+            "task_write_committed",
+            "checkpoint_attempted_after_task_write"
+          ]
+        },
+        {
+          "trial": 3,
+          "firstExit": 73,
+          "checkpoint": {
+            "checkpoint_sequence": 1,
+            "current_pending_write_count": 3,
+            "parent_sequence": 0,
+            "parent_pending_write_count": 3
+          },
+          "resumeExit": 0,
+          "versions": {
+            "langgraph": "1.2.17",
+            "langgraph-checkpoint": "4.3.0",
+            "langgraph-checkpoint-sqlite": "3.1.2"
+          },
+          "effects": {
+            "0": 1,
+            "1": 1,
+            "2": 1
+          },
+          "attempts": {
+            "0": 1,
+            "1": 1,
+            "2": 1
+          },
+          "eventNames": [
+            "task_write_entered_gate",
+            "task_write_gate_released",
+            "task_write_committed",
+            "checkpoint_attempted_after_task_write"
+          ]
+        }
+      ]
+    },
+    {
+      "case": "stable-key-control",
+      "gate": 0,
+      "trials": [
+        {
+          "trial": 1,
+          "firstExit": 73,
+          "checkpoint": {
+            "checkpoint_sequence": 1,
+            "current_pending_write_count": 0,
+            "parent_sequence": 0,
+            "parent_pending_write_count": 3
+          },
+          "resumeExit": 0,
+          "versions": {
+            "langgraph": "1.2.17",
+            "langgraph-checkpoint": "4.3.0",
+            "langgraph-checkpoint-sqlite": "3.1.2"
+          },
+          "effects": {
+            "0": 1,
+            "1": 1,
+            "2": 1
+          },
+          "attempts": {
+            "0": 1,
+            "1": 2,
+            "2": 1
+          },
+          "eventNames": [
+            "task_write_entered_gate",
+            "checkpoint_attempted_while_task_write_blocked"
+          ]
+        },
+        {
+          "trial": 2,
+          "firstExit": 73,
+          "checkpoint": {
+            "checkpoint_sequence": 1,
+            "current_pending_write_count": 0,
+            "parent_sequence": 0,
+            "parent_pending_write_count": 3
+          },
+          "resumeExit": 0,
+          "versions": {
+            "langgraph": "1.2.17",
+            "langgraph-checkpoint": "4.3.0",
+            "langgraph-checkpoint-sqlite": "3.1.2"
+          },
+          "effects": {
+            "0": 1,
+            "1": 1,
+            "2": 1
+          },
+          "attempts": {
+            "0": 1,
+            "1": 2,
+            "2": 1
+          },
+          "eventNames": [
+            "task_write_entered_gate",
+            "checkpoint_attempted_while_task_write_blocked"
+          ]
+        },
+        {
+          "trial": 3,
+          "firstExit": 73,
+          "checkpoint": {
+            "checkpoint_sequence": 1,
+            "current_pending_write_count": 0,
+            "parent_sequence": 0,
+            "parent_pending_write_count": 3
+          },
+          "resumeExit": 0,
+          "versions": {
+            "langgraph": "1.2.17",
+            "langgraph-checkpoint": "4.3.0",
+            "langgraph-checkpoint-sqlite": "3.1.2"
+          },
+          "effects": {
+            "0": 1,
+            "1": 1,
+            "2": 1
+          },
+          "attempts": {
+            "0": 1,
+            "1": 2,
+            "2": 1
+          },
+          "eventNames": [
+            "task_write_entered_gate",
+            "checkpoint_attempted_while_task_write_blocked"
+          ]
+        }
+      ]
+    }
+  ],
+  "decision": {
+    "race_reproduced_three_of_three": true,
+    "ordered_control_passed_three_of_three": true,
+    "stable_key_control_passed_three_of_three": true,
+    "completed_control_passed_three_of_three": true,
+    "eligible_for_example": true
+  }
+}

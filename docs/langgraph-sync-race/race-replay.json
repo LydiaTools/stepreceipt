@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "title": "Task write is still pending when the checkpoint advances.",
+  "startedAt": "2026-10-26T08:48:02.520Z",
+  "steps": [
+    {
+      "id": "step-1",
+      "label": "Trial 1: start graph and reach the controlled cut",
+      "kind": "write",
+      "startedAt": "2026-10-26T08:48:02.520Z",
+      "durationMs": 252,
+      "toolStatus": "error",
+      "errorName": "WorkerExit",
+      "verification": {
+        "status": "verified",
+        "summary": "Observed the controlled exit 73 at the intended write-pending checkpoint cut.",
+        "observedAt": "2026-10-26T08:48:02.772Z"
+      }
+    },
+    {
+      "id": "step-2",
+      "label": "Trial 1: read checkpoint and pending task writes",
+      "kind": "read",
+      "startedAt": "2026-10-26T08:48:02.895Z",
+      "durationMs": 0,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "Separate read-only inspection found checkpoint sequence 1 and 0 pending task writes.",
+        "observedAt": "2026-10-26T08:48:02.895Z"
+      }
+    },
+    {
+      "id": "step-3",
+      "label": "Trial 1: resume this thread in a fresh process",
+      "kind": "write",
+      "startedAt": "2026-10-26T08:48:02.895Z",
+      "durationMs": 288,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "The resumed graph returned normally and reported no pending next node.",
+        "observedAt": "2026-10-26T08:48:03.183Z"
+      }
+    },
+    {
+      "id": "step-4",
+      "label": "Trial 1: independently read committed effects",
+      "kind": "read",
+      "startedAt": "2026-10-26T08:48:03.203Z",
+      "durationMs": 0,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "rejected",
+        "summary": "The negative case reproduced as designed: 2 committed effects for logical sequence 1. The exactly-one-effect check correctly blocks this run.",
+        "observedAt": "2026-10-26T08:48:03.203Z"
+      }
+    },
+    {
+      "id": "step-5",
+      "label": "Trial 2: start graph and reach the controlled cut",
+      "kind": "write",
+      "startedAt": "2026-10-26T08:48:03.203Z",
+      "durationMs": 251,
+      "toolStatus": "error",
+      "errorName": "WorkerExit",
+      "verification": {
+        "status": "verified",
+        "summary": "Observed the controlled exit 73 at the intended write-pending checkpoint cut.",
+        "observedAt": "2026-10-26T08:48:03.455Z"
+      }
+    },
+    {
+      "id": "step-6",
+      "label": "Trial 2: read checkpoint and pending task writes",
+      "kind": "read",
+      "startedAt": "2026-10-26T08:48:03.730Z",
+      "durationMs": 0,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "Separate read-only inspection found checkpoint sequence 1 and 0 pending task writes.",
+        "observedAt": "2026-10-26T08:48:03.730Z"
+      }
+    },
+    {
+      "id": "step-7",
+      "label": "Trial 2: resume this thread in a fresh process",
+      "kind": "write",
+      "startedAt": "2026-10-26T08:48:03.730Z",
+      "durationMs": 1530,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "The resumed graph returned normally and reported no pending next node.",
+        "observedAt": "2026-10-26T08:48:05.260Z"
+      }
+    },
+    {
+      "id": "step-8",
+      "label": "Trial 2: independently read committed effects",
+      "kind": "read",
+      "startedAt": "2026-10-26T08:48:05.284Z",
+      "durationMs": 0,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "rejected",
+        "summary": "The negative case reproduced as designed: 2 committed effects for logical sequence 1. The exactly-one-effect check correctly blocks this run.",
+        "observedAt": "2026-10-26T08:48:05.284Z"
+      }
+    },
+    {
+      "id": "step-9",
+      "label": "Trial 3: start graph and reach the controlled cut",
+      "kind": "write",
+      "startedAt": "2026-10-26T08:48:05.284Z",
+      "durationMs": 384,
+      "toolStatus": "error",
+      "errorName": "WorkerExit",
+      "verification": {
+        "status": "verified",
+        "summary": "Observed the controlled exit 73 at the intended write-pending checkpoint cut.",
+        "observedAt": "2026-10-26T08:48:05.668Z"
+      }
+    },
+    {
+      "id": "step-10",
+      "label": "Trial 3: read checkpoint and pending task writes",
+      "kind": "read",
+      "startedAt": "2026-10-26T08:48:05.796Z",
+      "durationMs": 0,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "Separate read-only inspection found checkpoint sequence 1 and 0 pending task writes.",
+        "observedAt": "2026-10-26T08:48:05.796Z"
+      }
+    },
+    {
+      "id": "step-11",
+      "label": "Trial 3: resume this thread in a fresh process",
+      "kind": "write",
+      "startedAt": "2026-10-26T08:48:05.796Z",
+      "durationMs": 304,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "The resumed graph returned normally and reported no pending next node.",
+        "observedAt": "2026-10-26T08:48:06.100Z"
+      }
+    },
+    {
+      "id": "step-12",
+      "label": "Trial 3: independently read committed effects",
+      "kind": "read",
+      "startedAt": "2026-10-26T08:48:06.121Z",
+      "durationMs": 0,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "rejected",
+        "summary": "The negative case reproduced as designed: 2 committed effects for logical sequence 1. The exactly-one-effect check correctly blocks this run.",
+        "observedAt": "2026-10-26T08:48:06.121Z"
+      }
+    }
+  ]
+}

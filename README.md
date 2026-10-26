@@ -122,6 +122,16 @@ The bridge does not infer success from generated text or retry the action. This 
 
 ![Actual synthetic LangGraph restart report: the resumed worker returned normally; independent readback found two drafts and failed the exactly-one-draft check](docs/assets/langgraph-replay.png)
 
+## Reproduce a LangGraph checkpoint-ordering race
+
+**The task write was still held when a newer checkpoint reached the saver boundary.** In a controlled LangGraph 1.2.17 fixture, resume replayed the unfinished action and committed a second effect in all three repetitions. The example also includes a completed baseline, an ordered-write control, and a stable-operation-key control.
+
+[Run the four cases](docs/LANGGRAPH-SYNC-RACE.md) · [Open the replay report](https://lydiatools.github.io/stepreceipt/langgraph-sync-race/race-replay.html) · [Chinese guide](docs/LANGGRAPH-SYNC-RACE.zh-CN.md)
+
+![Actual StepReceipt report from the deterministic LangGraph checkpoint-ordering reproduction](docs/assets/langgraph-sync-race/race-replay.png)
+
+This is an original synthetic SQLite reproduction informed by [LangGraph #8039](https://github.com/langchain-ai/langgraph/issues/8039), which already includes its own reproduction. StepReceipt adds a separate event-gated run with portable reports and explicit controls; it does not patch LangGraph or imply upstream endorsement. The existing [process-restart example](docs/LANGGRAPH.md) covers a different crash point and remains pinned separately.
+
 ## Put a recovery gate and a receipt in the same browser run
 
 The [optional Blueprint integration](docs/BLUEPRINT-INTEGRATION.md) connects Browser Agent Blueprint's pinned write-ahead controller to StepReceipt's real browser action, separate readback, CLI gate, and HTML report. It runs three local synthetic cases: a saved draft whose UI confirmation times out, a failed readback that must stay unknown, and an unguarded retry that creates a duplicate. The first two reload the journal into a fresh controller and show whether another dispatch is refused.

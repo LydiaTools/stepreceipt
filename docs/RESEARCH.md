@@ -21,6 +21,8 @@ On 2026-10-20, [LangGraph #9240](https://github.com/langchain-ai/langgraph/issue
 
 Instead of creating another workflow engine, this repository adds an optional [fresh-process crash/restart fixture](LANGGRAPH.md) using the public StateGraph API. Its narrow additional value is a real process exit after a separate business commit, portable action/observation reports, a completed-node control, and a negative-case CLI gate. It does not patch LangGraph or claim the underlying pattern is novel. The target database, not this recorder, implements transactional deduplication. Whether real developers will use these reports remains unverified.
 
+On 2026-10-26, a separate [event-gated reproduction](LANGGRAPH-SYNC-RACE.md) was run against LangGraph 1.2.17, checkpoint 4.3.0 and SQLite saver 3.1.2. The pending task-write/checkpoint cut reproduced a second effect in 3/3 isolated runs; the ordered-write and stable-key controls each matched their stated result in 3/3 runs. This is evidence for that synthetic SQLite case only. It does not imply broad framework behavior, an upstream fix, independent user demand, or endorsement.
+
 ## Page-change evidence is a useful slice, not a new verification engine
 
 Research snapshot: 2026-10-24. These sources show active discussion and adjacent tools; they do not establish demand for StepReceipt specifically.

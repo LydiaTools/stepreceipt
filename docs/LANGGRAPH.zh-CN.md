@@ -36,6 +36,6 @@ PowerShell 命令见[英文页](LANGGRAPH.md#run-it)。安装阶段会下载 Pyt
 
 固定 LangGraph 1.2.16、checkpoint 4.3.0、SQLite saver 3.1.2 及已解析的 Python 依赖。这里只测一个同步单节点图、单线程任务、业务事务提交后的进程退出，以及最新检查点恢复。没有验证断电、操作系统或存储损坏、并发工作进程、旧检查点回放、Cloud、分布式 saver、生产 API 或模型行为。它是可运行的接入示例，不是通用 SDK 适配器，也不提供普遍的“恰好执行一次”保证。
 
-官方[检查点文档](https://docs.langchain.com/oss/python/langgraph/checkpointers#durability-modes)说明持久化时机，[幂等说明](https://docs.langchain.com/oss/python/langgraph/functional-api#idempotency)讨论未完成任务的重放。[#9240](https://github.com/langchain-ai/langgraph/issues/9240)已有相关讨论与其他示例；[#8039](https://github.com/langchain-ai/langgraph/issues/8039)是另一个检查点写入顺序问题，本例没有复现或修复它。它们不代表上游认可或已验证的产品需求。
+官方[检查点文档](https://docs.langchain.com/oss/python/langgraph/checkpointers#durability-modes)说明持久化时机，[幂等说明](https://docs.langchain.com/oss/python/langgraph/functional-api#idempotency)讨论未完成任务的重放。[#9240](https://github.com/langchain-ai/langgraph/issues/9240)已有相关讨论与其他示例。本页的进程崩溃夹具没有复现或修复 [#8039](https://github.com/langchain-ai/langgraph/issues/8039) 中另一种写入顺序竞态；该问题另有[事件门控复现](LANGGRAPH-SYNC-RACE.zh-CN.md)。Issue 和社区示例不等于 StepReceipt 的市场需求或上游认可。
 
 本例的价值是跨进程故障复现、可分享的动作/观察报告和必须失败的反例检查。代码为本仓库编写，没有复制上游或评论中的实现；外部 LangGraph 依赖单独安装并保留包内许可。

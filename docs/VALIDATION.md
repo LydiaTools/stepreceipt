@@ -1,5 +1,18 @@
 # Validation
 
+## LangGraph checkpoint-ordering reproduction (v0.7.0 local run)
+
+Checked on 2026-10-26 with Python 3.12.13, LangGraph 1.2.17, langgraph-checkpoint 4.3.0, SQLite saver 3.1.2, Node.js 22.23.0 and Google Chrome 156.0.8078.47. The original fixture used fresh business/checkpoint databases and three independent repetitions per case. Python socket connect, DNS and send-to audit events were denied during each worker process; no provider/model was called.
+
+| Case | Initial process exit | Pending task writes at inspection | Relevant action/effect count after resume | `--check` exit |
+| --- | ---: | ---: | ---: | ---: |
+| Completed control | 0 | 0 | 1 / 1 (sequence 0) | 0 |
+| Held task-write race | 73 | 0 | 2 / 2 | 1 |
+| Ordered-write control | 73 | 3 | 1 / 1 | 0 |
+| Stable operation-key control | 73 | 0 | 2 / 1 | 0 |
+
+All four expected results repeated 3/3. The generated [measurements](langgraph-sync-race/measurements.json), four StepReceipt JSON/HTML reports and the README screenshot come from this run. Exit 1 is the intended report gate for the duplicated effect; the demo runner itself exits successfully only when that negative case and every control match the declared outcome. This is a controlled local SQLite reproduction informed by LangGraph #8039, not a patch, broad framework guarantee, production-saver test or upstream endorsement.
+
 ## Python browser-use bridge (v0.6.0 local validation)
 
 Checked on 2026-10-25 with Python 3.12.13, browser-use 0.13.11 from PyPI, Node.js 22.23.0 and Google Chrome 156.0.8078.47. The native `Tools.navigate`, selector-map and `Tools.click` APIs ran in a fresh local profile. No `Agent.run`, model or provider was invoked. GitHub's 0.13.13 tag was checked separately from PyPI; PyPI had no same-version release at that check, so the example pins the installable 0.13.11.

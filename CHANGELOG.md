@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.7.0 — LangGraph checkpoint-ordering reproduction
+
+- Add an original event-gated LangGraph 1.2.17 fixture informed by issue #8039, with fresh-process resume and four isolated cases repeated three times each.
+- Record checkpoint state, pending task writes, action attempts and independently read committed effects in StepReceipt reports.
+- Include the expected rejected replay case, completed baseline, ordered-write control and transactional stable-key control.
+- Add English and Chinese run guides and actual report links. The fixture does not patch LangGraph or claim upstream endorsement.
+
 ## 0.6.0 — Python browser-use outcome checks
 
 - Add an optional dependency-free Python bridge for native browser-use ActionResult and explicit independent checks. Raw result/error text stays out of the receipt; no retry is added.

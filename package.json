@@ -1,6 +1,6 @@
 {
   "name": "stepreceipt",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "module",
   "description": "Record browser-agent actions beside explicit outcome checks; export portable HTML reports and CI summaries.",
   "license": "MIT",

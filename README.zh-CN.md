@@ -108,6 +108,16 @@ node bin/stepreceipt.mjs artifacts/demo/run.json --summary receipt-summary.md --
 
 ![真实模拟任务截图：恢复进程正常返回，但独立读取发现两条草稿，因此检查未通过](docs/assets/langgraph-replay.png)
 
+## 复现 LangGraph 检查点写入顺序竞态
+
+**task write 仍被挂起时，更新的 checkpoint 已到达 saver 边界。** 在 LangGraph 1.2.17 的受控夹具中，恢复流程再次执行未完成动作，3 次都提交了第二个效果。示例还包含正常完成基线、先提交 task write 的顺序对照，以及稳定操作键对照。
+
+[运行四个场景](docs/LANGGRAPH-SYNC-RACE.zh-CN.md) · [打开重复执行报告](https://lydiatools.github.io/stepreceipt/langgraph-sync-race/race-replay.html) · [English guide](docs/LANGGRAPH-SYNC-RACE.md)
+
+![LangGraph 检查点写入顺序受控复现的真实 StepReceipt 报告](docs/assets/langgraph-sync-race/race-replay.png)
+
+这是参考 [LangGraph #8039](https://github.com/langchain-ai/langgraph/issues/8039) 编写的原创合成 SQLite 复现；该 Issue 已包含作者自己的复现。本项目补充了独立的事件门控运行、可分享报告和明确对照组；没有修改 LangGraph，也不表示上游认可。已有的[跨进程重启示例](docs/LANGGRAPH.zh-CN.md)覆盖另一种退出点，并独立固定依赖版本。
+
 ## 把恢复闸门和回执放进同一次浏览器运行
 
 [Blueprint 整合示例](docs/BLUEPRINT-INTEGRATION.zh-CN.md) 把 Browser Agent Blueprint 的写前检查点接到 StepReceipt 的真实浏览器动作、独立读回、CLI 检查和 HTML 报告。它运行三组本地合成场景：草稿已保存但界面确认超时、读回失败必须保持未知、未加保护的重试造成重复。前两组会从磁盘把日志载入新控制器，再观察它是否拒绝再次写入。

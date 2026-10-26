@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="description" content="StepReceipt puts browser-agent actions beside explicit observations. Open a local run JSON and export a standalone HTML report.">
+<title>StepReceipt — See what happened after the click</title><style>
+:root{color-scheme:light;--ink:#142640;--muted:#53647b;--blue:#265ed7;--line:#d9e1ee;--paper:#f3f6fb;--green:#176d50;--amber:#885b0b}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input{font:inherit}button,a,label{touch-action:manipulation}a{color:var(--blue);text-underline-offset:4px}button,.file-label{cursor:pointer}button:focus-visible,a:focus-visible,.file-label:focus-within{outline:3px solid #ae79f3;outline-offset:4px}header,main,footer{max-width:1200px;margin:auto;padding:28px 40px}.topbar{display:flex;align-items:center;gap:24px;flex-wrap:wrap}.brand{font-size:23px;font-weight:800;letter-spacing:-.8px;color:var(--ink);text-decoration:none}.brand-mark{display:inline-grid;place-items:center;width:27px;height:32px;background:var(--blue);color:white;border-radius:2px 8px 2px 2px;margin-right:9px;font-size:18px}.topbar .source{margin-left:auto;font-size:14px}.language{border:1px solid var(--line);background:white;padding:6px 12px;border-radius:5px}.hero{padding:38px 0 25px;max-width:820px}.hero h1{font-size:clamp(36px,4.3vw,54px);line-height:1.1;letter-spacing:-2px;margin:0 0 18px;font-weight:760}.hero p{font-size:19px;color:var(--muted);margin:0}.toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:7px 0}.file-label, #download{padding:10px 16px;border-radius:5px;border:1px solid #bccbe2;background:white;color:var(--ink);font-weight:650}.file-label{background:var(--blue);color:white;border-color:var(--blue)}#file{position:absolute;opacity:0;width:1px;height:1px}#notice:empty{display:none}#notice{color:#a52828;max-width:75ch}.privacy{font-size:13px;color:var(--muted);margin:14px 0 0}.run-header{padding:22px 0 20px;border-top:1px solid var(--line)}.run-header h2{font-size:23px;margin:0 0 4px}.run-date{font:12px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--muted)}.stats{display:grid;grid-template-columns:repeat(5,1fr);border-block:1px solid var(--line);padding:14px 0;margin-bottom:28px}.stat{padding:0 20px;border-left:1px solid var(--line)}.stat:first-child{border:0;padding-left:0}.stat strong{display:block;font-size:31px;line-height:1.2}.stat span{font-size:13px;color:var(--muted)}.workspace{display:grid;grid-template-columns:300px 1fr;gap:26px}.timeline-heading{font-size:14px;margin:0 0 12px;font-weight:650}.step{display:flex;width:100%;align-items:flex-start;text-align:left;padding:16px 12px;border:0;border-left:3px solid #cbd7eb;background:none;border-radius:0;color:var(--ink);gap:12px}.step+.step{margin-top:7px}.step.selected{background:#e5edfd;border-color:var(--blue)}.step:hover{background:#e8eef8}.number{font:13px/1.6 ui-monospace,monospace;color:var(--muted);padding-top:2px}.step-content{display:block}.step-content strong{font-size:15px;line-height:1.4;display:block}.step-caption{display:block;font-size:12px;color:var(--muted);margin-top:6px}.detail-heading{display:flex;align-items:baseline;gap:15px;margin-bottom:18px}.position{font:13px ui-monospace,monospace;color:var(--muted);white-space:nowrap}.detail-heading h2{font-size:25px;line-height:1.25;margin:0}.page-evidence{padding:0 0 16px;margin:0 0 18px;border-bottom:1px solid var(--line)}.page-evidence h3{margin:0 0 4px}.page-evidence .page-state{display:block;font-size:17px;line-height:1.35;margin:0 0 4px}.page-evidence p{margin:0 0 4px;font-size:13px;color:var(--muted)}.comparison{display:grid;grid-template-columns:1fr 1fr;background:white;border:1px solid var(--line);border-radius:8px;overflow:hidden}.observation{padding:24px;min-width:0;overflow-wrap:anywhere}.observation+ .observation{border-left:1px solid var(--line)}h3{font-size:13px;font-weight:600;margin:0 0 19px;color:var(--muted)}.result{display:block;font-size:22px;line-height:1.2;margin:0 0 17px}.observation p{margin:0 0 16px;max-width:48ch}.error .result{color:var(--amber)}.verified .result{color:var(--green)}.rejected .result{color:#a43332}.unknown .result{color:var(--amber)}.meta{font-size:12px;color:var(--muted)}.advice{padding:20px 22px;border-left:3px solid #839ec7;margin-top:20px;background:#eaf0f8}.advice h3{margin-bottom:8px;color:var(--ink)}.advice p{margin:0;font-size:14px}.raw-wrap{margin-top:30px}details{border-top:1px solid var(--line);padding-top:18px}summary{cursor:pointer;color:var(--muted);font-size:14px}pre{font:12px/1.6 ui-monospace,monospace;white-space:pre-wrap;overflow-wrap:anywhere;background:white;border:1px solid var(--line);padding:20px;max-height:500px;overflow:auto}footer{font-size:13px;color:var(--muted);padding-bottom:36px}footer p{max-width:90ch}button{transition:background .12s}@media(max-width:760px){header,main,footer{padding:22px}.hero{padding-top:32px}.hero h1{letter-spacing:-1px}.workspace{grid-template-columns:1fr;gap:24px}#detail{grid-row:1}.workspace aside{grid-row:2}.toolbar .file-label,.toolbar #download{font-size:14px;padding:9px 12px}.comparison{grid-template-columns:1fr}.observation+.observation{border-left:0;border-top:1px solid var(--line)}.observation{padding:20px}.stats{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px 0}.stat{padding:0 10px}.stat:nth-child(4){border:0;padding-left:0}.stat strong{font-size:26px}.stat span{font-size:11px}.topbar{gap:14px}.topbar .source{font-size:12px}.detail-heading h2{font-size:23px}#timeline{display:grid;grid-template-columns:1fr}.step{padding-block:12px}.hero p{font-size:17px}.privacy{font-size:12px}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body>
+<header><nav class="topbar" aria-label="Main"><a class="brand" href="https://github.com/LydiaTools/stepreceipt"><span class="brand-mark" aria-hidden="true">✓</span>StepReceipt</a><a class="source" data-word="source" href="https://github.com/LydiaTools/stepreceipt#quick-start">Source & setup</a><button class="language" id="language">中文</button></nav>
+<div class="hero"><h1 data-word="headline">See what happened after the click.</h1><p data-word="sub">Tool results and observations, side by side.</p></div>
+<div class="toolbar"><label class="file-label"><span data-word="load">Open run JSON</span><input id="file" type="file" accept="application/json,.json" aria-label="Open a StepReceipt JSON file"></label><button id="download" data-word="download">Download this report</button></div>
+<p class="privacy" data-word="local"></p><p id="notice" role="alert"></p></header>
+<main><section class="run-header"><h2 id="run-title"></h2><span class="run-date" id="run-date"></span></section>
+<section class="stats" aria-label="Run summary"><div class="stat"><strong id="count-steps">0</strong><span data-word="steps"></span></div><div class="stat"><strong id="count-verified">0</strong><span data-word="verified"></span></div><div class="stat"><strong id="count-rejected">0</strong><span data-word="rejected"></span></div><div class="stat"><strong id="count-unknown">0</strong><span data-word="unknown"></span></div><div class="stat"><strong id="count-errors">0</strong><span data-word="errors"></span></div></section>
+<div class="workspace"><aside><h2 class="timeline-heading" data-word="timeline"></h2><div id="timeline"></div></aside><section id="detail" aria-label="Selected step" aria-live="polite"></section></div>
+<div class="raw-wrap"><details><summary data-word="raw"></summary><pre id="raw"></pre></details></div></main>
+<footer><p data-word="footer"></p><a href="https://github.com/LydiaTools">Made by LydiaTools</a></footer>
+<script id="receipt-data" type="application/json">{"schemaVersion":1,"title":"Control: commit a stable operation key with the effect.","startedAt":"2026-10-26T08:48:09.481Z","steps":[{"id":"step-1","label":"Trial 1: start graph and reach the controlled cut","kind":"write","startedAt":"2026-10-26T08:48:09.481Z","durationMs":269,"toolStatus":"error","errorName":"WorkerExit","verification":{"status":"verified","summary":"Observed the controlled exit 73 at the intended write-pending checkpoint cut.","observedAt":"2026-10-26T08:48:09.750Z"}},{"id":"step-2","label":"Trial 1: read checkpoint and pending task writes","kind":"read","startedAt":"2026-10-26T08:48:09.873Z","durationMs":0,"toolStatus":"ok","verification":{"status":"verified","summary":"Separate read-only inspection found checkpoint sequence 1 and 0 pending task writes.","observedAt":"2026-10-26T08:48:09.873Z"}},{"id":"step-3","label":"Trial 1: resume this thread in a fresh process","kind":"write","startedAt":"2026-10-26T08:48:09.873Z","durationMs":394,"toolStatus":"ok","verification":{"status":"verified","summary":"The resumed graph returned normally and reported no pending next node.","observedAt":"2026-10-26T08:48:10.267Z"}},{"id":"step-4","label":"Trial 1: independently read committed effects","kind":"read","startedAt":"2026-10-26T08:48:10.289Z","durationMs":0,"toolStatus":"ok","verification":{"status":"verified","summary":"Readback matched the control: effects {\"0\":1,\"1\":1,\"2\":1}; action attempts {\"0\":1,\"1\":2,\"2\":1}.","observedAt":"2026-10-26T08:48:10.289Z"}},{"id":"step-5","label":"Trial 2: start graph and reach the controlled cut","kind":"write","startedAt":"2026-10-26T08:48:10.289Z","durationMs":321,"toolStatus":"error","errorName":"WorkerExit","verification":{"status":"verified","summary":"Observed the controlled exit 73 at the intended write-pending checkpoint cut.","observedAt":"2026-10-26T08:48:10.610Z"}},{"id":"step-6","label":"Trial 2: read checkpoint and pending task writes","kind":"read","startedAt":"2026-10-26T08:48:10.853Z","durationMs":0,"toolStatus":"ok","verification":{"status":"verified","summary":"Separate read-only inspection found checkpoint sequence 1 and 0 pending task writes.","observedAt":"2026-10-26T08:48:10.853Z"}},{"id":"step-7","label":"Trial 2: resume this thread in a fresh process","kind":"write","startedAt":"2026-10-26T08:48:10.853Z","durationMs":308,"toolStatus":"ok","verification":{"status":"verified","summary":"The resumed graph returned normally and reported no pending next node.","observedAt":"2026-10-26T08:48:11.161Z"}},{"id":"step-8","label":"Trial 2: independently read committed effects","kind":"read","startedAt":"2026-10-26T08:48:11.182Z","durationMs":0,"toolStatus":"ok","verification":{"status":"verified","summary":"Readback matched the control: effects {\"0\":1,\"1\":1,\"2\":1}; action attempts {\"0\":1,\"1\":2,\"2\":1}.","observedAt":"2026-10-26T08:48:11.182Z"}},{"id":"step-9","label":"Trial 3: start graph and reach the controlled cut","kind":"write","startedAt":"2026-10-26T08:48:11.182Z","durationMs":252,"toolStatus":"error","errorName":"WorkerExit","verification":{"status":"verified","summary":"Observed the controlled exit 73 at the intended write-pending checkpoint cut.","observedAt":"2026-10-26T08:48:11.435Z"}},{"id":"step-10","label":"Trial 3: read checkpoint and pending task writes","kind":"read","startedAt":"2026-10-26T08:48:11.573Z","durationMs":0,"toolStatus":"ok","verification":{"status":"verified","summary":"Separate read-only inspection found checkpoint sequence 1 and 0 pending task writes.","observedAt":"2026-10-26T08:48:11.573Z"}},{"id":"step-11","label":"Trial 3: resume this thread in a fresh process","kind":"write","startedAt":"2026-10-26T08:48:11.573Z","durationMs":312,"toolStatus":"ok","verification":{"status":"verified","summary":"The resumed graph returned normally and reported no pending next node.","observedAt":"2026-10-26T08:48:11.885Z"}},{"id":"step-12","label":"Trial 3: independently read committed effects","kind":"read","startedAt":"2026-10-26T08:48:11.959Z","durationMs":0,"toolStatus":"ok","verification":{"status":"verified","summary":"Readback matched the control: effects {\"0\":1,\"1\":1,\"2\":1}; action attempts {\"0\":1,\"1\":2,\"2\":1}.","observedAt":"2026-10-26T08:48:11.959Z"}}]}</script><script>const normalizePageEvidence = function normalizePageEvidence(input) {
+  const pageSignals = new Set(['url', 'title', 'visible_text', 'controls']);
+  const object = (value) => value && typeof value === 'object' && !Array.isArray(value);
+  const captureStatus = input?.captureStatus;
+  const outcome = input?.outcome;
+  const beforeCaptured = input?.beforeCaptured;
+  const afterCaptured = input?.afterCaptured;
+  const signals = input?.signals;
+  if (!object(input) || !['complete', 'partial', 'unavailable'].includes(captureStatus) ||
+      !['changed', 'no_visible_change', 'unavailable'].includes(outcome) ||
+      typeof beforeCaptured !== 'boolean' || typeof afterCaptured !== 'boolean' ||
+      !Array.isArray(signals) || signals.length > pageSignals.size ||
+      signals.some((signal) => !pageSignals.has(signal)) || new Set(signals).size !== signals.length) {
+    throw new TypeError('Invalid page evidence.');
+  }
+  const complete = beforeCaptured && afterCaptured;
+  if ((captureStatus === 'complete') !== complete ||
+      (captureStatus === 'partial') !== (beforeCaptured !== afterCaptured) ||
+      (captureStatus === 'unavailable') !== (!beforeCaptured && !afterCaptured) ||
+      (captureStatus === 'complete' && outcome === 'unavailable') ||
+      (captureStatus !== 'complete' && (outcome !== 'unavailable' || signals.length !== 0)) ||
+      (outcome === 'changed' && signals.length === 0) ||
+      (outcome === 'no_visible_change' && signals.length !== 0)) {
+    throw new TypeError('Page evidence fields do not describe a consistent capture.');
+  }
+  return { captureStatus, outcome, beforeCaptured, afterCaptured, signals: [...signals] };
+}; (function boot(normalizeRun) {
+  const $ = (id) => document.getElementById(id);
+  let run = normalizeRun(JSON.parse($('receipt-data').textContent));
+  function initialStep() {
+    for (const match of [
+      (step) => step.kind === 'write' && step.verification.status !== 'verified',
+      (step) => step.verification.status !== 'verified',
+      (step) => step.toolStatus === 'error',
+    ]) {
+      const index = run.steps.findIndex(match);
+      if (index >= 0) return index;
+    }
+    return 0;
+  }
+  let selected = initialStep();
+  let lang = 'en';
+  const words = {
+    en: {
+      headline: 'See what happened after the click.', sub: 'Tool results and observations, side by side.',
+      load: 'Open JSON', download: 'Save HTML report', source: 'Source & setup', example: 'Local fixture demo',
+      steps: 'Recorded steps', verified: 'Checks passed', rejected: 'Checks failed', unknown: 'Unknown outcomes', errors: 'Tool errors',
+      timeline: 'Run timeline', attempted: 'What the tool returned', observed: 'What was checked afterward',
+      pageSignals: 'Page signals', pageChanged: 'Visible page changes detected', pageUnchanged: 'No visible change detected', pagePartial: 'Some page signals were unavailable', pageUnavailable: 'Page signals unavailable',
+      pageUrl: 'URL', pageTitle: 'Title', pageText: 'Visible text', pageControls: 'Control count', pageBoundary: 'A page change is context, not proof that the requested task succeeded.',
+      ok: 'Returned normally', error: 'Returned an error', read: 'Read', write: 'Write',
+      vverified: 'Verified', vrejected: 'Check failed', vunknown: 'Not verified', duration: 'Duration',
+      next: 'Before the next action', raw: 'Inspect the exported JSON', empty: 'No steps recorded yet.',
+      unknownAdvice: 'Observe the target before repeating a write. This report has no confirmed outcome for this step.',
+      rejectedAdvice: 'The check did not pass. Inspect the observation before choosing a recovery.',
+      verifiedAdvice: 'The observation passed. Decide whether any further action is necessary.',
+      footer: 'Checks are supplied by your code. StepReceipt does not independently verify them or replay actions. Review task details before sharing.',
+      local: 'File import and report rendering run in this page. No upload endpoint, analytics, or account.',
+      jsonError: 'Could not open this file: ', fileSize: 'Use a JSON file smaller than 2 MB.',
+    },
+    zh: {
+      headline: '点击之后，到底发生了什么？', sub: '把工具返回和后续观察放在一起看。',
+      load: '打开运行 JSON', download: '下载这份报告', source: '源码与上手', example: '本地测试页演示',
+      steps: '已记录步骤', verified: '检查通过', rejected: '检查未通过', unknown: '结果未知', errors: '工具报错',
+      timeline: '运行时间线', attempted: '工具返回了什么', observed: '随后检查到了什么',
+      pageSignals: '页面信号', pageChanged: '检测到页面可见变化', pageUnchanged: '没有检测到可见变化', pagePartial: '部分页面信号不可用', pageUnavailable: '页面信号暂不可用',
+      pageUrl: '网址', pageTitle: '标题', pageText: '可见文本', pageControls: '控件数量', pageBoundary: '页面发生变化只能作为线索，不能证明任务结果正确。',
+      ok: '正常返回', error: '返回错误', read: '读取', write: '写入',
+      vverified: '已核验', vrejected: '检查未通过', vunknown: '尚未核验', duration: '耗时',
+      next: '下一步操作之前', raw: '查看导出的 JSON', empty: '尚未记录步骤。',
+      unknownAdvice: '重复写入之前，先观察目标状态。这一步还没有已确认的结果。',
+      rejectedAdvice: '这次检查未通过。先查看观察结果，再选择恢复方式。',
+      verifiedAdvice: '这次观察检查通过了。请判断是否还需要后续操作。',
+      footer: '检查结果由接入代码提供。StepReceipt 不会独立验证它们，也不会重放操作。分享前请检查任务详情。',
+      local: '文件读取与报告渲染都在当前页面完成，无上传接口、统计或账号。',
+      jsonError: '无法打开该文件：', fileSize: '请选择小于 2 MB 的 JSON 文件。',
+    },
+  };
+  function node(tag, value, className = '') {
+    const el = document.createElement(tag); el.textContent = String(value); el.className = className; return el;
+  }
+  function render() {
+    const t = words[lang]; document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    document.querySelectorAll('[data-word]').forEach((el) => { el.textContent = t[el.dataset.word]; });
+    $('language').textContent = lang === 'en' ? '中文' : 'English';
+    $('run-title').textContent = run.title;
+    $('run-date').textContent = new Date(run.startedAt).toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
+    const values = [run.steps.length, run.steps.filter((s) => s.verification.status === 'verified').length, run.steps.filter((s) => s.verification.status === 'rejected').length, run.steps.filter((s) => s.verification.status === 'unknown').length, run.steps.filter((s) => s.toolStatus === 'error').length];
+    ['count-steps','count-verified','count-rejected','count-unknown','count-errors'].forEach((id,i) => { $(id).textContent = values[i]; });
+    $('timeline').replaceChildren();
+    run.steps.forEach((step, index) => {
+      const button = node('button', '', `step ${selected === index ? 'selected' : ''}`);
+      button.setAttribute('aria-pressed', String(selected === index));
+      button.append(node('span', String(index + 1).padStart(2, '0'), 'number'));
+      const content = node('span', '', 'step-content'); content.append(node('strong', step.label), node('span', `${t[step.kind]} · ${t['v' + step.verification.status]}`, 'step-caption'));
+      button.append(content); button.addEventListener('click', () => { selected = index; render(); }); $('timeline').append(button);
+    });
+    const detail = $('detail'); detail.replaceChildren();
+    const step = run.steps[selected];
+    if (!step) { detail.append(node('p', t.empty)); return; }
+    const heading = node('div', '', 'detail-heading');
+    heading.append(node('span', `${selected + 1} / ${run.steps.length}`, 'position'), node('h2', step.label));
+    detail.append(heading);
+    if (step.pageEvidence) {
+      const pageEvidence = node('section', '', 'page-evidence');
+      pageEvidence.setAttribute('aria-label', t.pageSignals);
+      pageEvidence.append(node('h3', t.pageSignals));
+      const outcome = step.pageEvidence.outcome;
+      const pageState = outcome === 'changed'
+        ? 'pageChanged'
+        : outcome === 'no_visible_change'
+          ? 'pageUnchanged'
+          : step.pageEvidence.captureStatus === 'partial' ? 'pagePartial' : 'pageUnavailable';
+      pageEvidence.append(node('strong', t[pageState], 'page-state'));
+      if (step.pageEvidence.signals.length) {
+        const labels = { url: t.pageUrl, title: t.pageTitle, visible_text: t.pageText, controls: t.pageControls };
+        pageEvidence.append(node('p', step.pageEvidence.signals.map((signal) => labels[signal]).join(', ')));
+      }
+      pageEvidence.append(node('p', t.pageBoundary));
+      detail.append(pageEvidence);
+    }
+    const panels = node('div', '', 'comparison');
+    const returned = node('section', '', `observation ${step.toolStatus}`);
+    returned.append(node('h3', t.attempted), node('strong', t[step.toolStatus], 'result'), node('p', step.toolStatus === 'error' ? step.errorName : t.ok), node('span', `${t.duration}: ${step.durationMs} ms`, 'meta'));
+    const observed = node('section', '', `observation ${step.verification.status}`);
+    observed.append(node('h3', t.observed), node('strong', t['v' + step.verification.status], 'result'), node('p', step.verification.summary));
+    panels.append(returned, observed); detail.append(panels);
+    const advice = node('section', '', 'advice');
+    advice.append(node('h3', t.next), node('p', t[step.verification.status + 'Advice'])); detail.append(advice);
+    $('raw').textContent = JSON.stringify(run, null, 2);
+    $('receipt-data').textContent = JSON.stringify(run).replace(/</g, '\\u003c');
+  }
+  $('language').addEventListener('click', () => { lang = lang === 'en' ? 'zh' : 'en'; render(); });
+  $('file').addEventListener('change', async (event) => {
+    const file = event.target.files[0]; if (!file) return;
+    try {
+      if (file.size > 2 * 1024 * 1024) throw new Error(words[lang].fileSize);
+      const next = normalizeRun(JSON.parse(await file.text()));
+      run = next; selected = initialStep(); $('notice').textContent = ''; render();
+    } catch { $('notice').textContent = words[lang].jsonError + (lang === 'en' ? 'Use a StepReceipt v1 JSON file under 2 MB with a title, timestamps, and steps.' : '请使用小于 2 MB、含标题、时间与步骤的 StepReceipt v1 JSON。'); }
+    event.target.value = '';
+  });
+  $('download').addEventListener('click', () => {
+    const url = URL.createObjectURL(new Blob(['<!doctype html>\n' + document.documentElement.outerHTML], { type: 'text/html' }));
+    const a = node('a', ''); a.href = url; a.download = 'stepreceipt-report.html'; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
+  render();
+})(function normalizeRun(input) {
+  const object = (value) => value && typeof value === 'object' && !Array.isArray(value);
+  function text(value, max = 1000) {
+    if (typeof value !== 'string' || !value.trim() || value.length > max) throw new TypeError('Expected non-empty text within the length limit.');
+    return value.replace(/\bBearer\s+[A-Za-z0-9._~+/=-]+/gi, 'Bearer [redacted]')
+      .replace(/\b(?:sk-(?:proj-)?[A-Za-z0-9_-]{12,}|ghp_[A-Za-z0-9]{12,}|github_pat_[A-Za-z0-9_]{12,})\b/g, '[redacted]')
+      .replace(/\b(api[_-]?key|access[_-]?token|password|secret)\s*[:=]\s*[^\s,;]+/gi, '$1=[redacted]');
+  }
+  function date(value) {
+    if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}T/.test(value) || !Number.isFinite(Date.parse(value))) throw new TypeError('Expected an ISO timestamp.');
+    return new Date(value).toISOString();
+  }
+  if (!object(input) || input.schemaVersion !== 1 || !Array.isArray(input.steps) || input.steps.length > 1000) throw new TypeError('Expected a StepReceipt v1 run with at most 1,000 steps.');
+  const ids = new Set();
+  const steps = input.steps.map((s) => {
+    if (!object(s) || typeof s.id !== 'string' || !/^[A-Za-z0-9_-]{1,80}$/.test(s.id) || ids.has(s.id)) throw new TypeError('Every step needs a unique, simple ID.');
+    ids.add(s.id);
+    if (!['read', 'write'].includes(s.kind) || !['ok', 'error'].includes(s.toolStatus)) throw new TypeError('Unknown action kind or unfinished tool status.');
+    if (!Number.isFinite(s.durationMs) || s.durationMs < 0) throw new TypeError('Invalid duration.');
+    const v = s.verification ?? { status: 'unknown', summary: 'No observation was recorded.' };
+    if (!object(v) || !['verified', 'rejected', 'unknown'].includes(v.status)) throw new TypeError('Unknown verification status.');
+    return {
+      id: s.id, label: text(s.label, 240), kind: s.kind,
+      startedAt: date(s.startedAt), durationMs: Math.round(s.durationMs), toolStatus: s.toolStatus,
+      ...(s.toolStatus === 'error' ? { errorName: /^[A-Za-z][A-Za-z0-9]{0,59}$/.test(s.errorName ?? '') ? s.errorName : 'Error' } : {}),
+      verification: { status: v.status, summary: text(v.summary, 2000), ...(v.observedAt ? { observedAt: date(v.observedAt) } : {}) },
+      ...(Object.hasOwn(s, 'pageEvidence') ? { pageEvidence: normalizePageEvidence(s.pageEvidence) } : {}),
+    };
+  });
+  return { schemaVersion: 1, title: text(input.title, 240), startedAt: date(input.startedAt), steps };
+});</script></body></html>

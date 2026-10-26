@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 1,
+  "title": "Completed task: restart without replay.",
+  "startedAt": "2026-10-26T08:47:57.060Z",
+  "steps": [
+    {
+      "id": "step-1",
+      "label": "Trial 1: start graph and reach the controlled cut",
+      "kind": "write",
+      "startedAt": "2026-10-26T08:47:57.061Z",
+      "durationMs": 2174,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "The completed control returned normally.",
+        "observedAt": "2026-10-26T08:47:59.240Z"
+      }
+    },
+    {
+      "id": "step-2",
+      "label": "Trial 1: read checkpoint and pending task writes",
+      "kind": "read",
+      "startedAt": "2026-10-26T08:47:59.378Z",
+      "durationMs": 0,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "Separate read-only inspection found checkpoint sequence 1 and 0 pending task writes.",
+        "observedAt": "2026-10-26T08:47:59.378Z"
+      }
+    },
+    {
+      "id": "step-3",
+      "label": "Trial 1: resume this thread in a fresh process",
+      "kind": "write",
+      "startedAt": "2026-10-26T08:47:59.378Z",
+      "durationMs": 288,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "The resumed graph returned normally and reported no pending next node.",
+        "observedAt": "2026-10-26T08:47:59.666Z"
+      }
+    },
+    {
+      "id": "step-4",
+      "label": "Trial 1: independently read committed effects",
+      "kind": "read",
+      "startedAt": "2026-10-26T08:47:59.687Z",
+      "durationMs": 0,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "Readback matched the control: effects {\"0\":1}; action attempts {\"0\":1}.",
+        "observedAt": "2026-10-26T08:47:59.688Z"
+      }
+    },
+    {
+      "id": "step-5",
+      "label": "Trial 2: start graph and reach the controlled cut",
+      "kind": "write",
+      "startedAt": "2026-10-26T08:47:59.688Z",
+      "durationMs": 296,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "The completed control returned normally.",
+        "observedAt": "2026-10-26T08:47:59.984Z"
+      }
+    },
+    {
+      "id": "step-6",
+      "label": "Trial 2: read checkpoint and pending task writes",
+      "kind": "read",
+      "startedAt": "2026-10-26T08:48:00.108Z",
+      "durationMs": 0,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "Separate read-only inspection found checkpoint sequence 1 and 0 pending task writes.",
+        "observedAt": "2026-10-26T08:48:00.108Z"
+      }
+    },
+    {
+      "id": "step-7",
+      "label": "Trial 2: resume this thread in a fresh process",
+      "kind": "write",
+      "startedAt": "2026-10-26T08:48:00.108Z",
+      "durationMs": 289,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "The resumed graph returned normally and reported no pending next node.",
+        "observedAt": "2026-10-26T08:48:00.396Z"
+      }
+    },
+    {
+      "id": "step-8",
+      "label": "Trial 2: independently read committed effects",
+      "kind": "read",
+      "startedAt": "2026-10-26T08:48:00.469Z",
+      "durationMs": 0,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "Readback matched the control: effects {\"0\":1}; action attempts {\"0\":1}.",
+        "observedAt": "2026-10-26T08:48:00.469Z"
+      }
+    },
+    {
+      "id": "step-9",
+      "label": "Trial 3: start graph and reach the controlled cut",
+      "kind": "write",
+      "startedAt": "2026-10-26T08:48:00.469Z",
+      "durationMs": 1435,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "The completed control returned normally.",
+        "observedAt": "2026-10-26T08:48:01.904Z"
+      }
+    },
+    {
+      "id": "step-10",
+      "label": "Trial 3: read checkpoint and pending task writes",
+      "kind": "read",
+      "startedAt": "2026-10-26T08:48:02.061Z",
+      "durationMs": 0,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "Separate read-only inspection found checkpoint sequence 1 and 0 pending task writes.",
+        "observedAt": "2026-10-26T08:48:02.061Z"
+      }
+    },
+    {
+      "id": "step-11",
+      "label": "Trial 3: resume this thread in a fresh process",
+      "kind": "write",
+      "startedAt": "2026-10-26T08:48:02.061Z",
+      "durationMs": 406,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "The resumed graph returned normally and reported no pending next node.",
+        "observedAt": "2026-10-26T08:48:02.466Z"
+      }
+    },
+    {
+      "id": "step-12",
+      "label": "Trial 3: independently read committed effects",
+      "kind": "read",
+      "startedAt": "2026-10-26T08:48:02.489Z",
+      "durationMs": 0,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "Readback matched the control: effects {\"0\":1}; action attempts {\"0\":1}.",
+        "observedAt": "2026-10-26T08:48:02.489Z"
+      }
+    }
+  ]
+}
