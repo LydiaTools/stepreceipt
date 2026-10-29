@@ -15,6 +15,10 @@
 | Agent 返回 | `agent.run()` 正常返回，但 `result.status` 是 `RunStatus.error` |
 | StepReceipt `--check` | 退出码 1，因为调用方提供的一项观察被拒绝 |
 
+![合成 Agno 运行的真实 StepReceipt 报告：独立读取发现两条草稿，第二次检查未通过](assets/agno-retry.png)
+
+*本地合成样例生成的真实报告，已选中第二次写入。*
+
 示例用原创夹具代码复现 [Agno #10366](https://github.com/agno-agi/agno/issues/10366) 描述的“工具成功后、后续步骤失败”形态；没有测试报告者的实际环境、真实模型、生产接口或当前上游 main。
 
 ## 运行示例

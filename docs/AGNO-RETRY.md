@@ -15,6 +15,10 @@ This optional fixture runs **Agno 3.0.10** and **OpenAI SDK 3.16.2** with one sy
 | Agent return | `agent.run()` returned without raising; `result.status` was `RunStatus.error` |
 | StepReceipt `--check` | Exit 1, because one supplied observation was rejected |
 
+![Actual StepReceipt report from the synthetic Agno run: two writes, the second check rejected after a local GET found two drafts](assets/agno-retry.png)
+
+*Actual report from the local synthetic fixture, with the second write selected.*
+
 This recreates the specific successful-tool-then-later-failure shape described in [Agno #10366](https://github.com/agno-agi/agno/issues/10366) with original fixture code. It does not test the reporter's environment, a real model, production endpoint or current upstream main.
 
 ## Run the example
