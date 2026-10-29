@@ -53,6 +53,36 @@ jobs:
           path: artifacts/langgraph/
           if-no-files-found: error
           retention-days: 7
+  agno-retry-example:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r examples/agno/requirements.txt
+      - run: node examples/agno/run.mjs --python python --out artifacts/agno
+      - name: Check the expected rejection
+        run: |
+          code=0
+          node bin/stepreceipt.mjs artifacts/agno/run.json --check --summary artifacts/agno/summary.md || code=$?
+          test "$code" -eq 1
+          cat artifacts/agno/summary.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v7.0.2
+        if: always()
+        with:
+          name: agno-synthetic-retry
+          path: |
+            artifacts/agno/run.json
+            artifacts/agno/report.html
+            artifacts/agno/observation.json
+            artifacts/agno/summary.md
+          if-no-files-found: error
+          retention-days: 7
   test:
     runs-on: ubuntu-latest
     steps:
