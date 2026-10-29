@@ -1,6 +1,6 @@
 # Two successful tool returns, then two drafts
 
-[中文](AGNO-RETRY.zh-CN.md) · [Example source](../examples/agno/)
+[中文](AGNO-RETRY.zh-CN.md) · [Example source](../examples/agno/) · [Open the synthetic report](https://lydiatools.github.io/stepreceipt/agno/retry.html) · [Run data](agno/run.json)
 
 A tool returns successfully. A later model request fails. When the entire agent run is retried, what happens to the first write?
 

@@ -1,6 +1,6 @@
 # 工具成功返回两次，草稿也保存了两份
 
-[English](AGNO-RETRY.md) · [示例源码](../examples/agno/)
+[English](AGNO-RETRY.md) · [示例源码](../examples/agno/) · [打开合成运行报告](https://lydiatools.github.io/stepreceipt/agno/retry.html) · [查看运行数据](agno/run.json)
 
 工具已经成功返回，但后续模型请求失败。如果整个 Agent 运行被重试，第一次写入会发生什么？
 

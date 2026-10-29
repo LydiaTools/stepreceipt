@@ -112,7 +112,7 @@ node bin/stepreceipt.mjs artifacts/demo/run.json --summary receipt-summary.md --
 
 桥接不根据生成文本推断成功，也不会自动重试。这里实测原生工具调用和合成页面，没有实测模型驱动的 `Agent.run` 或生产网站。v0.6.0 起包含此示例，旧的固定发行包不包含。
 
-**Agno 重试示例：**[查看后续模型失败后，两次合成写入均成功的情况](docs/AGNO-RETRY.zh-CN.md)。使用 Agno 3.0.10、本地脚本模型和调用方提供的读回检查；不是通用适配器或重试拦截器。
+**Agno 重试示例：**[查看后续模型失败后，两次合成写入均成功的情况](docs/AGNO-RETRY.zh-CN.md) · [打开报告](https://lydiatools.github.io/stepreceipt/agno/retry.html)。使用 Agno 3.0.10、本地脚本模型和调用方提供的读回检查；不是通用适配器或重试拦截器。
 
 ## 真实 LangGraph 跨进程恢复
 

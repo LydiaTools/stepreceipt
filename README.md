@@ -124,7 +124,7 @@ The optional bridge records a real `Tools.click` result beside your application'
 
 The bridge does not infer success from generated text or retry the action. This tests native tool calls on synthetic pages, not model-driven `Agent.run` behavior or production sites. Included from v0.6.0; older fixed releases do not contain it.
 
-**Agno retry example:** [See two successful synthetic writes after a later model failure](docs/AGNO-RETRY.md). Uses Agno 3.0.10 with a local scripted model and caller-supplied readback; not a generic adapter or a retry guard.
+**Agno retry example:** [See two successful synthetic writes after a later model failure](docs/AGNO-RETRY.md) · [Open the report](https://lydiatools.github.io/stepreceipt/agno/retry.html). Uses Agno 3.0.10 with a local scripted model and caller-supplied readback; not a generic adapter or a retry guard.
 
 ## A real LangGraph process restart
 

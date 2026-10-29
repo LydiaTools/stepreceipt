@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "title": "Synthetic retry with Agno 3.0.10",
+  "startedAt": "2026-10-29T18:55:38.123Z",
+  "steps": [
+    {
+      "id": "step-1",
+      "label": "Synthetic draft write 1",
+      "kind": "write",
+      "startedAt": "2026-10-29T18:55:38.628Z",
+      "durationMs": 0,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "Separate local GET: 1 draft(s); exactly one was intended.",
+        "observedAt": "2026-10-29T18:55:38.633Z"
+      }
+    },
+    {
+      "id": "step-2",
+      "label": "Synthetic draft write 2",
+      "kind": "write",
+      "startedAt": "2026-10-29T18:55:38.636Z",
+      "durationMs": 0,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "rejected",
+        "summary": "Separate local GET: 2 draft(s); exactly one was intended.",
+        "observedAt": "2026-10-29T18:55:38.637Z"
+      }
+    }
+  ]
+}
