@@ -1,8 +1,12 @@
 # StepReceipt · 浏览器 Agent 操作回执
 
-**点了“保存”，工具却超时了。现在应该再点一次吗？**
+**点了保存，工具却超时了。到底保存成功了吗？**
 
-工具报错时，页面上的操作可能已经完成。StepReceipt 把“工具返回了什么”和“随后检查到了什么”放在同一份报告里，方便你决定下一步。
+那一刻，你可能会犹豫：再等等，先去页面看看，还是重新点一次？再点也许没关系，也可能多出一份草稿。
+
+我做 StepReceipt，就是想给这个犹豫留一份清楚的记录。它把浏览器工具的返回结果，和你随后检查到的结果放在同一份报告里。工具超时后，读回可能已经成功；工具正常返回，在检查之前也仍然是**未知**。
+
+下一步怎么做由你决定。这份回执让你更容易看清眼前的情况。
 
 **[直接打开演示](https://lydiatools.github.io/stepreceipt/)** · [Python browser-use 示例](docs/BROWSER-USE.zh-CN.md) · [Stagehand 示例](docs/STAGEHAND-INTEGRATION.zh-CN.md) · [English](README.md) · [下载发行版](https://github.com/LydiaTools/stepreceipt/releases/latest)
 
@@ -12,7 +16,7 @@
 
 [查看三种结果的界面动图](docs/assets/three-outcomes.gif)：超时但已保存、错误成功提示、读回不可用。动图使用英文界面，回放三份已提交的本地合成测试报告；[录制与来源说明](docs/DEMO.md)可核对。
 
-## 它能帮你做什么
+## 一份回执里有什么
 
 - 分别记录动作、工具状态和后续观察。工具正常返回也不会自动算“已核验”。
 - 可选记录一次 Playwright 动作前后的网址、标题、可见文本和控件数量变化；它们只是页面信号，不代表任务成功。
@@ -20,7 +24,7 @@
 - 导出独立 HTML，双击即可查看；界面可切换中英文。
 - 在网页中打开自己的运行 JSON，文件在页面内读取，不上传到服务端。
 
-每个动作只由记录器调用一次。工具不自动重试、不重放操作；你自己的外围流程仍需决定后续动作。检查函数由接入方编写，StepReceipt 不会独立证明检查结论。
+记录器只调用一次动作，不自动重试或重放。后续检查由接入方编写，因此报告的可靠性取决于检查本身；系统其他部分仍可能独立重试。
 
 ## 先花一分钟看看结果
 
@@ -183,6 +187,8 @@ npm run demo
 
 报告自动捕获错误类别，不自动记录错误正文、堆栈、页面内容或网络流量。导出文字会对少量常见凭据格式做脱敏，仍需检查自己填写的标题与观察说明。浏览器页面不含统计代码；在线演示托管于 GitHub Pages，会产生正常页面访问请求。
 
-[测试证据](docs/VALIDATION.md) · [数据格式](docs/FORMAT.md) · [问题反馈](https://github.com/LydiaTools/stepreceipt/issues)
+[测试证据](docs/VALIDATION.md) · [数据格式](docs/FORMAT.md)
+
+如果报告让你产生了错误判断，或者接入过程不顺手，欢迎[提交问题](https://github.com/LydiaTools/stepreceipt/issues)，附一个不含私人信息的小示例，让我能更容易复现。
 
 MIT 开源，个人项目由 [LydiaTools](https://github.com/LydiaTools) 维护。

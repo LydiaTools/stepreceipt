@@ -1,10 +1,12 @@
 # StepReceipt
 
-**“Save” timed out. Do you click it again?**
+**You click Save. The tool times out. Did it save?**
 
-The error tells you what happened to the tool. You still need to know what happened on the page.
+For a moment, you don't know whether to wait, check the page, or click again. One more click might be harmless. It might also create a second draft.
 
-StepReceipt puts each browser action beside an explicit follow-up check, then turns the run into a standalone HTML report. A normal return stays **unknown** until you check it. A timeout can sit beside a successful readback. You can see both before deciding what to do next.
+I built StepReceipt for that pause. It puts what the browser tool returned next to what you checked afterward, in a report you can open and share. A timeout can sit beside a successful readback; a normal tool return stays **unknown** until a check says more.
+
+The decision is still yours. The receipt gives you a clearer place to start.
 
 **[Open the live report](https://lydiatools.github.io/stepreceipt/)** · [Python browser-use example](docs/BROWSER-USE.md) · [Stagehand example](docs/STAGEHAND-INTEGRATION.md) · [中文说明](README.zh-CN.md) · [Download a release](https://github.com/LydiaTools/stepreceipt/releases/latest)
 
@@ -12,7 +14,7 @@ StepReceipt puts each browser action beside an explicit follow-up check, then tu
 
 *Recorded from the real report viewer using three committed synthetic local-browser runs. Each fixture made one POST with no retry. [Static timeout screenshot](docs/assets/report-focus.png) · [Capture and reproduction notes](docs/DEMO.md).*
 
-## What you can keep separate
+## What goes on the receipt
 
 | Question | What StepReceipt records |
 | --- | --- |
@@ -21,9 +23,9 @@ StepReceipt puts each browser action beside an explicit follow-up check, then tu
 | What did I actually check? | An explicit observation marked `verified`, `rejected`, or `unknown` |
 | What can I share for review? | A local JSON file and a self-contained HTML report, with English and Chinese controls |
 
-The recorder calls each action once. It has no automatic retry or replay mechanism. Your code supplies the observation; StepReceipt does not independently prove it or prevent another part of your system from retrying.
+StepReceipt calls each recorded action once; it does not retry or replay it. You provide the follow-up check, so the report is only as reliable as that check. Other parts of your system can still retry independently.
 
-## Quick start
+## See a receipt in a minute
 
 Node.js 20+ is enough to render a report. No install, model, account, or API key is needed for this step:
 
@@ -33,7 +35,7 @@ cd stepreceipt
 node bin/stepreceipt.mjs examples/save-timeout.json --out receipt.html
 ```
 
-Open `receipt.html` in your browser. You can also open a run JSON in the [online viewer](https://lydiatools.github.io/stepreceipt/). The viewer reads it in the page; there is no upload endpoint or analytics code. GitHub Pages still receives ordinary page requests.
+Open `receipt.html` in your browser. Or open a run JSON in the [online viewer](https://lydiatools.github.io/stepreceipt/). The viewer reads it in the page; there is no upload endpoint or analytics code. GitHub Pages still receives ordinary page requests.
 
 The CLI refuses to overwrite an existing output file. Choose a new filename for another report.
 
@@ -251,6 +253,6 @@ npm run test:e2e
 
 See [the run format](docs/FORMAT.md), [validation](docs/VALIDATION.md), and [why this small scope](docs/RESEARCH.md). The report shows observations supplied by the integration, including their limitations; it does not turn a claim into independent evidence.
 
-If a report is misleading or an integration is hard to use, [open an issue](https://github.com/LydiaTools/stepreceipt/issues). Share a small synthetic example rather than a private session. If you want to follow the next integration, a Star is a useful way to keep track.
+If a report leaves you with the wrong impression, or an integration is difficult to use, I'd like to know. [Open an issue](https://github.com/LydiaTools/stepreceipt/issues) with a small synthetic example rather than a private session.
 
 MIT. Built by [LydiaTools](https://github.com/LydiaTools). The related [Browser Agent Blueprint](https://github.com/LydiaTools/browser-agent-blueprint) contains prompt modules and local recovery scenarios; StepReceipt is the executable recorder and report tool.
