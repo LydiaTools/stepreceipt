@@ -72,6 +72,14 @@ npm run demo
 
 结果位于 `artifacts/demo/`。JS 接入示例见 [英文说明](README.md#use-it-in-your-nodejs-project)。`attempt()` 捕获动作错误而不向外抛出，请检查返回的 `ok` 字段，再依据观察结果决定是否继续。
 
+## 同一个网址，两个标签页。点击落在哪一页？
+
+两个标签页看起来可能一模一样。本地示例中，一段回调观察第一页，却点击了第二页；工具正常返回，单独核对才发现第一页仍未保存。另一组使用 `recordPageClick`，让点击通过选定的 Playwright `Page` 执行；第三组则在选择器匹配多个按钮时拒绝点击。
+
+[选定页面的点击报告](https://lydiatools.github.io/stepreceipt/page-click/bound.html) · [未绑定回调报告](https://lydiatools.github.io/stepreceipt/page-click/unbound.html) · [多个匹配的报告](https://lydiatools.github.io/stepreceipt/page-click/ambiguous.html) · [自己运行示例](docs/PLAYWRIGHT.zh-CN.md#运行双标签页示例)
+
+这些案例使用本地合成页面。调用方仍需选择正确的页面并提供核对；该方法不能识别远程浏览器目标，也不能证明服务端保存成功。
+
 ## 在 GitHub Actions 中使用检查结果
 
 ```bash

@@ -33,7 +33,7 @@ await receipt.verify(step.id, async () => {
 
 对于用 Playwright 选择器定位的点击，`recordPageClick` 通过采样所用的同一个 `Page` 对象创建并执行点击：
 
-此入口在当前源码中提供，早期固定版本不包含它。
+此入口从 v0.8.0 和当前源码提供，早期固定版本不包含它。
 
 ```js
 import { recordPageClick } from 'stepreceipt/playwright';
@@ -49,6 +49,20 @@ const step = await recordPageClick(receipt, page, {
 调用方需要自己选择正确的 `Page` 对象并确认操作范围。该方法仅把自己的点击绑定到这个对象，不能验证浏览器会话或远程工具的目标身份，也不能冻结页面导航、使检查与点击成为原子操作，或证明服务端保存成功。它不修复 BrowserSkill，也不能直接用于其 API。其他动作可以继续使用 `recordPageAction`，注意回调要使用正在采样的页面。
 
 安装开发依赖和 Playwright 浏览器后，可运行 `npm run test:page-click`。该检查使用两个网址相同、对象不同的合成页面，也覆盖目标缺失、匹配多个元素和页面关闭的情况。
+
+## 运行双标签页示例
+
+克隆仓库或解压源码 ZIP，安装开发依赖和 Playwright 浏览器后运行：
+
+```bash
+npm ci
+npx playwright install chromium
+npm run demo:page-click
+```
+
+本机已有 Chrome 时，macOS/Linux 可用 `BROWSER_CHANNEL=chrome npm run demo:page-click`；PowerShell 先设置 `$env:BROWSER_CHANNEL="chrome"`。示例启动隔离浏览器，将三组 HTML、JSON 和 Markdown 报告写入 `artifacts/page-click/`。再次运行时，可用 `-- --out 目录路径` 指定空目录。示例使用本地合成页面，不连接真实账号或模型。
+
+以下报告来自该示例的实际运行：[选定页面](https://lydiatools.github.io/stepreceipt/page-click/bound.html)、[未绑定回调](https://lydiatools.github.io/stepreceipt/page-click/unbound.html)、[多个匹配](https://lydiatools.github.io/stepreceipt/page-click/ambiguous.html)。两张实测截图分别显示[选定页面已保存](page-click/selected-page.png)和[另一页面未保存](page-click/other-page.png)。
 
 ## 记录哪些信号
 

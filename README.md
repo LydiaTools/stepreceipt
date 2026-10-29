@@ -84,6 +84,14 @@ PowerShell: `$env:BROWSER_CHANNEL="chrome"; npm run demo`.
 
 Open `artifacts/demo/report.html`. The matching `run.json` contains the recorded tool error and the later observation. The expected fixture result is **one write request and one saved record**.
 
+## Same URL, two tabs. Which one received the click?
+
+Two tabs can look identical. In this local example, one callback samples the first tab but clicks the second; the tool returns normally, while a separate readback finds the first tab still pending. A second run uses `recordPageClick` to make the click through the selected Playwright `Page`. A third refuses an ambiguous selector.
+
+[Click on the selected page](https://lydiatools.github.io/stepreceipt/page-click/bound.html) · [Unbound callback](https://lydiatools.github.io/stepreceipt/page-click/unbound.html) · [Ambiguous selector](https://lydiatools.github.io/stepreceipt/page-click/ambiguous.html) · [Run the example](docs/PLAYWRIGHT.md#try-the-two-tab-example)
+
+These are synthetic local pages. The caller still chooses the correct page and supplies the check; the helper does not identify a remote browser target or prove a server-side save.
+
 ## Put recorded checks in CI
 
 ```bash

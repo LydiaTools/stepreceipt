@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "title": "Bound click: same URL, selected page",
+  "startedAt": "2026-10-29T17:21:20.181Z",
+  "steps": [
+    {
+      "id": "step-1",
+      "label": "Click Save on first page",
+      "kind": "write",
+      "startedAt": "2026-10-29T17:21:20.183Z",
+      "durationMs": 34,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "Independent read: first page Saved; second page Pending.",
+        "observedAt": "2026-10-29T17:21:20.227Z"
+      },
+      "pageEvidence": {
+        "captureStatus": "complete",
+        "outcome": "changed",
+        "beforeCaptured": true,
+        "afterCaptured": true,
+        "signals": [
+          "visible_text"
+        ]
+      }
+    }
+  ]
+}

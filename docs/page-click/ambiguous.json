@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "title": "Ambiguous selector: click blocked",
+  "startedAt": "2026-10-29T17:21:20.303Z",
+  "steps": [
+    {
+      "id": "step-1",
+      "label": "Click ambiguous Save buttons",
+      "kind": "write",
+      "startedAt": "2026-10-29T17:21:20.304Z",
+      "durationMs": 1,
+      "toolStatus": "error",
+      "errorName": "Error",
+      "verification": {
+        "status": "rejected",
+        "summary": "Two buttons matched. First page remained Pending; no click was made.",
+        "observedAt": "2026-10-29T17:21:20.306Z"
+      },
+      "pageEvidence": {
+        "captureStatus": "complete",
+        "outcome": "no_visible_change",
+        "beforeCaptured": true,
+        "afterCaptured": true,
+        "signals": []
+      }
+    }
+  ]
+}

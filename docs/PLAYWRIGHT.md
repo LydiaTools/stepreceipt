@@ -33,7 +33,7 @@ The callback can refer to a different page than the one being sampled. The adapt
 
 For a click addressed by a Playwright selector, `recordPageClick` builds and executes the click through the same `Page` object it samples:
 
-This helper is available from the current source; it is not included in earlier fixed releases.
+This helper is available in v0.8.0 and current source; earlier fixed releases do not include it.
 
 ```js
 import { recordPageClick } from 'stepreceipt/playwright';
@@ -49,6 +49,20 @@ The selector must match exactly one element; no match or multiple matches record
 The caller must select and authorize the correct `Page` object and scope. This helper binds its own click to that object; it does not identify a browser session or remote tool target, freeze navigation, make target checks atomic, or prove that a server-side save happened. It does not fix BrowserSkill or apply to its API. Use `recordPageAction` for other actions, taking care that the callback uses the sampled page.
 
 To run the local two-tab check after installing the development dependencies and a Playwright browser, use `npm run test:page-click`. It compares two distinct synthetic pages with the same URL, including missing, ambiguous, and closed targets.
+
+## Try the two-tab example
+
+From a clone or the source ZIP, install the development dependencies and a Playwright browser, then run the example:
+
+```bash
+npm ci
+npx playwright install chromium
+npm run demo:page-click
+```
+
+If Chrome is installed, use `BROWSER_CHANNEL=chrome npm run demo:page-click` on macOS/Linux, or set `$env:BROWSER_CHANNEL="chrome"` in PowerShell first. The command starts an isolated browser and writes three HTML, JSON, and Markdown reports to `artifacts/page-click/`. Choose an empty output directory with `-- --out path/to/directory` for another run. The pages are synthetic, and no real account or model is used.
+
+The included reports are from an actual run of this example: [selected page](https://lydiatools.github.io/stepreceipt/page-click/bound.html), [unbound callback](https://lydiatools.github.io/stepreceipt/page-click/unbound.html), and [ambiguous selector](https://lydiatools.github.io/stepreceipt/page-click/ambiguous.html). The two captured pages show the [selected page saved](page-click/selected-page.png) and the [other page pending](page-click/other-page.png).
 
 ## What is recorded
 

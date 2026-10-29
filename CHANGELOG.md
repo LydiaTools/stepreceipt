@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.8.0 — Click through the sampled Playwright page
+
+- Add `recordPageClick`, which constructs a selector-based click on the supplied Playwright Page and requires exactly one matching element.
+- Add a reproducible two-tab demonstration and portable reports for a bound click, a rejected ambiguous target, and an unbound callback control.
+- Verify distinct same-URL tabs, missing, ambiguous and closed targets in local Chrome and GitHub CI. The caller still chooses the Page and performs a separate business outcome check; no remote-agent session or atomic navigation guarantee is implied.
+
 ## 0.7.0 — LangGraph checkpoint-ordering reproduction
 
 - Add an original event-gated LangGraph 1.2.17 fixture informed by issue #8039, with fresh-process resume and four isolated cases repeated three times each.

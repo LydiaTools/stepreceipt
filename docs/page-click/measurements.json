@@ -1,0 +1,29 @@
+{
+  "sameUrl": true,
+  "summary": {
+    "bound": {
+      "toolStatus": "ok",
+      "verification": "verified",
+      "pageSignals": "changed",
+      "gatePassed": true,
+      "first": "Saved",
+      "second": "Pending"
+    },
+    "ambiguous": {
+      "toolStatus": "error",
+      "verification": "rejected",
+      "pageSignals": "no_visible_change",
+      "gatePassed": false,
+      "first": "Pending",
+      "second": "Pending"
+    },
+    "unbound": {
+      "toolStatus": "ok",
+      "verification": "rejected",
+      "pageSignals": "no_visible_change",
+      "gatePassed": false,
+      "first": "Pending",
+      "second": "Saved"
+    }
+  }
+}

@@ -66,6 +66,15 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
       - run: npm run test:page-click
+      - run: npm run demo:page-click
+      - name: Check the three two-tab outcomes
+        run: |
+          node bin/stepreceipt.mjs artifacts/page-click/bound.json --check
+          for case in ambiguous unbound; do
+            code=0
+            node bin/stepreceipt.mjs "artifacts/page-click/$case.json" --check || code=$?
+            test "$code" -eq 1
+          done
       - run: node test/langgraph-viewer.mjs
       - run: node test/browser-use-viewer.mjs
       - run: npm run test:blueprint
@@ -85,6 +94,7 @@ jobs:
             artifacts/rejected-write/
             artifacts/unknown-readback/
             artifacts/page-evidence/
+            artifacts/page-click/
             artifacts/screenshots/page-evidence-*.png
           if-no-files-found: error
           retention-days: 7

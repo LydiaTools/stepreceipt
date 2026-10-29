@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "title": "Unbound callback: click went to the other page",
+  "startedAt": "2026-10-29T17:21:20.311Z",
+  "steps": [
+    {
+      "id": "step-1",
+      "label": "Attempt to save on first page",
+      "kind": "write",
+      "startedAt": "2026-10-29T17:21:20.311Z",
+      "durationMs": 24,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "rejected",
+        "summary": "Independent read: first page Pending; other page Saved.",
+        "observedAt": "2026-10-29T17:21:20.336Z"
+      },
+      "pageEvidence": {
+        "captureStatus": "complete",
+        "outcome": "no_visible_change",
+        "beforeCaptured": true,
+        "afterCaptured": true,
+        "signals": []
+      }
+    }
+  ]
+}
