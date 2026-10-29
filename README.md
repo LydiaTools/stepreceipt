@@ -124,6 +124,8 @@ The optional bridge records a real `Tools.click` result beside your application'
 
 The bridge does not infer success from generated text or retry the action. This tests native tool calls on synthetic pages, not model-driven `Agent.run` behavior or production sites. Included from v0.6.0; older fixed releases do not contain it.
 
+**Agno retry example:** [See two successful synthetic writes after a later model failure](docs/AGNO-RETRY.md). Uses Agno 3.0.10 with a local scripted model and caller-supplied readback; not a generic adapter or a retry guard.
+
 ## A real LangGraph process restart
 
 **The graph returned normally. It saved the same draft twice.** An optional, provider-free example kills a Python process after the business commit and resumes the same thread in a new process. Ordinary insert: **2 attempts, 2 drafts**. A target-side unique operation key: **2 attempts, 1 draft**. A completed-node control stays at **1 attempt, 1 draft**.
