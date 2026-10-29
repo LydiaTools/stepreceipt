@@ -1,6 +1,6 @@
 {
   "name": "stepreceipt",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "type": "module",
   "description": "Record browser-agent actions beside explicit outcome checks; export portable HTML reports and CI summaries.",
   "license": "MIT",
@@ -43,6 +43,10 @@
     "examples/stagehand/package-lock.json",
     "examples/stagehand/demo.mjs",
     "examples/stagehand/fixture.html",
+    "docs/AGNO-RETRY*.md",
+    "docs/assets/agno-retry.png",
+    "docs/agno/",
+    "examples/agno/",
     "LICENSE"
   ],
   "engines": {

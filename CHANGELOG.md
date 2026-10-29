@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.8.1 — Observe an Agno retry after a successful write
+
+- Add an isolated Agno 3.0.10 and OpenAI SDK 3.16.2 example using a local scripted model and a synthetic business server. One run returns an error after two successful writes; separate readbacks record one passing and one rejected check.
+- Include English and Chinese instructions, an actual synthetic report and a GitHub CI job. StepReceipt records fixture server-side writes; it does not prevent retries or perform deduplication.
+
 ## 0.8.0 — Click through the sampled Playwright page
 
 - Add `recordPageClick`, which constructs a selector-based click on the supplied Playwright Page and requires exactly one matching element.

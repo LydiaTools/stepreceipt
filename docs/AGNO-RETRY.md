@@ -23,7 +23,7 @@ This recreates the specific successful-tool-then-later-failure shape described i
 
 ## Run the example
 
-Use current repository source, Node.js 20+ and Python 3.12. The fixed v0.8.0 release predates this example. Install the pinned optional dependencies in a new virtual environment; installation requires network access. The fixture itself uses only a local HTTP server and a synthetic API key.
+Use the v0.8.1 release ZIP or current repository source, Node.js 20+ and Python 3.12. The fixed v0.8.0 release predates this example. Install the pinned optional dependencies in a new virtual environment; installation requires network access. The fixture itself uses only a local HTTP server and a synthetic API key.
 
 ```bash
 python3.12 -m venv .venv-agno
