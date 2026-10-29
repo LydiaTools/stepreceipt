@@ -77,3 +77,26 @@ export async function recordPageAction(receipt, page, { label, kind = 'read', ac
   const pageEvidence = receipt.addPageEvidence(attempt.id, compare(before, after));
   return { ...attempt, pageEvidence };
 }
+
+/**
+ * Click a unique selector using the same Playwright Page object that is sampled.
+ * The caller is responsible for choosing the right page and authorizing the click.
+ */
+export async function recordPageClick(receipt, page, { label, selector } = {}) {
+  if (!page || typeof page.locator !== 'function' || typeof page.isClosed !== 'function') {
+    throw new TypeError('Provide a Playwright-compatible page with locator and isClosed methods.');
+  }
+  if (typeof selector !== 'string' || !selector.trim() || selector.length > 1000) {
+    throw new TypeError('Provide a non-empty Playwright selector within the length limit.');
+  }
+  return recordPageAction(receipt, page, {
+    label,
+    kind: 'write',
+    action: async () => {
+      if (page.isClosed()) throw new Error('The selected page is closed.');
+      const target = page.locator(selector);
+      if (await target.count() !== 1) throw new Error('Expected exactly one matching element.');
+      await target.click();
+    },
+  });
+}

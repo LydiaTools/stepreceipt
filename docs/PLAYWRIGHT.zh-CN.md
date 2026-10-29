@@ -27,6 +27,29 @@ await receipt.verify(step.id, async () => {
 
 动作回调只运行一次。适配器在动作前、以及回调结束后立即读取页面信号，并把 `pageEvidence` 加到同一条 StepReceipt 记录。如果页面会异步更新，请在回调里等待相关页面状态稳定后再返回。任一侧采样失败时，页面信号会标为部分可用或不可用；动作仍只运行一次，不会自动重试或重放。
 
+回调也可能引用另一个页面；适配器无法从任意回调中判断动作实际使用了哪个页面。请明确选择目标：`ok` 和页面信号都不证明目标身份。
+
+## 在选定的 Playwright 页面点击
+
+对于用 Playwright 选择器定位的点击，`recordPageClick` 通过采样所用的同一个 `Page` 对象创建并执行点击：
+
+此入口在当前源码中提供，早期固定版本不包含它。
+
+```js
+import { recordPageClick } from 'stepreceipt/playwright';
+
+const step = await recordPageClick(receipt, page, {
+  label: '保存草稿',
+  selector: 'button[data-action="save"]',
+});
+```
+
+选择器必须恰好匹配一个元素；没有匹配或匹配多个元素时记录工具错误，不执行点击。页面已关闭时也记录错误。选择器不会写入回执。点击后仍需通过 `receipt.verify()` 独立核对业务结果；不做检查时结果保持 `unknown`。
+
+调用方需要自己选择正确的 `Page` 对象并确认操作范围。该方法仅把自己的点击绑定到这个对象，不能验证浏览器会话或远程工具的目标身份，也不能冻结页面导航、使检查与点击成为原子操作，或证明服务端保存成功。它不修复 BrowserSkill，也不能直接用于其 API。其他动作可以继续使用 `recordPageAction`，注意回调要使用正在采样的页面。
+
+安装开发依赖和 Playwright 浏览器后，可运行 `npm run test:page-click`。该检查使用两个网址相同、对象不同的合成页面，也覆盖目标缺失、匹配多个元素和页面关闭的情况。
+
 ## 记录哪些信号
 
 报告会显示以下信号是否变化：

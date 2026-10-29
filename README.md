@@ -187,6 +187,8 @@ await writeFile('receipt.html', renderReport(receipt.toJSON()));
 
 The optional Playwright adapter records whether the URL, title, visible text, or count of interactive elements changed around one action. It stores only the signal names—not the URL, title, page text, or their temporary fingerprints.
 
+For a selector-based click, `recordPageClick` executes through the same Playwright `Page` object it samples and requires a unique match. The caller must still choose the correct page and independently verify the task result. Arbitrary `recordPageAction` callbacks can use a different page; the recorder cannot infer their target. [Playwright guide](docs/PLAYWRIGHT.md)
+
 ```js
 import { recordPageAction } from 'stepreceipt/playwright';
 

@@ -27,6 +27,29 @@ await receipt.verify(step.id, async () => {
 
 The callback runs once. The adapter samples the page before and as soon as the callback settles, then adds `pageEvidence` to the same StepReceipt step. If the UI updates asynchronously, await the relevant page state inside the callback so the after-sample observes the settled page. If either capture fails, the action still runs once and the page evidence is marked unavailable or partial. It never retries or replays the action.
 
+The callback can refer to a different page than the one being sampled. The adapter cannot determine which page an arbitrary callback used. Choose the target explicitly; an `ok` result or a page signal does not prove target identity.
+
+## Click on the selected Playwright page
+
+For a click addressed by a Playwright selector, `recordPageClick` builds and executes the click through the same `Page` object it samples:
+
+This helper is available from the current source; it is not included in earlier fixed releases.
+
+```js
+import { recordPageClick } from 'stepreceipt/playwright';
+
+const step = await recordPageClick(receipt, page, {
+  label: 'Save the draft',
+  selector: 'button[data-action="save"]',
+});
+```
+
+The selector must match exactly one element; no match or multiple matches records a tool error and does not click. A closed page also records an error. The selector is not added to the receipt. Follow the click with a task-specific `receipt.verify()`; without an explicit check the outcome stays `unknown`.
+
+The caller must select and authorize the correct `Page` object and scope. This helper binds its own click to that object; it does not identify a browser session or remote tool target, freeze navigation, make target checks atomic, or prove that a server-side save happened. It does not fix BrowserSkill or apply to its API. Use `recordPageAction` for other actions, taking care that the callback uses the sampled page.
+
+To run the local two-tab check after installing the development dependencies and a Playwright browser, use `npm run test:page-click`. It compares two distinct synthetic pages with the same URL, including missing, ambiguous, and closed targets.
+
 ## What is recorded
 
 The report shows whether these signals changed:

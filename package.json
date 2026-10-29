@@ -56,6 +56,7 @@
     "test": "node --test test/*.test.mjs",
     "demo": "node examples/demo.mjs",
     "test:e2e": "node test/e2e.mjs",
+    "test:page-click": "node test/page-click-e2e.mjs",
     "demo:blueprint": "node examples/blueprint/run.mjs",
     "test:blueprint": "node test/blueprint-e2e.mjs",
     "demo:browser-use": "node examples/browser-use/run.mjs",

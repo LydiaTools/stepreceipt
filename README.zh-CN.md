@@ -138,6 +138,8 @@ npm run demo:blueprint -- --out artifacts/blueprint-demo
 
 可选 Playwright 适配器会观察一次动作前后 URL、标题、可见文本和交互控件数量是否变化。报告只保存变化项名称，不保存网址、标题、页面文字或临时指纹。
 
+选择器点击可使用 `recordPageClick`：通过采样所用的同一个 Playwright `Page` 对象执行，并要求恰好匹配一个元素。调用方仍须选对页面并独立核对业务结果。普通 `recordPageAction` 的回调可能引用另一个页面，记录器无法自动判断。[Playwright 中文指南](docs/PLAYWRIGHT.zh-CN.md)
+
 ```js
 import { recordPageAction } from 'stepreceipt/playwright';
 
