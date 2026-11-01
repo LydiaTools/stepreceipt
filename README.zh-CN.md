@@ -102,6 +102,12 @@ node bin/stepreceipt.mjs artifacts/demo/run.json --summary receipt-summary.md --
 
 ![真实反例报告：工具正常返回，但单独读取发现没有保存记录，检查未通过](docs/assets/rejected-write.png)
 
+## Codex 技能：核对用户期待的结果
+
+[StepReceipt Outcome Check](skills/stepreceipt-outcome-check/SKILL.md) 帮 Codex 把浏览器或界面任务转成可观察的预期结果，再单独读回核对，并生成 StepReceipt v1 JSON。它沿用项目现有的本地或测试环境；没有充分的读回证据时，结果保留为 `unknown`。
+
+在 Codex 中使用 `$skill-installer`，仓库填写 `LydiaTools/stepreceipt`，路径填写 `skills/stepreceipt-outcome-check`。[在 GitHub 查看技能文件夹](https://github.com/LydiaTools/stepreceipt/tree/main/skills/stepreceipt-outcome-check)。技能本身不会安装依赖，也不会替代码正确性背书。
+
 ## Python browser-use：点击返回，不等于已经保存
 
 可选桥接把真实的 `Tools.click` 返回与应用侧只读核对放在一起。四个原创本地案例覆盖禁用按钮、正常保存、错误成功提示和读回不可用。固定 browser-use 0.13.11 的四次点击都正常返回，核对结果依次是“不通过／通过／不通过／未知”；没有调用模型，不需要 API Key。
