@@ -114,6 +114,12 @@ Each case makes exactly one POST. Our [actual workflow](.github/workflows/test.y
 
 ![Actual false-confirmation case: the tool returned normally while the separate check found no saved record](docs/assets/rejected-write.png)
 
+## Codex skill: check the requested outcome
+
+[StepReceipt Outcome Check](skills/stepreceipt-outcome-check/SKILL.md) helps Codex turn a requested browser or UI behavior into a separate readback and a StepReceipt v1 JSON file. It uses the project's existing local or staging workflow; when there is no adequate readback, the receipt stays `unknown`.
+
+Install it in Codex with `$skill-installer`, using repository `LydiaTools/stepreceipt` and path `skills/stepreceipt-outcome-check`. The skill does not install packages or certify code by itself. [Open the skill folder on GitHub](https://github.com/LydiaTools/stepreceipt/tree/main/skills/stepreceipt-outcome-check).
+
 ## Python browser-use: clicked does not mean saved
 
 The optional bridge records a real `Tools.click` result beside your application's read-only check. Four original local cases cover a disabled button, a working save, a false success toast and unavailable readback. With the pinned browser-use 0.13.11, all four clicks returned normally; the checks produced **rejected / verified / rejected / unknown**. No model or API key was used.

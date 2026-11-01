@@ -1,0 +1,4 @@
+interface:
+  display_name: "StepReceipt Outcome Check"
+  short_description: "Turn expected UI behavior into an evidence receipt."
+  default_prompt: "Use $stepreceipt-outcome-check to verify this change against my expected browser behavior and create a receipt."
