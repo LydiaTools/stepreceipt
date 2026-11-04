@@ -132,6 +132,14 @@ The bridge does not infer success from generated text or retry the action. This 
 
 **Agno retry example:** [See two successful synthetic writes after a later model failure](docs/AGNO-RETRY.md) · [Open the report](https://lydiatools.github.io/stepreceipt/agno/retry.html). Uses Agno 3.0.10 with a local scripted model and caller-supplied readback; not a generic adapter or a retry guard.
 
+## MCP: the write happened, but the response vanished
+
+The first `create_draft` call commits a synthetic row; the local MCP response is then dropped. Blind retry creates **two** drafts. Reading back by operation ID first finds the committed draft and leaves **one**.
+
+[Run the MCP SDK example](docs/MCP-RETRY.md) · [Blind-retry report](docs/mcp/blind-retry.html) · [Readback-first report](docs/mcp/readback-first.html) · [中文说明](docs/MCP-RETRY.zh-CN.md)
+
+This uses the MCP TypeScript SDK 2.4.0 and an in-process handler. It shows one deterministic fixture, not real network or production host behavior; StepReceipt records the result but does not control a client's retry policy. This source-tree example is not in the fixed v0.8.1 release archive.
+
 ## A real LangGraph process restart
 
 **The graph returned normally. It saved the same draft twice.** An optional, provider-free example kills a Python process after the business commit and resumes the same thread in a new process. Ordinary insert: **2 attempts, 2 drafts**. A target-side unique operation key: **2 attempts, 1 draft**. A completed-node control stays at **1 attempt, 1 draft**.
@@ -257,7 +265,7 @@ Requires Node.js 22.18+ and local Chrome or Chromium. [Run instructions and resu
 - Keeping raw error messages, stacks, page contents, and network traffic out of automatic capture. Only the error class is recorded.
 - Redacting a few common credential patterns from exported text. This is heuristic redaction, not complete detection; labels and observations can still contain private information.
 
-It is not a Playwright `trace.zip` viewer, a cryptographically signed audit trail, or a replacement for site-specific assertions. The Playwright, pinned Stagehand Page and browser-use tool examples use synthetic local pages; production websites, Stagehand's model-backed `act()`, browser-use `Agent.run`, Codex and MCP integrations have **not** been tested. The JavaScript callback and JSON interfaces remain available. The package is not published on npm or PyPI. The core recorder still has zero runtime dependencies.
+It is not a Playwright `trace.zip` viewer, a cryptographically signed audit trail, or a replacement for site-specific assertions. The Playwright, pinned Stagehand Page and browser-use tool examples use synthetic local pages; production websites, Stagehand's model-backed `act()`, browser-use `Agent.run`, Codex behavior, and production MCP hosts or remote MCP services have **not** been tested. The MCP SDK example uses only an in-process synthetic handler. The JavaScript callback and JSON interfaces remain available. The package is not published on npm or PyPI. The core recorder still has zero runtime dependencies.
 
 ## Development and evidence
 

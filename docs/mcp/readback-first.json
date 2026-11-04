@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "title": "MCP timeout: read back before deciding to retry",
+  "startedAt": "2026-11-04T01:47:13.480Z",
+  "steps": [
+    {
+      "id": "step-1",
+      "label": "MCP create_draft — first call",
+      "kind": "write",
+      "startedAt": "2026-11-04T01:47:13.480Z",
+      "durationMs": 1,
+      "toolStatus": "error",
+      "errorName": "SdkHttpError",
+      "verification": {
+        "status": "verified",
+        "summary": "Readback found 1 record(s). The first call committed despite its lost response.",
+        "observedAt": "2026-11-04T01:47:13.483Z"
+      }
+    },
+    {
+      "id": "step-2",
+      "label": "MCP list_drafts — independent readback",
+      "kind": "read",
+      "startedAt": "2026-11-04T01:47:13.481Z",
+      "durationMs": 2,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "The independent list_drafts call returned 1 record(s) for this operation.",
+        "observedAt": "2026-11-04T01:47:13.483Z"
+      }
+    }
+  ]
+}

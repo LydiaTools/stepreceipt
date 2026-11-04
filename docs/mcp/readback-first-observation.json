@@ -1,0 +1,16 @@
+{
+  "scenario": "readback-first",
+  "transport": "MCP TypeScript SDK 2.4.0 over an in-process fetch handler; no socket or external service",
+  "droppedResponses": 1,
+  "createCalls": 1,
+  "readbackRecords": 1,
+  "intendedRecords": 1,
+  "toolStatuses": [
+    "error",
+    "ok"
+  ],
+  "verificationStatuses": [
+    "verified",
+    "verified"
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "title": "MCP timeout: blind retry after a committed write",
+  "startedAt": "2026-11-04T01:47:13.466Z",
+  "steps": [
+    {
+      "id": "step-1",
+      "label": "MCP create_draft — first call",
+      "kind": "write",
+      "startedAt": "2026-11-04T01:47:13.466Z",
+      "durationMs": 6,
+      "toolStatus": "error",
+      "errorName": "SdkHttpError",
+      "verification": {
+        "status": "verified",
+        "summary": "Readback found 2 record(s). The first call committed despite its lost response.",
+        "observedAt": "2026-11-04T01:47:13.476Z"
+      }
+    },
+    {
+      "id": "step-2",
+      "label": "MCP create_draft — blind retry",
+      "kind": "write",
+      "startedAt": "2026-11-04T01:47:13.472Z",
+      "durationMs": 2,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "rejected",
+        "summary": "Readback found 2 records; the intended maximum was one.",
+        "observedAt": "2026-11-04T01:47:13.476Z"
+      }
+    },
+    {
+      "id": "step-3",
+      "label": "MCP list_drafts — independent readback",
+      "kind": "read",
+      "startedAt": "2026-11-04T01:47:13.474Z",
+      "durationMs": 1,
+      "toolStatus": "ok",
+      "verification": {
+        "status": "verified",
+        "summary": "The independent list_drafts call returned 2 record(s) for this operation.",
+        "observedAt": "2026-11-04T01:47:13.476Z"
+      }
+    }
+  ]
+}

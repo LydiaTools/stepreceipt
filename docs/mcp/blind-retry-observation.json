@@ -1,0 +1,18 @@
+{
+  "scenario": "blind-retry",
+  "transport": "MCP TypeScript SDK 2.4.0 over an in-process fetch handler; no socket or external service",
+  "droppedResponses": 1,
+  "createCalls": 2,
+  "readbackRecords": 2,
+  "intendedRecords": 1,
+  "toolStatuses": [
+    "error",
+    "ok",
+    "ok"
+  ],
+  "verificationStatuses": [
+    "verified",
+    "rejected",
+    "verified"
+  ]
+}
