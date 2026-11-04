@@ -1,0 +1,13 @@
+{
+  "name": "stepreceipt-mcp-example",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "demo": "node run.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/client": "2.4.0",
+    "@modelcontextprotocol/server": "2.4.0",
+    "zod": "4.6.7"
+  }
+}

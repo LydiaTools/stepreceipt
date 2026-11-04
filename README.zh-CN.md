@@ -120,6 +120,14 @@ node bin/stepreceipt.mjs artifacts/demo/run.json --summary receipt-summary.md --
 
 **Agno 重试示例：**[查看后续模型失败后，两次合成写入均成功的情况](docs/AGNO-RETRY.zh-CN.md) · [打开报告](https://lydiatools.github.io/stepreceipt/agno/retry.html)。使用 Agno 3.0.10、本地脚本模型和调用方提供的读回检查；不是通用适配器或重试拦截器。
 
+## MCP：写入已经发生，响应却丢了
+
+首次 `create_draft` 调用已提交一条虚构记录，进程内 MCP 响应随后被丢弃。立即重试会产生**两条**草稿。先按操作 ID 读回会发现第一条已存在，最终只保留**一条**。
+
+[运行 MCP SDK 示例](docs/MCP-RETRY.zh-CN.md) · [立即重试报告](docs/mcp/blind-retry.html) · [先读回报告](docs/mcp/readback-first.html) · [English](docs/MCP-RETRY.md)
+
+示例使用 MCP TypeScript SDK 2.4.0 和进程内处理器。它只展示一个确定性小样，不代表真实网络或生产 Host 行为；StepReceipt 记录结果，不控制客户端重试策略。本源码示例未包含在固定的 v0.8.1 Release 压缩包中。
+
 ## 真实 LangGraph 跨进程恢复
 
 **流程正常返回，却留下两份相同的草稿。** 可选示例在业务提交后直接退出 Python 进程，再用新进程恢复同一任务。普通插入：2 次调用、2 条草稿；目标库唯一操作键：2 次调用、1 条草稿；正常完成对照组：1 次调用、1 条草稿。
@@ -199,7 +207,7 @@ npm run demo
 
 ## 当前边界
 
-已测试本地浏览器案例、JSON 导入、独立 HTML 导出再打开、移动端与中英文界面、Blueprint 整合、Playwright 信号适配器、Stagehand v4.3.0 Page 示例，以及 browser-use 0.13.11 工具层桥接。以上使用合成页面；模型驱动的 `stagehand.act()`、browser-use `Agent.run`、生产网站、Codex 和 MCP 原生整合尚未测试。当前不是 Playwright trace.zip 查看器，也尚未发布到 npm 或 PyPI；CLI 和 JavaScript 库可直接从 GitHub 安装。核心记录器仍无运行时依赖。
+已测试本地浏览器案例、JSON 导入、独立 HTML 导出再打开、移动端与中英文界面、Blueprint 整合、Playwright 信号适配器、Stagehand v4.3.0 Page 示例，以及 browser-use 0.13.11 工具层桥接。另有 MCP TypeScript SDK 进程内合成示例；尚未测试生产网站、模型驱动的 `stagehand.act()`、browser-use `Agent.run`、Codex 行为、生产 MCP Host 或远程 MCP 服务。当前不是 Playwright trace.zip 查看器，也尚未发布到 npm 或 PyPI；CLI 和 JavaScript 库可直接从 GitHub 安装。核心记录器仍无运行时依赖。
 
 报告自动捕获错误类别，不自动记录错误正文、堆栈、页面内容或网络流量。导出文字会对少量常见凭据格式做脱敏，仍需检查自己填写的标题与观察说明。浏览器页面不含统计代码；在线演示托管于 GitHub Pages，会产生正常页面访问请求。
 

@@ -44,9 +44,14 @@
     "examples/stagehand/demo.mjs",
     "examples/stagehand/fixture.html",
     "docs/AGNO-RETRY*.md",
+    "docs/MCP-RETRY*.md",
     "docs/assets/agno-retry.png",
     "docs/agno/",
+    "docs/mcp/",
     "examples/agno/",
+    "examples/mcp/package.json",
+    "examples/mcp/package-lock.json",
+    "examples/mcp/run.mjs",
     "LICENSE"
   ],
   "engines": {
