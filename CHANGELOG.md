@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.8.2 — Reproduce an ambiguous MCP write
+
+- Add a pinned MCP TypeScript SDK 2.4.0 example where a synthetic write commits but its response is dropped; a blind retry leaves two rows, while a readback by operation ID leaves one.
+- Include the runnable source, lockfile, bilingual instructions and reports in the release bundle. The fixture uses an in-process handler and no external service.
+- StepReceipt records the action and observation; it does not control a client's retry policy or guarantee exactly-once effects.
+
 ## 0.8.1 — Observe an Agno retry after a successful write
 
 - Add an isolated Agno 3.0.10 and OpenAI SDK 3.16.2 example using a local scripted model and a synthetic business server. One run returns an error after two successful writes; separate readbacks record one passing and one rejected check.
